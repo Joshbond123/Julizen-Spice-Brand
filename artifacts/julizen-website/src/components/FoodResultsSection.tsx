@@ -7,13 +7,13 @@ const results = [
     delay: 0
   },
   {
-    title: "Authentic Pepper Soup",
-    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop&q=80",
+    title: "Fried Rice",
+    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800&auto=format&fit=crop&q=80",
     delay: 0.2
   },
   {
-    title: "Spicy Suya Platter",
-    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80",
+    title: "Authentic Soup",
+    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop&q=80",
     delay: 0.4
   }
 ];
@@ -22,11 +22,11 @@ export function FoodResultsSection() {
   return (
     <section className="py-24 bg-secondary text-white relative">
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary via-secondary to-secondary"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -34,14 +34,14 @@ export function FoodResultsSection() {
             >
               See the Difference <span className="text-primary">Julizen</span> Makes
             </motion.h2>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
               className="text-lg text-white/70"
             >
-              Every meal deserves to be unforgettable. Our signature blends bring authentic, mouthwatering flavor to your home kitchen instantly.
+              A well-seasoned meal tells its own story. These are the dishes our customers cook every day with Julizen.
             </motion.p>
           </div>
         </div>

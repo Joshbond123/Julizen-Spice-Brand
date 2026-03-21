@@ -1,32 +1,32 @@
 import { motion } from "framer-motion";
-import { Leaf, Zap, ShieldCheck, Truck } from "lucide-react";
+import { FlaskConical, Award, ShieldCheck, Truck } from "lucide-react";
 
 const features = [
   {
-    icon: Leaf,
-    title: "100% Natural",
-    description: "No artificial additives or preservatives. Just pure, wholesome ingredients.",
+    icon: FlaskConical,
+    title: "Carefully Blended",
+    description: "Each seasoning is formulated with a precise balance of spices selected for authentic Nigerian cooking.",
     color: "text-emerald-500",
     bg: "bg-emerald-500/10"
   },
   {
-    icon: Zap,
-    title: "Rich Flavor",
-    description: "Restaurant-quality taste in every dish. A little goes a very long way.",
+    icon: Award,
+    title: "Bold & Balanced",
+    description: "Our blends are crafted to enhance your dish without overpowering it — just the right depth every time.",
     color: "text-accent",
     bg: "bg-accent/10"
   },
   {
     icon: ShieldCheck,
     title: "Quality Assured",
-    description: "Hygienically prepared and packaged in world-class, certified facilities.",
+    description: "Hygienically prepared and packaged in certified facilities to meet consistent food safety standards.",
     color: "text-blue-500",
     bg: "bg-blue-500/10"
   },
   {
     icon: Truck,
     title: "Fast Delivery",
-    description: "Order conveniently via WhatsApp, and get it delivered straight to your door.",
+    description: "Order via WhatsApp and get it delivered straight to your door — quick and hassle-free.",
     color: "text-primary",
     bg: "bg-primary/10"
   }
@@ -37,7 +37,7 @@ export function WhyJulizenSection() {
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -45,14 +45,14 @@ export function WhyJulizenSection() {
           >
             Why Choose Julizen?
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            We don't just sell spices; we sell an experience. Here is why thousands of homes trust our blends.
+            From the kitchen to the table — here is what sets Julizen apart.
           </motion.p>
         </div>
 

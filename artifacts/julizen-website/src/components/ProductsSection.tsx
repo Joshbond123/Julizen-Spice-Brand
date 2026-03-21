@@ -23,11 +23,11 @@ export function ProductsSection() {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            Carefully crafted with the finest ingredients to give your meals that authentic, irresistible taste.
+            Three distinct blends, each formulated for a specific dish. Pick the one that matches your meal.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
           ))}

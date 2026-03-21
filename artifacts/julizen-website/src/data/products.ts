@@ -10,39 +10,30 @@ export interface Product {
 
 export const products: Product[] = [
   {
-    id: "jollof-seasoning",
-    name: "Julizen Jollof Seasoning",
-    category: "Rice Blends",
+    id: "chicken-seasoning",
+    name: "Julizen Chicken Seasoning",
+    category: "Chicken",
     price: 1500,
-    description: "Our signature blend that makes every pot of jollof rice burst with rich, smoky flavor.",
-    image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&auto=format&fit=crop&q=80",
+    description: "A well-balanced seasoning blend crafted to bring out the full depth of flavor in every chicken dish — grilled, stewed, or roasted.",
+    image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=800&auto=format&fit=crop&q=80",
     status: "available"
   },
   {
-    id: "pepper-soup-spice",
-    name: "Julizen Pepper Soup Spice",
-    category: "Soup Spices",
-    price: 1200,
-    description: "A carefully balanced mix of aromatic spices perfect for authentic Nigerian pepper soup.",
-    image: "https://images.unsplash.com/photo-1628294895950-9805252327bc?w=800&auto=format&fit=crop&q=80",
+    id: "fried-rice-seasoning",
+    name: "Julizen Fried Rice Seasoning",
+    category: "Fried Rice",
+    price: 1500,
+    description: "A carefully measured blend of spices designed specifically for fried rice — giving each grain a savory, aromatic finish.",
+    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800&auto=format&fit=crop&q=80",
     status: "available"
   },
   {
-    id: "suya-blend",
-    name: "Julizen Suya Blend",
-    category: "Grill Blends",
-    price: 1000,
-    description: "The secret behind perfectly seasoned, grilled suya. Spicy, smoky, and absolutely delicious.",
-    image: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=800&auto=format&fit=crop&q=80",
-    status: "available"
-  },
-  {
-    id: "all-purpose",
-    name: "Julizen All-Purpose",
-    category: "All-Purpose",
-    price: 800,
-    description: "A versatile seasoning that elevates any dish — from stews to stir-fries and roasted veggies.",
-    image: "https://images.unsplash.com/photo-1626025357876-0f8bc5b46e8c?w=800&auto=format&fit=crop&q=80",
+    id: "crayfish-seasoning",
+    name: "Julizen Crayfish Seasoning",
+    category: "Crayfish",
+    price: 1500,
+    description: "A rich, smoky crayfish-infused blend perfect for soups, stews, and traditional Nigerian dishes that call for depth and body.",
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&auto=format&fit=crop&q=80",
     status: "available"
   }
 ];
