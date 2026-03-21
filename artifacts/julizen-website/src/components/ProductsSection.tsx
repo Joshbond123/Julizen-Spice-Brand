@@ -23,7 +23,7 @@ export function ProductsSection() {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            Three distinct blends, each formulated for a specific dish. Pick the one that matches your meal.
+            Julizen comes in three targeted blends — each one developed for a specific type of dish. Choose the one that fits what you're cooking.
           </motion.p>
         </div>
 

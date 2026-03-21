@@ -41,7 +41,7 @@ export function FoodResultsSection() {
               transition={{ delay: 0.1 }}
               className="text-lg text-white/70"
             >
-              A well-seasoned meal tells its own story. These are the dishes our customers cook every day with Julizen.
+              Every well-prepared meal speaks for itself. These are everyday dishes made better with Julizen seasoning.
             </motion.p>
           </div>
         </div>

@@ -9,7 +9,6 @@ export function CTASection() {
     <section className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-accent"></div>
 
-      {/* Decorative patterns */}
       <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-96 h-96 bg-black/10 rounded-full blur-3xl"></div>
 
@@ -18,9 +17,9 @@ export function CTASection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-white mb-6 leading-tight"
+          className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-white mb-5 leading-tight"
         >
-          Order Now and Taste the Difference
+          Ready to Order?
         </motion.h2>
 
         <motion.p
@@ -28,18 +27,17 @@ export function CTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-xl text-white/90 mb-8 max-w-2xl mx-auto"
+          className="text-lg text-white/85 mb-8 max-w-2xl mx-auto leading-relaxed"
         >
-          Delivered fresh to your door. Skip the hassle and order directly via WhatsApp in seconds.
+          Place your order directly via WhatsApp. We handle both individual and bulk orders — for home cooks, wholesalers, and retailers.
         </motion.p>
 
-        {/* Info pills */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.15 }}
-          className="flex flex-wrap justify-center gap-4 mb-10"
+          className="flex flex-wrap justify-center gap-3 mb-10"
         >
           <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/25 text-white text-sm font-medium">
             <Truck className="w-4 h-4" />
@@ -59,7 +57,7 @@ export function CTASection() {
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 px-8 py-5 rounded-full bg-white text-primary font-bold text-xl shadow-2xl hover:scale-105 hover:shadow-white/20 transition-all duration-300"
+          className="inline-flex items-center gap-3 px-8 py-5 rounded-full bg-white text-primary font-bold text-xl shadow-2xl hover:scale-105 transition-all duration-300"
         >
           <MessageCircle className="w-6 h-6 fill-primary text-primary" />
           Order on WhatsApp

@@ -1,32 +1,32 @@
 import { motion } from "framer-motion";
-import { FlaskConical, Award, ShieldCheck, Truck } from "lucide-react";
+import { RefreshCw, UtensilsCrossed, CheckCircle, Building2 } from "lucide-react";
 
 const features = [
   {
-    icon: FlaskConical,
-    title: "Carefully Blended",
-    description: "Each seasoning is formulated with a precise balance of spices selected for authentic Nigerian cooking.",
-    color: "text-emerald-500",
+    icon: RefreshCw,
+    title: "Consistent Results",
+    description: "Helps you achieve the same great taste every time you cook, without guessing the right amount of seasoning.",
+    color: "text-emerald-600",
     bg: "bg-emerald-500/10"
   },
   {
-    icon: Award,
-    title: "Bold & Balanced",
-    description: "Our blends are crafted to enhance your dish without overpowering it — just the right depth every time.",
+    icon: UtensilsCrossed,
+    title: "Made for Everyday Meals",
+    description: "Works well with common Nigerian dishes like jollof rice, fried rice, and soups — dishes you already cook.",
     color: "text-accent",
     bg: "bg-accent/10"
   },
   {
-    icon: ShieldCheck,
-    title: "Quality Assured",
-    description: "Hygienically prepared and packaged in certified facilities to meet consistent food safety standards.",
+    icon: CheckCircle,
+    title: "Easy to Use",
+    description: "Simple to add during cooking without any complications. No special preparation required.",
     color: "text-blue-500",
     bg: "bg-blue-500/10"
   },
   {
-    icon: Truck,
-    title: "Fast Delivery",
-    description: "Order via WhatsApp and get it delivered straight to your door — quick and hassle-free.",
+    icon: Building2,
+    title: "Reliable Quality",
+    description: "Designed to support both home cooking and commercial use. Consistent across every batch.",
     color: "text-primary",
     bg: "bg-primary/10"
   }
@@ -52,7 +52,7 @@ export function WhyJulizenSection() {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            From the kitchen to the table — here is what sets Julizen apart.
+            Here is what makes Julizen a practical choice for your kitchen.
           </motion.p>
         </div>
 
@@ -70,7 +70,7 @@ export function WhyJulizenSection() {
                 <feature.icon className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold font-display text-foreground mb-3">{feature.title}</h3>
-              <p className="text-muted-foreground">{feature.description}</p>
+              <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
         </div>

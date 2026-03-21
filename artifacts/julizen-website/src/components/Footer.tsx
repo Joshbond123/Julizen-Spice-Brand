@@ -18,7 +18,7 @@ export function Footer() {
               </span>
             </a>
             <p className="max-w-md text-white/60 leading-relaxed">
-              Premium, natural seasonings crafted to bring authentic restaurant-quality flavors directly into your home kitchen. Taste the difference today.
+              Julizen is a seasoning brand focused on making everyday Nigerian cooking more consistent and flavorful. Available for home use, wholesale, and retail.
             </p>
           </div>
 
