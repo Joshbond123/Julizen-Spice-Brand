@@ -7,14 +7,19 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-secondary">
-      {/* Background Image — vibrant Nigerian jollof rice */}
+      {/* Background Image — portrait for mobile, landscape for desktop */}
       <div className="absolute inset-0 z-0">
+        <img
+          src="/images/hero-food-mobile.png"
+          alt="Mouthwatering Nigerian food spread"
+          className="w-full h-full object-cover object-center block sm:hidden"
+        />
         <img
           src="/images/hero-food.png"
           alt="Mouthwatering Nigerian food spread"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-center hidden sm:block"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/50 to-black/75"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/70"></div>
       </div>
 
       {/* Content */}
