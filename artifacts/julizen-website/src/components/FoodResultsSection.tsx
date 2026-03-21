@@ -3,17 +3,17 @@ import { motion } from "framer-motion";
 const results = [
   {
     title: "Perfect Jollof Rice",
-    image: "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=800&auto=format&fit=crop&q=80",
+    image: "/images/food-jollof-rice.png",
     delay: 0
   },
   {
     title: "Fried Rice",
-    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800&auto=format&fit=crop&q=80",
+    image: "/images/food-fried-rice.png",
     delay: 0.2
   },
   {
     title: "Authentic Soup",
-    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&auto=format&fit=crop&q=80",
+    image: "/images/food-soup.png",
     delay: 0.4
   }
 ];

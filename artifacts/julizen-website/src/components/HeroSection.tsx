@@ -10,8 +10,8 @@ export function HeroSection() {
       {/* Background Image — vibrant Nigerian jollof rice */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1800&auto=format&fit=crop&q=85"
-          alt="Vibrant food spread"
+          src="/images/hero-food.png"
+          alt="Mouthwatering Nigerian food spread"
           className="w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/50 to-black/75"></div>

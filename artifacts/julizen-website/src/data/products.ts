@@ -15,7 +15,7 @@ export const products: Product[] = [
     category: "Chicken",
     price: 1500,
     description: "A well-balanced seasoning blend crafted to bring out the full depth of flavor in every chicken dish — grilled, stewed, or roasted.",
-    image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=800&auto=format&fit=crop&q=80",
+    image: "/images/product-chicken.png",
     status: "available"
   },
   {
@@ -24,7 +24,7 @@ export const products: Product[] = [
     category: "Fried Rice",
     price: 1500,
     description: "A carefully measured blend of spices designed specifically for fried rice — giving each grain a savory, aromatic finish.",
-    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=800&auto=format&fit=crop&q=80",
+    image: "/images/product-fried-rice.png",
     status: "available"
   },
   {
@@ -33,7 +33,7 @@ export const products: Product[] = [
     category: "Crayfish",
     price: 1500,
     description: "A rich, smoky crayfish-infused blend perfect for soups, stews, and traditional Nigerian dishes that call for depth and body.",
-    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&auto=format&fit=crop&q=80",
+    image: "/images/product-crayfish.png",
     status: "available"
   }
 ];
