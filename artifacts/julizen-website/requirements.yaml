@@ -1,0 +1,9 @@
+packages:
+  "framer-motion": "Scroll animations, polished transitions, and premium UI interactions"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility for merging tailwind classes without style conflicts"
+
+notes:
+  - Static marketing site with no backend required
+  - Products data is stored locally
+  - Uses Unsplash for realistic food photography per instructions

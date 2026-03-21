@@ -1,0 +1,65 @@
+import { Flame, Instagram, Facebook, Twitter } from "lucide-react";
+import { generateWhatsAppLink } from "@/lib/utils";
+
+export function Footer() {
+  const whatsappLink = generateWhatsAppLink("Hello, I want to ask about Julizen seasoning");
+
+  return (
+    <footer className="bg-secondary text-white/70 pt-20 pb-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 border-b border-white/10 pb-16">
+          <div className="md:col-span-2">
+            <a href="#" className="flex items-center gap-2 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white">
+                <Flame className="w-6 h-6 fill-white" />
+              </div>
+              <span className="font-display font-bold text-2xl tracking-tight text-white">
+                Julizen
+              </span>
+            </a>
+            <p className="max-w-md text-white/60 leading-relaxed">
+              Premium, natural seasonings crafted to bring authentic restaurant-quality flavors directly into your home kitchen. Taste the difference today.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold mb-6 font-display">Quick Links</h4>
+            <ul className="space-y-4">
+              <li><a href="#" className="hover:text-white transition-colors">Home</a></li>
+              <li><a href="#products" className="hover:text-white transition-colors">Products</a></li>
+              <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
+              <li><a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors text-primary font-medium">Order via WhatsApp</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold mb-6 font-display">Contact Us</h4>
+            <ul className="space-y-4">
+              <li><a href="mailto:info@julizen.com" className="hover:text-white transition-colors">info@julizen.com</a></li>
+              <li><a href="tel:+2348000000000" className="hover:text-white transition-colors">+234 800 000 0000</a></li>
+              <li className="pt-4 flex gap-4">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                  <Facebook className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                  <Twitter className="w-5 h-5" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+          <p>&copy; {new Date().getFullYear()} Julizen Seasoning. All rights reserved.</p>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
