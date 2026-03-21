@@ -18,7 +18,7 @@ export function Footer() {
               </span>
             </a>
             <p className="max-w-md text-white/60 leading-relaxed">
-              Julizen is a seasoning brand focused on making everyday Nigerian cooking more consistent and flavorful. Available for home use, wholesale, and retail.
+              Julizen is a seasoning brand designed to support everyday cooking with consistent, reliable results. Suitable for home use, wholesale, and retail distribution.
             </p>
           </div>
 

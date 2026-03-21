@@ -14,7 +14,7 @@ export function ProductsSection() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-display font-bold text-secondary mb-6"
           >
-            Our Signature Blends
+            Julizen Seasoning
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -23,7 +23,7 @@ export function ProductsSection() {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            Julizen comes in three targeted blends — each one developed for a specific type of dish. Choose the one that fits what you're cooking.
+            Made to bring out the best in your cooking. Add it to your meals and enjoy a rich, well-balanced taste every time.
           </motion.p>
         </div>
 

@@ -4,29 +4,29 @@ import { RefreshCw, UtensilsCrossed, CheckCircle, Building2 } from "lucide-react
 const features = [
   {
     icon: RefreshCw,
-    title: "Consistent Results",
-    description: "Helps you achieve the same great taste every time you cook, without guessing the right amount of seasoning.",
+    title: "Consistent Taste",
+    description: "Helps you achieve reliable results every time you cook.",
     color: "text-emerald-600",
     bg: "bg-emerald-500/10"
   },
   {
     icon: UtensilsCrossed,
-    title: "Made for Everyday Meals",
-    description: "Works well with common Nigerian dishes like jollof rice, fried rice, and soups — dishes you already cook.",
+    title: "Works Across Everyday Meals",
+    description: "Suitable for rice dishes, soups, and more.",
     color: "text-accent",
     bg: "bg-accent/10"
   },
   {
     icon: CheckCircle,
-    title: "Easy to Use",
-    description: "Simple to add during cooking without any complications. No special preparation required.",
+    title: "Simple to Use",
+    description: "Easy to add during cooking with no complications.",
     color: "text-blue-500",
     bg: "bg-blue-500/10"
   },
   {
     icon: Building2,
-    title: "Reliable Quality",
-    description: "Designed to support both home cooking and commercial use. Consistent across every batch.",
+    title: "Trusted for Daily Cooking",
+    description: "Designed for both home use and commercial kitchens.",
     color: "text-primary",
     bg: "bg-primary/10"
   }
