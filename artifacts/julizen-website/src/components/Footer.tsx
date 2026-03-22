@@ -1,4 +1,4 @@
-import { Flame, Instagram, Facebook, Twitter } from "lucide-react";
+import { Instagram, Facebook, Twitter } from "lucide-react";
 import { generateWhatsAppLink } from "@/lib/utils";
 
 export function Footer() {
@@ -9,13 +9,12 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 border-b border-white/10 pb-16">
           <div className="md:col-span-2">
-            <a href="#" className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white">
-                <Flame className="w-6 h-6 fill-white" />
-              </div>
-              <span className="font-display font-bold text-2xl tracking-tight text-white">
-                Julizen
-              </span>
+            <a href="#home" className="inline-block mb-6 group">
+              <img
+                src="/images/julizen-logo.png"
+                alt="Julizen"
+                className="h-10 sm:h-11 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
+              />
             </a>
             <p className="max-w-md text-white/60 leading-relaxed">
               Julizen is a seasoning brand designed to support everyday cooking with consistent, reliable results. Suitable for home use, wholesale, and retail distribution.

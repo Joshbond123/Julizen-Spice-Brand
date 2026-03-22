@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Flame } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn, generateWhatsAppLink } from "@/lib/utils";
 
@@ -51,17 +51,13 @@ export function Navbar() {
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, "#home")}
-            className="flex items-center gap-2 group"
+            className="flex items-center group py-1"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white shadow-md shadow-primary/20 group-hover:shadow-lg transition-all">
-              <Flame className="w-6 h-6 fill-white" />
-            </div>
-            <span className={cn(
-              "font-display font-bold text-2xl tracking-tight transition-colors",
-              isScrolled ? "text-secondary" : "text-white"
-            )}>
-              Julizen
-            </span>
+            <img
+              src="/images/julizen-logo.png"
+              alt="Julizen"
+              className="h-10 sm:h-12 md:h-14 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
+            />
           </a>
 
           {/* Desktop Nav */}
