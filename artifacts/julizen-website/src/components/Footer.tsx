@@ -19,8 +19,8 @@ export function Footer() {
                   loading="eager"
                   decoding="async"
                   fetchPriority="high"
-                  width={300}
-                  height={200}
+                  width={600}
+                  height={400}
                 />
               </picture>
             </a>
