@@ -58,11 +58,17 @@ export function Navbar() {
             onClick={(e) => handleNavClick(e, "#home")}
             className="flex items-center group py-1"
           >
-            <img
-              src={getImageUrl("/images/julizen-logo.png")}
-              alt="Julizen"
-              className="h-20 sm:h-24 md:h-28 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
-            />
+            <picture>
+              <source srcSet={getImageUrl("/images/julizen-logo.webp")} type="image/webp" />
+              <img
+                src={getImageUrl("/images/julizen-logo.png")}
+                alt="Julizen"
+                className="h-20 sm:h-24 md:h-28 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
+                fetchPriority="high"
+                width={300}
+                height={200}
+              />
+            </picture>
           </a>
 
           {/* Desktop Nav */}

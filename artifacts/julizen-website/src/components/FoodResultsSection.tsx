@@ -4,17 +4,20 @@ import { getImageUrl } from "@/lib/imageUrl";
 const results = [
   {
     title: "Perfect Jollof Rice",
-    image: getImageUrl("/images/food-jollof-rice.png"),
+    image: "/images/food-jollof-rice.png",
+    webp: "/images/food-jollof-rice.webp",
     delay: 0
   },
   {
     title: "Fried Rice",
-    image: getImageUrl("/images/food-fried-rice.png"),
+    image: "/images/food-fried-rice.png",
+    webp: "/images/food-fried-rice.webp",
     delay: 0.2
   },
   {
     title: "Authentic Soup",
-    image: getImageUrl("/images/food-soup.png"),
+    image: "/images/food-soup.png",
+    webp: "/images/food-soup.webp",
     delay: 0.4
   }
 ];
@@ -57,11 +60,17 @@ export function FoodResultsSection() {
               transition={{ delay: result.delay, duration: 0.5 }}
               className="group relative rounded-3xl overflow-hidden aspect-[4/5] bg-secondary-foreground/10"
             >
-              <img
-                src={result.image}
-                alt={result.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
+              <picture>
+                <source srcSet={getImageUrl(result.webp)} type="image/webp" />
+                <img
+                  src={getImageUrl(result.image)}
+                  alt={result.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                  width={600}
+                  height={750}
+                />
+              </picture>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8">
                 <h3 className="text-2xl font-display font-bold text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                   {result.title}

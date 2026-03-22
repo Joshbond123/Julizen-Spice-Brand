@@ -10,16 +10,28 @@ export function HeroSection() {
     <section id="home" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-secondary">
       {/* Background Image — portrait for mobile, landscape for desktop */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={getImageUrl("/images/hero-food-mobile.png")}
-          alt="Mouthwatering Nigerian food spread"
-          className="w-full h-full object-cover object-center block sm:hidden"
-        />
-        <img
-          src={getImageUrl("/images/hero-food.png")}
-          alt="Mouthwatering Nigerian food spread"
-          className="w-full h-full object-cover object-center hidden sm:block"
-        />
+        <picture className="block sm:hidden w-full h-full">
+          <source srcSet={getImageUrl("/images/hero-food-mobile.webp")} type="image/webp" />
+          <img
+            src={getImageUrl("/images/hero-food-mobile.png")}
+            alt="Mouthwatering Nigerian food spread"
+            className="w-full h-full object-cover object-center"
+            fetchPriority="high"
+            width={768}
+            height={1408}
+          />
+        </picture>
+        <picture className="hidden sm:block w-full h-full">
+          <source srcSet={getImageUrl("/images/hero-food.webp")} type="image/webp" />
+          <img
+            src={getImageUrl("/images/hero-food.png")}
+            alt="Mouthwatering Nigerian food spread"
+            className="w-full h-full object-cover object-center"
+            fetchPriority="high"
+            width={1280}
+            height={720}
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/70"></div>
       </div>
 

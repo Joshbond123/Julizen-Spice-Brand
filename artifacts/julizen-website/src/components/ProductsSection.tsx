@@ -38,6 +38,10 @@ export function ProductsSection() {
   );
 }
 
+function getWebpPath(imagePath: string): string {
+  return imagePath.replace(/\.png$/, '.webp');
+}
+
 function ProductCard({ product, index }: { product: any, index: number }) {
   const whatsappLink = generateWhatsAppLink(`Hello, I want to order ${product.name} from Julizen`);
 
@@ -50,11 +54,17 @@ function ProductCard({ product, index }: { product: any, index: number }) {
       className="bg-card rounded-2xl overflow-hidden shadow-lg shadow-black/5 border border-border/50 hover:shadow-xl hover:border-border transition-all duration-300 group flex flex-col h-full"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-        <img
-          src={getImageUrl(product.image)}
-          alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
+        <picture>
+          <source srcSet={getImageUrl(getWebpPath(product.image))} type="image/webp" />
+          <img
+            src={getImageUrl(product.image)}
+            alt={product.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+            width={800}
+            height={600}
+          />
+        </picture>
         <div className="absolute top-4 left-4">
           <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-xs font-bold text-secondary shadow-sm">
             {product.category}
