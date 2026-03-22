@@ -13,7 +13,7 @@ export function Footer() {
               <img
                 src="/images/julizen-logo.png"
                 alt="Julizen"
-                className="h-10 sm:h-11 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
+                className="h-20 sm:h-24 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
               />
             </a>
             <p className="max-w-md text-white/60 leading-relaxed">
