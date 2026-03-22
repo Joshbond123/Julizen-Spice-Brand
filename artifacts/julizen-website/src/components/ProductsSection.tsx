@@ -5,7 +5,7 @@ import { ShoppingBag } from "lucide-react";
 
 export function ProductsSection() {
   return (
-    <section id="products" className="py-24 bg-muted relative">
+    <section id="products" className="py-24 bg-muted relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.h2 
@@ -14,7 +14,7 @@ export function ProductsSection() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-display font-bold text-secondary mb-6"
           >
-            Julizen Seasoning
+            Julizen Seasoning Powder
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

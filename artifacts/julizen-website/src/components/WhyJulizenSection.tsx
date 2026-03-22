@@ -34,7 +34,7 @@ const features = [
 
 export function WhyJulizenSection() {
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section id="why-julizen" className="py-24 bg-white relative overflow-hidden scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.h2

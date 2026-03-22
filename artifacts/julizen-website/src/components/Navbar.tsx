@@ -16,12 +16,25 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Home", href: "#" },
+    { name: "Home", href: "#home" },
     { name: "Products", href: "#products" },
+    { name: "Why Choose", href: "#why-julizen" },
     { name: "How It Works", href: "#how-it-works" },
   ];
 
   const whatsappLink = generateWhatsAppLink("Hello, I want to order Julizen seasoning");
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <header
@@ -35,7 +48,11 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          <a
+            href="#home"
+            onClick={(e) => handleNavClick(e, "#home")}
+            className="flex items-center gap-2 group"
+          >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white shadow-md shadow-primary/20 group-hover:shadow-lg transition-all">
               <Flame className="w-6 h-6 fill-white" />
             </div>
@@ -53,6 +70,7 @@ export function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className={cn(
                   "font-medium text-sm hover:text-primary transition-colors",
                   isScrolled ? "text-foreground" : "text-white/90 hover:text-white"
@@ -78,6 +96,7 @@ export function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button
+            aria-label="Toggle menu"
             className="md:hidden p-2 -mr-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
@@ -99,13 +118,13 @@ export function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white border-b border-border overflow-hidden absolute top-full left-0 right-0 shadow-xl"
           >
-            <div className="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+            <div className="px-4 pt-2 pb-6 space-y-1 flex flex-col">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className="block px-4 py-3 text-lg font-medium text-foreground hover:bg-muted rounded-xl transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}
                 </a>
@@ -115,8 +134,8 @@ export function Navbar() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center w-full px-6 py-4 rounded-xl bg-primary text-white font-semibold text-lg shadow-lg shadow-primary/25"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-center w-full px-6 py-4 rounded-xl bg-primary text-white font-semibold text-lg shadow-lg shadow-primary/25"
                 >
                   Order via WhatsApp
                 </a>

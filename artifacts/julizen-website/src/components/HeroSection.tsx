@@ -6,7 +6,7 @@ export function HeroSection() {
   const whatsappLink = generateWhatsAppLink("Hello, I want to order Julizen seasoning");
 
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-secondary">
+    <section id="home" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-secondary">
       {/* Background Image — portrait for mobile, landscape for desktop */}
       <div className="absolute inset-0 z-0">
         <img
@@ -38,7 +38,7 @@ export function HeroSection() {
           </h1>
 
           <p className="text-lg sm:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed">
-            Julizen seasonings are crafted to bring bold, authentic flavor to your meals — from everyday cooking to special occasions.
+            Julizen seasoning powder is crafted to bring bold, authentic flavor to your meals — from everyday cooking to special occasions.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
