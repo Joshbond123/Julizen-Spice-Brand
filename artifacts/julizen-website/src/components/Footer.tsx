@@ -17,7 +17,8 @@ export function Footer() {
                   src={getImageUrl("/images/julizen-logo.png")}
                   alt="Julizen"
                   className="h-20 sm:h-24 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
                   width={300}
                   height={200}
                 />

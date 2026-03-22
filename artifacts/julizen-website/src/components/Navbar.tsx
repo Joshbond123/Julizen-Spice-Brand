@@ -65,6 +65,7 @@ export function Navbar() {
                 alt="Julizen"
                 className="h-20 sm:h-24 md:h-28 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
                 fetchPriority="high"
+                decoding="sync"
                 width={300}
                 height={200}
               />

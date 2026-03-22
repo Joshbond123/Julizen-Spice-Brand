@@ -17,6 +17,9 @@ export function HeroSection() {
             alt="Mouthwatering Nigerian food spread"
             className="w-full h-full object-cover object-center"
             fetchPriority="high"
+            loading="eager"
+            decoding="sync"
+            sizes="100vw"
             width={768}
             height={1408}
           />
@@ -28,6 +31,9 @@ export function HeroSection() {
             alt="Mouthwatering Nigerian food spread"
             className="w-full h-full object-cover object-center"
             fetchPriority="high"
+            loading="eager"
+            decoding="sync"
+            sizes="100vw"
             width={1280}
             height={720}
           />

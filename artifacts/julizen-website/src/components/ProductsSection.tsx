@@ -60,7 +60,10 @@ function ProductCard({ product, index }: { product: any, index: number }) {
             src={getImageUrl(product.image)}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             width={800}
             height={600}
           />
