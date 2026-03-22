@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn, generateWhatsAppLink } from "@/lib/utils";
@@ -6,12 +6,13 @@ import { cn, generateWhatsAppLink } from "@/lib/utils";
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -24,24 +25,27 @@ export function Navbar() {
 
   const whatsappLink = generateWhatsAppLink("Hello, I want to order Julizen seasoning");
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    e.preventDefault();
+  const scrollToSection = (href: string) => {
     setIsMobileMenuOpen(false);
     const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    if (!target) return;
+    const navbarHeight = headerRef.current?.offsetHeight ?? 120;
+    const top = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    scrollToSection(href);
   };
 
   return (
     <header
+      ref={headerRef}
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 transition-all duration-300 border-b border-transparent",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
         isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-sm border-border py-1"
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-border py-1"
           : "bg-transparent py-2"
       )}
     >
@@ -68,7 +72,7 @@ export function Navbar() {
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={cn(
-                  "font-medium text-sm hover:text-primary transition-colors",
+                  "font-medium text-sm hover:text-primary transition-colors cursor-pointer",
                   isScrolled ? "text-foreground" : "text-white/90 hover:text-white"
                 )}
               >
@@ -93,8 +97,8 @@ export function Navbar() {
           {/* Mobile Menu Toggle */}
           <button
             aria-label="Toggle menu"
-            className="md:hidden p-2 -mr-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 -mr-2 z-50 relative"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
           >
             {isMobileMenuOpen ? (
               <X className={cn("w-6 h-6", isScrolled ? "text-foreground" : "text-white")} />
@@ -105,39 +109,42 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Nav Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-border overflow-hidden absolute top-full left-0 right-0 shadow-xl"
+          <motion.nav
+            key="mobile-nav"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-white border-b border-border absolute top-full left-0 right-0 shadow-2xl z-50"
           >
-            <div className="px-4 pt-2 pb-6 space-y-1 flex flex-col">
+            <ul className="px-4 pt-3 pb-6 flex flex-col gap-1">
               {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="block px-4 py-3 text-lg font-medium text-foreground hover:bg-muted rounded-xl transition-colors"
-                >
-                  {link.name}
-                </a>
+                <li key={link.name}>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection(link.href)}
+                    className="w-full text-left px-4 py-3 text-lg font-medium text-foreground hover:bg-muted rounded-xl transition-colors active:bg-muted/70"
+                  >
+                    {link.name}
+                  </button>
+                </li>
               ))}
-              <div className="pt-4 px-4">
+              <li className="pt-3 px-4">
                 <a
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-center w-full px-6 py-4 rounded-xl bg-primary text-white font-semibold text-lg shadow-lg shadow-primary/25"
+                  className="flex items-center justify-center w-full px-6 py-4 rounded-xl bg-primary text-white font-semibold text-lg shadow-lg shadow-primary/25 active:bg-primary/90"
                 >
                   Order via WhatsApp
                 </a>
-              </div>
-            </div>
-          </motion.div>
+              </li>
+            </ul>
+          </motion.nav>
         )}
       </AnimatePresence>
     </header>
