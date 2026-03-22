@@ -11,28 +11,26 @@ export function HeroSection() {
       {/* Background Image — portrait for mobile, landscape for desktop */}
       <div className="absolute inset-0 z-0">
         <picture className="block sm:hidden w-full h-full">
-          <source srcSet={getImageUrl("/images/hero-food-mobile.webp")} type="image/webp" />
           <img
-            src={getImageUrl("/images/hero-food-mobile.png")}
+            src={getImageUrl("/images/hero-food-mobile.webp")}
             alt="Mouthwatering Nigerian food spread"
             className="w-full h-full object-cover object-center"
-            fetchPriority="high"
             loading="eager"
             decoding="sync"
+            fetchPriority="high"
             sizes="100vw"
             width={768}
             height={1408}
           />
         </picture>
         <picture className="hidden sm:block w-full h-full">
-          <source srcSet={getImageUrl("/images/hero-food.webp")} type="image/webp" />
           <img
-            src={getImageUrl("/images/hero-food.png")}
+            src={getImageUrl("/images/hero-food.webp")}
             alt="Mouthwatering Nigerian food spread"
             className="w-full h-full object-cover object-center"
-            fetchPriority="high"
             loading="eager"
             decoding="sync"
+            fetchPriority="high"
             sizes="100vw"
             width={1280}
             height={720}

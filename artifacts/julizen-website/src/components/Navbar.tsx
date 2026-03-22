@@ -59,13 +59,13 @@ export function Navbar() {
             className="flex items-center group py-1"
           >
             <picture>
-              <source srcSet={getImageUrl("/images/julizen-logo.webp")} type="image/webp" />
               <img
-                src={getImageUrl("/images/julizen-logo.png")}
+                src={getImageUrl("/images/julizen-logo.webp")}
                 alt="Julizen"
                 className="h-20 sm:h-24 md:h-28 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
-                fetchPriority="high"
+                loading="eager"
                 decoding="sync"
+                fetchPriority="high"
                 width={300}
                 height={200}
               />

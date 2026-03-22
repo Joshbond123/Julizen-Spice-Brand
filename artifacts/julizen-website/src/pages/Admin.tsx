@@ -138,7 +138,7 @@ function AdminNav({ tab, setTab, onLogout }: { tab: string; setTab: (t: any) => 
     <header className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-30">
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src={getImageUrl("/images/julizen-logo.png")} alt="Julizen" className="h-10 w-auto object-contain" />
+          <img src={getImageUrl("/images/julizen-logo.webp")} alt="Julizen" className="h-10 w-auto object-contain" />
           <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider hidden sm:block">Admin Panel</span>
         </div>
         <nav className="flex items-center gap-1">
@@ -178,7 +178,7 @@ function ProductsTab({ token, onRefetch }: { token: string; onRefetch: () => voi
     category: "",
     price: 1500,
     description: "",
-    image: "/images/product-chicken.png",
+    image: "/images/product-chicken.webp",
     status: "available",
   };
   const [form, setForm] = useState<Partial<Product>>(emptyProduct);
@@ -216,9 +216,9 @@ function ProductsTab({ token, onRefetch }: { token: string; onRefetch: () => voi
   };
 
   const imageOptions = [
-    { label: "Chicken", value: "/images/product-chicken.png" },
-    { label: "Fried Rice", value: "/images/product-fried-rice.png" },
-    { label: "Crayfish", value: "/images/product-crayfish.png" },
+    { label: "Chicken", value: "/images/product-chicken.webp" },
+    { label: "Fried Rice", value: "/images/product-fried-rice.webp" },
+    { label: "Crayfish", value: "/images/product-crayfish.webp" },
   ];
 
   return (

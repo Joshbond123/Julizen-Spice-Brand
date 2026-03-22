@@ -12,13 +12,13 @@ export function Footer() {
           <div className="md:col-span-2">
             <a href="#home" className="inline-block mb-6 group">
               <picture>
-                <source srcSet={getImageUrl("/images/julizen-logo.webp")} type="image/webp" />
                 <img
-                  src={getImageUrl("/images/julizen-logo.png")}
+                  src={getImageUrl("/images/julizen-logo.webp")}
                   alt="Julizen"
                   className="h-20 sm:h-24 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
                   loading="eager"
                   decoding="async"
+                  fetchPriority="high"
                   width={300}
                   height={200}
                 />
