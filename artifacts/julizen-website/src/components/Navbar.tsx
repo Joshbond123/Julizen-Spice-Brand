@@ -41,8 +41,8 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-40 transition-all duration-300 border-b border-transparent",
         isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-sm border-border py-4"
-          : "bg-transparent py-6"
+          ? "bg-white/90 backdrop-blur-md shadow-sm border-border py-1"
+          : "bg-transparent py-2"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,7 +56,7 @@ export function Navbar() {
             <img
               src="/images/julizen-logo.png"
               alt="Julizen"
-              className="h-10 sm:h-12 md:h-14 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
+              className="h-20 sm:h-24 md:h-28 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
             />
           </a>
 
