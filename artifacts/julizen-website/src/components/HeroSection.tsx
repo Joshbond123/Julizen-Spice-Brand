@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { generateWhatsAppLink } from "@/lib/utils";
+import { getImageUrl } from "@/lib/imageUrl";
 
 export function HeroSection() {
   const whatsappLink = generateWhatsAppLink("Hello, I want to order Julizen seasoning");
@@ -10,12 +11,12 @@ export function HeroSection() {
       {/* Background Image — portrait for mobile, landscape for desktop */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/hero-food-mobile.png"
+          src={getImageUrl("/images/hero-food-mobile.png")}
           alt="Mouthwatering Nigerian food spread"
           className="w-full h-full object-cover object-center block sm:hidden"
         />
         <img
-          src="/images/hero-food.png"
+          src={getImageUrl("/images/hero-food.png")}
           alt="Mouthwatering Nigerian food spread"
           className="w-full h-full object-cover object-center hidden sm:block"
         />

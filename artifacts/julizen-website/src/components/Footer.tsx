@@ -1,5 +1,6 @@
 import { Instagram, Facebook, Twitter } from "lucide-react";
 import { generateWhatsAppLink } from "@/lib/utils";
+import { getImageUrl } from "@/lib/imageUrl";
 
 export function Footer() {
   const whatsappLink = generateWhatsAppLink("Hello, I want to ask about Julizen seasoning");
@@ -11,7 +12,7 @@ export function Footer() {
           <div className="md:col-span-2">
             <a href="#home" className="inline-block mb-6 group">
               <img
-                src="/images/julizen-logo.png"
+                src={getImageUrl("/images/julizen-logo.png")}
                 alt="Julizen"
                 className="h-20 sm:h-24 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
               />

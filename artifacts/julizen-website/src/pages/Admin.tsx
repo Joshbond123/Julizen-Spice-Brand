@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { Flame, Plus, Pencil, Trash2, Save, X, LogOut, KeyRound, Settings, Package, Eye, EyeOff } from "lucide-react";
 import { useApp, type Product } from "@/context/AppContext";
 import { formatNaira } from "@/context/AppContext";
+import { getImageUrl } from "@/lib/imageUrl";
 
 const API = (path: string) => path;
 
@@ -137,7 +138,7 @@ function AdminNav({ tab, setTab, onLogout }: { tab: string; setTab: (t: any) => 
     <header className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-30">
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src="/images/julizen-logo.png" alt="Julizen" className="h-10 w-auto object-contain" />
+          <img src={getImageUrl("/images/julizen-logo.png")} alt="Julizen" className="h-10 w-auto object-contain" />
           <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider hidden sm:block">Admin Panel</span>
         </div>
         <nav className="flex items-center gap-1">
@@ -301,7 +302,7 @@ function ProductsTab({ token, onRefetch }: { token: string; onRefetch: () => voi
       <div className="space-y-3">
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex items-center gap-4">
-            <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded-xl flex-shrink-0" />
+            <img src={getImageUrl(product.image)} alt={product.name} className="w-16 h-16 object-cover rounded-xl flex-shrink-0" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <p className="font-semibold text-gray-900 text-sm truncate">{product.name}</p>

@@ -1,19 +1,20 @@
 import { motion } from "framer-motion";
+import { getImageUrl } from "@/lib/imageUrl";
 
 const results = [
   {
     title: "Perfect Jollof Rice",
-    image: "/images/food-jollof-rice.png",
+    image: getImageUrl("/images/food-jollof-rice.png"),
     delay: 0
   },
   {
     title: "Fried Rice",
-    image: "/images/food-fried-rice.png",
+    image: getImageUrl("/images/food-fried-rice.png"),
     delay: 0.2
   },
   {
     title: "Authentic Soup",
-    image: "/images/food-soup.png",
+    image: getImageUrl("/images/food-soup.png"),
     delay: 0.4
   }
 ];

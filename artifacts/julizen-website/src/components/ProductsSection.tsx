@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { products, formatNaira } from "@/data/products";
 import { generateWhatsAppLink } from "@/lib/utils";
 import { ShoppingBag } from "lucide-react";
+import { getImageUrl } from "@/lib/imageUrl";
 
 export function ProductsSection() {
   return (
@@ -50,7 +51,7 @@ function ProductCard({ product, index }: { product: any, index: number }) {
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         <img
-          src={product.image}
+          src={getImageUrl(product.image)}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn, generateWhatsAppLink } from "@/lib/utils";
+import { getImageUrl } from "@/lib/imageUrl";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -58,7 +59,7 @@ export function Navbar() {
             className="flex items-center group py-1"
           >
             <img
-              src="/images/julizen-logo.png"
+              src={getImageUrl("/images/julizen-logo.png")}
               alt="Julizen"
               className="h-20 sm:h-24 md:h-28 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
             />
