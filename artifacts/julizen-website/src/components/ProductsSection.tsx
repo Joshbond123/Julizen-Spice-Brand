@@ -15,7 +15,7 @@ export function ProductsSection() {
             viewport={{ once: true }}
             className="mb-4 inline-flex rounded-full border border-primary/20 bg-primary/8 px-4 py-1.5 text-sm font-semibold tracking-wide text-primary"
           >
-            Seasoning Powder Range
+            Our Products
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 18 }}
@@ -24,7 +24,7 @@ export function ProductsSection() {
             transition={{ delay: 0.05 }}
             className="mt-3 text-3xl font-display font-bold tracking-tight text-secondary sm:text-4xl lg:text-5xl"
           >
-            Explore the Julizen Seasoning Powder Range
+            Bold Flavor. Every Meal. Every Time.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 18 }}
@@ -33,7 +33,7 @@ export function ProductsSection() {
             transition={{ delay: 0.1 }}
             className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg"
           >
-            Discover Julizen Seasoning Powder options prepared to support everyday cooking with the right flavor for different meals.
+            Julizen Seasoning Powders are crafted to bring out the full, natural flavor in every dish — from everyday home cooking to your most special meals. Choose the perfect blend and taste the difference.
           </motion.p>
         </div>
 
@@ -104,7 +104,7 @@ function ProductCard({
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 text-center text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#1ebe5d] hover:shadow-md active:scale-[0.98]"
+          className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-secondary px-5 py-3 text-center text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-secondary/90 hover:shadow-md active:scale-[0.98]"
         >
           <ShoppingBag className="h-4 w-4 shrink-0" />
           Order via WhatsApp
