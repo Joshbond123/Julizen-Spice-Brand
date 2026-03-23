@@ -5,9 +5,10 @@ export const CRITICAL_IMAGE_PRELOADS = [
 ] as const;
 
 export const DEFERRED_IMAGE_PRELOADS = [
-  "/images/product-chicken.webp",
-  "/images/product-fried-rice.webp",
-  "/images/product-crayfish.webp",
+  "/images/product-chicken-real.jpg",
+  "/images/product-crayfish-real.jpg",
+  "/images/product-fried-rice-real.jpg",
+  "/images/product-stew-jollof-real.jpg",
   "/images/food-jollof-rice.webp",
   "/images/food-fried-rice.webp",
   "/images/food-soup.webp",

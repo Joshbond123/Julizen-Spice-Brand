@@ -1,10 +1,3 @@
-import {
-  chickenPackArt,
-  crayfishPackArt,
-  friedRicePackArt,
-  stewJollofPackArt,
-} from "@/lib/productPackArt";
-
 export interface Product {
   id: string;
   name: string;
@@ -24,8 +17,8 @@ export const products: Product[] = [
     category: "Chicken Flavour",
     price: 1500,
     description:
-      "Prepared for chicken dishes and other everyday meals where a fuller savory taste is needed.",
-    image: chickenPackArt,
+      "Prepared for chicken dishes and everyday meals where a fuller savory taste is needed.",
+    image: "/images/product-chicken-real.jpg",
     weight: "100G",
     whatsappMessage:
       "Hello, I want to order Julizen Chicken Flavour Seasoning Powder 100G. Please send me the details.",
@@ -38,7 +31,7 @@ export const products: Product[] = [
     price: 1500,
     description:
       "Suitable for soups, sauces, and traditional dishes where crayfish flavor adds depth.",
-    image: crayfishPackArt,
+    image: "/images/product-crayfish-real.jpg",
     weight: "100G",
     whatsappMessage:
       "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder 100G. Please send me the details.",
@@ -50,8 +43,8 @@ export const products: Product[] = [
     category: "Fried Rice",
     price: 1500,
     description:
-      "Made for fried rice meals with a balanced taste that supports a more satisfying result.",
-    image: friedRicePackArt,
+      "Made for fried rice meals with a balanced taste and satisfying result.",
+    image: "/images/product-fried-rice-real.jpg",
     weight: "100G",
     whatsappMessage:
       "Hello, I want to order Julizen Fried Rice Seasoning Powder 100G. Please send me the details.",
@@ -64,7 +57,7 @@ export const products: Product[] = [
     price: 1500,
     description:
       "Designed for stew and jollof dishes to support a richer and more consistent cooking result.",
-    image: stewJollofPackArt,
+    image: "/images/product-stew-jollof-real.jpg",
     weight: "100G",
     whatsappMessage:
       "Hello, I want to order Julizen Stew & Jollof Seasoning Powder 100G. Please send me the details.",

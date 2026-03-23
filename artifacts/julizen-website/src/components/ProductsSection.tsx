@@ -1,43 +1,43 @@
 import { motion } from "framer-motion";
 import { products } from "@/data/products";
 import { generateWhatsAppLink } from "@/lib/utils";
-import { ArrowRight, ShoppingBag } from "lucide-react";
+import { getImageUrl } from "@/lib/imageUrl";
+import { ShoppingBag } from "lucide-react";
 
 export function ProductsSection() {
   return (
-    <section id="products" className="relative scroll-mt-36 overflow-hidden bg-white py-24 sm:py-28">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(229,59,46,0.10),_transparent_42%),radial-gradient(circle_at_bottom,_rgba(249,208,35,0.16),_transparent_35%)]" />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="products" className="scroll-mt-24 bg-[#f9f9f7] py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-16">
           <motion.span
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-4 inline-flex rounded-full border border-primary/20 bg-primary/8 px-4 py-1.5 text-sm font-semibold tracking-wide text-primary"
+          >
+            Seasoning Powder Range
+          </motion.span>
+          <motion.h2
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-4 inline-flex rounded-full border border-primary/15 bg-primary/5 px-4 py-1.5 text-sm font-semibold tracking-wide text-primary"
+            transition={{ delay: 0.05 }}
+            className="mt-3 text-3xl font-display font-bold tracking-tight text-secondary sm:text-4xl lg:text-5xl"
           >
-            Julizen Product Range
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl font-display font-bold tracking-tight text-secondary sm:text-5xl"
-          >
-            Explore the Julizen Seasoning Range
+            Explore the Julizen Seasoning Powder Range
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.08 }}
+            transition={{ delay: 0.1 }}
             className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg"
           >
-            Designed to support better everyday cooking.
+            Discover Julizen Seasoning Powder options prepared to support everyday cooking with the right flavor for different meals.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 xl:grid-cols-4">
           {products.map((product, index) => (
             <ProductCard key={product.id} index={index} product={product} />
           ))}
@@ -58,62 +58,56 @@ function ProductCard({
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ delay: index * 0.08, duration: 0.45 }}
-      className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-secondary/8 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_65px_rgba(15,23,42,0.12)]"
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ delay: index * 0.07, duration: 0.42 }}
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-[0_4px_24px_rgba(15,23,42,0.07)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(15,23,42,0.12)]"
     >
-      <div className="relative border-b border-secondary/6 bg-[linear-gradient(180deg,#fff9df_0%,#fff_100%)] px-6 pb-6 pt-8 sm:px-7">
-        <div className="absolute left-6 top-6 inline-flex rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-primary shadow-sm">
-          {product.category}
-        </div>
-        <div className="mx-auto flex aspect-[4/5] max-w-[240px] items-center justify-center rounded-[24px] bg-white/85 p-4 shadow-[0_26px_40px_rgba(255,197,0,0.15)] ring-1 ring-black/5">
+      <div className="relative flex items-center justify-center bg-gradient-to-b from-[#fef9ee] to-white px-6 pt-8 pb-6">
+        <div className="w-full max-w-[220px] overflow-hidden rounded-xl bg-white shadow-[0_8px_30px_rgba(0,0,0,0.10)]">
           <img
-            src={product.image}
+            src={getImageUrl(product.image)}
             alt={product.name}
-            className="h-full w-full object-contain drop-shadow-[0_22px_20px_rgba(15,23,42,0.20)] transition-transform duration-300 group-hover:scale-[1.03]"
+            className="h-auto w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
             loading="eager"
             decoding="sync"
             fetchPriority="high"
-            width={420}
-            height={520}
+            width={440}
+            height={540}
+            style={{ aspectRatio: "4/5", objectFit: "contain" }}
           />
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col px-6 pb-6 pt-5 sm:px-7">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <h3 className="text-xl font-display font-bold leading-tight text-secondary">
+      <div className="flex flex-1 flex-col border-t border-gray-100 px-5 pb-6 pt-5">
+        <div className="mb-1 flex items-start justify-between gap-2">
+          <h3 className="text-[15px] font-display font-bold leading-snug text-secondary">
             {product.name}
           </h3>
-          <span className="shrink-0 rounded-full bg-secondary/5 px-3 py-1 text-sm font-semibold text-secondary">
+        </div>
+
+        <div className="mb-3 flex items-center gap-2">
+          <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+            {product.category}
+          </span>
+          <span className="inline-block rounded-full bg-secondary/8 px-2.5 py-0.5 text-xs font-semibold text-secondary">
             {product.weight}
           </span>
         </div>
 
-        <p className="text-sm leading-6 text-muted-foreground sm:text-[15px]">
+        <p className="flex-1 text-sm leading-6 text-muted-foreground">
           {product.description}
         </p>
-
-        <div className="mt-6 rounded-2xl bg-muted/60 p-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground/80">
-            Pack Format
-          </p>
-          <p className="mt-1 text-sm font-medium text-secondary">
-            100G seasoning powder for convenient everyday cooking.
-          </p>
-        </div>
 
         <a
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-secondary px-5 py-3.5 text-center text-sm font-semibold text-white transition-all duration-300 hover:bg-primary active:scale-[0.99] sm:text-base"
+          className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 text-center text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#1ebe5d] hover:shadow-md active:scale-[0.98]"
         >
-          <ShoppingBag className="h-4 w-4" />
+          <ShoppingBag className="h-4 w-4 shrink-0" />
           Order via WhatsApp
-          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
         </a>
       </div>
     </motion.article>
