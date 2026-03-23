@@ -19,7 +19,7 @@ export function CTASection() {
           viewport={{ once: true }}
           className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-white mb-5 leading-tight"
         >
-          Place Your Order
+          Order Julizen Seasoning Powder
         </motion.h2>
 
         <motion.p
@@ -29,7 +29,7 @@ export function CTASection() {
           transition={{ delay: 0.1 }}
           className="text-lg text-white/85 mb-8 max-w-2xl mx-auto leading-relaxed"
         >
-          Order Julizen easily through WhatsApp for fast delivery. Available for personal use, wholesale, and retail.
+          Order Julizen seasoning powder — the best Nigerian seasoning for jollof rice, fried rice, stew, and soups — easily through WhatsApp for fast delivery across Nigeria.
         </motion.p>
 
         <motion.div

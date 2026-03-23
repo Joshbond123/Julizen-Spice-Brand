@@ -43,7 +43,7 @@ export function WhyJulizenSection() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-display font-bold text-secondary mb-6"
           >
-            Why Choose Julizen?
+            Why Choose Julizen Seasoning Powder?
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -52,7 +52,7 @@ export function WhyJulizenSection() {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            Here is what makes Julizen a practical choice for your kitchen.
+            Here is what makes Julizen the trusted seasoning powder Nigeria home cooks and chefs rely on daily.
           </motion.p>
         </div>
 

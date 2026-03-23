@@ -14,7 +14,7 @@ export function Footer() {
               <picture>
                 <img
                   src={getImageUrl("/images/julizen-logo.webp")}
-                  alt="Julizen"
+                  alt="Julizen Seasoning — Nigerian seasoning powder for jollof rice, fried rice and soups"
                   className="h-20 sm:h-24 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
                   loading="eager"
                   decoding="async"

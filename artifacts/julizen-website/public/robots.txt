@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://joshbond123.github.io/Julizen-Spice-Brand/sitemap.xml

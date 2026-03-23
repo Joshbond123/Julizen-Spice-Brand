@@ -13,7 +13,7 @@ export function HeroSection() {
         <picture className="block sm:hidden w-full h-full">
           <img
             src={getImageUrl("/images/hero-food-mobile.webp")}
-            alt="Mouthwatering Nigerian food spread"
+            alt="Delicious Nigerian jollof rice and fried rice dishes prepared with Julizen seasoning powder"
             className="w-full h-full object-cover object-center"
             loading="eager"
             decoding="sync"
@@ -26,7 +26,7 @@ export function HeroSection() {
         <picture className="hidden sm:block w-full h-full">
           <img
             src={getImageUrl("/images/hero-food.webp")}
-            alt="Mouthwatering Nigerian food spread"
+            alt="Mouthwatering Nigerian food spread — jollof rice, fried rice and soups made with Julizen seasoning powder"
             className="w-full h-full object-cover object-center"
             loading="eager"
             decoding="sync"
@@ -48,14 +48,14 @@ export function HeroSection() {
           className="max-w-4xl mx-auto space-y-7"
         >
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-white leading-[1.1]">
-            Cook Like a Chef.<br className="hidden sm:block" />
+            Julizen Seasoning Powder for{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-400">
-              Taste the Difference.
+              Better Everyday Cooking
             </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed">
-            Julizen seasoning powder is crafted to bring bold, authentic flavor to your meals — from everyday cooking to special occasions.
+            Julizen seasoning powder is crafted to bring bold, authentic Nigerian flavor to every meal — from jollof rice and fried rice to hearty soups and stews, with consistent taste every time.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">

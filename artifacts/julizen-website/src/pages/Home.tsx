@@ -5,6 +5,7 @@ import { WhyJulizenSection } from "@/components/WhyJulizenSection";
 import { FoodResultsSection } from "@/components/FoodResultsSection";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { SeoContentSection } from "@/components/SeoContentSection";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
@@ -20,6 +21,7 @@ export default function Home() {
         <FoodResultsSection />
         <HowItWorksSection />
         <TestimonialsSection />
+        <SeoContentSection />
         <CTASection />
       </main>
       <Footer />

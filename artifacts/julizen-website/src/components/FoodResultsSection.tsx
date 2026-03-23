@@ -5,16 +5,19 @@ const results = [
   {
     title: "Perfect Jollof Rice",
     image: "/images/food-jollof-rice.webp",
+    alt: "Jollof rice prepared with Julizen jollof rice seasoning powder — rich, flavorful Nigerian jollof",
     delay: 0
   },
   {
-    title: "Fried Rice",
+    title: "Nigerian Fried Rice",
     image: "/images/food-fried-rice.webp",
+    alt: "Nigerian fried rice cooked with Julizen fried rice seasoning powder for authentic flavor",
     delay: 0.2
   },
   {
-    title: "Authentic Soup",
+    title: "Authentic Nigerian Soup",
     image: "/images/food-soup.webp",
+    alt: "Nigerian soup made with Julizen crayfish seasoning powder for a deep, satisfying taste",
     delay: 0.4
   }
 ];
@@ -59,7 +62,7 @@ export function FoodResultsSection() {
             >
               <img
                 src={getImageUrl(result.image)}
-                alt={result.title}
+                alt={result.alt}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="eager"
                 decoding="async"

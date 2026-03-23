@@ -33,7 +33,7 @@ export function HowItWorksSection() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-display font-bold text-secondary mb-6"
           >
-            Ready in 3 Simple Steps
+            How It Works
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ export function HowItWorksSection() {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            Great cooking doesn't have to be complicated. We've done the hard work of blending the perfect spices for you.
+            Great cooking doesn't have to be complicated. Add Julizen seasoning powder to your jollof rice, fried rice, or soup and taste the difference in every bite.
           </motion.p>
         </div>
 

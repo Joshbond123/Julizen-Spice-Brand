@@ -15,7 +15,7 @@ export function ProductsSection() {
             viewport={{ once: true }}
             className="mb-4 inline-flex rounded-full border border-primary/20 bg-primary/8 px-4 py-1.5 text-sm font-semibold tracking-wide text-primary"
           >
-            Our Products
+            Products
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 18 }}
@@ -24,7 +24,7 @@ export function ProductsSection() {
             transition={{ delay: 0.05 }}
             className="mt-3 text-3xl font-display font-bold tracking-tight text-secondary sm:text-4xl lg:text-5xl"
           >
-            Bold Flavor. Every Meal. Every Time.
+            Seasoning Powders for Jollof Rice, Fried Rice &amp; Nigerian Soups
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 18 }}
@@ -33,7 +33,7 @@ export function ProductsSection() {
             transition={{ delay: 0.1 }}
             className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg"
           >
-            Julizen Seasoning Powders are crafted to bring out the full, natural flavor in every dish — from everyday home cooking to your most special meals. Choose the perfect blend and taste the difference.
+            Our seasoning powder Nigeria range covers everything from jollof rice seasoning to crayfish seasoning for soup — each blend crafted to help you cook with consistent, delicious results every time.
           </motion.p>
         </div>
 
@@ -68,7 +68,7 @@ function ProductCard({
         <div className="w-full max-w-[220px] overflow-hidden rounded-xl bg-white shadow-[0_8px_30px_rgba(0,0,0,0.10)]">
           <img
             src={getImageUrl(product.image)}
-            alt={product.name}
+            alt={`${product.name} — ${product.weight} Nigerian Seasoning Powder`}
             className="h-auto w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
             loading="eager"
             decoding="sync"
