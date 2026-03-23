@@ -24,7 +24,7 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section id="how-it-works" className="py-24 bg-muted relative scroll-mt-36">
+    <section id="how-it-works" aria-label="How to use Julizen seasoning powder" className="py-24 bg-muted relative scroll-mt-36">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.h2 
@@ -46,12 +46,11 @@ export function HowItWorksSection() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 relative">
-          {/* Connecting Line (Desktop) */}
-          <div className="hidden md:block absolute top-[52px] left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-transparent via-border to-transparent -z-10" />
+        <ol className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 relative list-none">
+          <div className="hidden md:block absolute top-[52px] left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-transparent via-border to-transparent -z-10" aria-hidden="true" />
 
           {steps.map((step, index) => (
-            <motion.div
+            <motion.li
               key={step.num}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -59,7 +58,7 @@ export function HowItWorksSection() {
               transition={{ delay: index * 0.2, duration: 0.5 }}
               className="relative text-center flex flex-col items-center"
             >
-              <div className="w-28 h-28 rounded-full bg-white shadow-xl shadow-black/5 flex items-center justify-center mb-8 relative border border-border">
+              <div className="w-28 h-28 rounded-full bg-white shadow-xl shadow-black/5 flex items-center justify-center mb-8 relative border border-border" aria-hidden="true">
                 <span className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-accent text-white font-bold flex items-center justify-center text-sm shadow-md">
                   {step.num}
                 </span>
@@ -72,9 +71,9 @@ export function HowItWorksSection() {
               <p className="text-muted-foreground leading-relaxed max-w-[280px]">
                 {step.description}
               </p>
-            </motion.div>
+            </motion.li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

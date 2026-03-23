@@ -1,0 +1,28 @@
+{
+  "name": "Julizen Seasoning",
+  "short_name": "Julizen",
+  "description": "Julizen seasoning powder supports everyday cooking with product options for jollof rice, fried rice, stew, and soups.",
+  "start_url": "/Julizen-Spice-Brand/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF3C00",
+  "lang": "en-NG",
+  "icons": [
+    {
+      "src": "/Julizen-Spice-Brand/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Julizen-Spice-Brand/images/julizen-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/Julizen-Spice-Brand/images/julizen-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

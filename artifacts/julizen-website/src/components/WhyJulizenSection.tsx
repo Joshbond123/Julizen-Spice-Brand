@@ -34,7 +34,7 @@ const features = [
 
 export function WhyJulizenSection() {
   return (
-    <section id="why-julizen" className="py-24 bg-white relative overflow-hidden scroll-mt-36">
+    <section id="why-julizen" aria-label="Why Choose Julizen Seasoning" className="py-24 bg-white relative overflow-hidden scroll-mt-36">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.h2
@@ -66,7 +66,7 @@ export function WhyJulizenSection() {
               transition={{ delay: index * 0.1, duration: 0.5 }}
               className="p-8 rounded-3xl bg-muted/50 border border-border/50 hover:bg-muted transition-colors duration-300 text-center flex flex-col items-center"
             >
-              <div className={`w-16 h-16 rounded-2xl ${feature.bg} ${feature.color} flex items-center justify-center mb-6 rotate-3`}>
+              <div className={`w-16 h-16 rounded-2xl ${feature.bg} ${feature.color} flex items-center justify-center mb-6 rotate-3`} aria-hidden="true">
                 <feature.icon className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold font-display text-foreground mb-3">{feature.title}</h3>

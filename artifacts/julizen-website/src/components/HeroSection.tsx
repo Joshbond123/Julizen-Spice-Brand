@@ -7,8 +7,7 @@ export function HeroSection() {
   const whatsappLink = generateWhatsAppLink("Hello, I want to order Julizen seasoning");
 
   return (
-    <section id="home" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-secondary">
-      {/* Background Image — portrait for mobile, landscape for desktop */}
+    <section id="home" aria-label="Welcome to Julizen Seasoning" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-secondary">
       <div className="absolute inset-0 z-0">
         <picture className="block sm:hidden w-full h-full">
           <img
@@ -39,7 +38,6 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/70"></div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 pb-32">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -75,12 +73,12 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        aria-hidden="true"
       >
         <span className="text-white/50 text-xs font-medium tracking-widest uppercase">Scroll</span>
         <motion.div
