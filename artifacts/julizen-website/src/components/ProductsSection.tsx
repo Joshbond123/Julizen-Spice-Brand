@@ -1,36 +1,45 @@
 import { motion } from "framer-motion";
-import { products, formatNaira } from "@/data/products";
+import { products } from "@/data/products";
 import { generateWhatsAppLink } from "@/lib/utils";
-import { ShoppingBag } from "lucide-react";
-import { getImageUrl } from "@/lib/imageUrl";
+import { ArrowRight, ShoppingBag } from "lucide-react";
 
 export function ProductsSection() {
   return (
-    <section id="products" className="py-24 bg-muted relative scroll-mt-36">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.h2 
+    <section id="products" className="relative scroll-mt-36 overflow-hidden bg-white py-24 sm:py-28">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(229,59,46,0.10),_transparent_42%),radial-gradient(circle_at_bottom,_rgba(249,208,35,0.16),_transparent_35%)]" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-16">
+          <motion.span
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-4 inline-flex rounded-full border border-primary/15 bg-primary/5 px-4 py-1.5 text-sm font-semibold tracking-wide text-primary"
+          >
+            Julizen Product Range
+          </motion.span>
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-display font-bold text-secondary mb-6"
+            className="text-4xl font-display font-bold tracking-tight text-secondary sm:text-5xl"
           >
-            Julizen Seasoning Powder
+            Explore the Julizen Seasoning Range
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-lg text-muted-foreground"
+            transition={{ delay: 0.08 }}
+            className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg"
           >
-            Made to bring out the best in your cooking. Add it to your meals and enjoy a rich, well-balanced taste every time.
+            Designed to support better everyday cooking.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {products.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
+            <ProductCard key={product.id} index={index} product={product} />
           ))}
         </div>
       </div>
@@ -38,63 +47,75 @@ export function ProductsSection() {
   );
 }
 
-function ProductCard({ product, index }: { product: any, index: number }) {
-  const whatsappLink = generateWhatsAppLink(`Hello, I want to order ${product.name} from Julizen`);
+function ProductCard({
+  product,
+  index,
+}: {
+  product: (typeof products)[number];
+  index: number;
+}) {
+  const whatsappLink = generateWhatsAppLink(product.whatsappMessage);
 
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      className="bg-card rounded-2xl overflow-hidden shadow-lg shadow-black/5 border border-border/50 hover:shadow-xl hover:border-border transition-all duration-300 group flex flex-col h-full"
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ delay: index * 0.08, duration: 0.45 }}
+      className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-secondary/8 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_65px_rgba(15,23,42,0.12)]"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-        <img
-          src={getImageUrl(product.image)}
-          alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          width={800}
-          height={600}
-        />
-        <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-xs font-bold text-secondary shadow-sm">
-            {product.category}
-          </span>
+      <div className="relative border-b border-secondary/6 bg-[linear-gradient(180deg,#fff9df_0%,#fff_100%)] px-6 pb-6 pt-8 sm:px-7">
+        <div className="absolute left-6 top-6 inline-flex rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-primary shadow-sm">
+          {product.category}
+        </div>
+        <div className="mx-auto flex aspect-[4/5] max-w-[240px] items-center justify-center rounded-[24px] bg-white/85 p-4 shadow-[0_26px_40px_rgba(255,197,0,0.15)] ring-1 ring-black/5">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="h-full w-full object-contain drop-shadow-[0_22px_20px_rgba(15,23,42,0.20)] transition-transform duration-300 group-hover:scale-[1.03]"
+            loading="eager"
+            decoding="sync"
+            fetchPriority="high"
+            width={420}
+            height={520}
+          />
         </div>
       </div>
-      
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="flex justify-between items-start mb-3 gap-2">
-          <h3 className="text-xl font-bold font-display text-foreground leading-tight">
+
+      <div className="flex flex-1 flex-col px-6 pb-6 pt-5 sm:px-7">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <h3 className="text-xl font-display font-bold leading-tight text-secondary">
             {product.name}
           </h3>
+          <span className="shrink-0 rounded-full bg-secondary/5 px-3 py-1 text-sm font-semibold text-secondary">
+            {product.weight}
+          </span>
         </div>
-        
-        <p className="text-muted-foreground text-sm flex-grow mb-6">
+
+        <p className="text-sm leading-6 text-muted-foreground sm:text-[15px]">
           {product.description}
         </p>
-        
-        <div className="mt-auto space-y-4">
-          <div className="text-2xl font-bold text-primary">
-            {formatNaira(product.price)}
-          </div>
-          
-          <a
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-secondary text-white font-semibold hover:bg-primary transition-colors duration-300 group/btn"
-          >
-            <ShoppingBag className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
-            Order via WhatsApp
-          </a>
+
+        <div className="mt-6 rounded-2xl bg-muted/60 p-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground/80">
+            Pack Format
+          </p>
+          <p className="mt-1 text-sm font-medium text-secondary">
+            100G seasoning powder for convenient everyday cooking.
+          </p>
         </div>
+
+        <a
+          href={whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-secondary px-5 py-3.5 text-center text-sm font-semibold text-white transition-all duration-300 hover:bg-primary active:scale-[0.99] sm:text-base"
+        >
+          <ShoppingBag className="h-4 w-4" />
+          Order via WhatsApp
+          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+        </a>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
