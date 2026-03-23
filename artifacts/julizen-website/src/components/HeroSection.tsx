@@ -4,9 +4,9 @@ import { generateWhatsAppLink } from "@/lib/utils";
 import { getImageUrl } from "@/lib/imageUrl";
 
 const fadeUp = (delay: number) => ({
-  initial: { opacity: 0, y: 22 },
+  initial: { opacity: 0, y: 18 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.62, ease: [0.22, 1, 0.36, 1], delay },
+  transition: { duration: 0.95, ease: [0.25, 0.46, 0.45, 0.94], delay },
 });
 
 export function HeroSection() {
@@ -18,12 +18,12 @@ export function HeroSection() {
       aria-label="Welcome to Julizen Seasoning"
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-secondary"
     >
-      {/* Hero image — subtle entrance: fade + very slight zoom out */}
+      {/* Hero image — slow, cinematic fade-in with gentle zoom-out */}
       <motion.div
         className="absolute inset-0 z-0"
-        initial={{ opacity: 0, scale: 1.06 }}
+        initial={{ opacity: 0, scale: 1.08 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.6, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         <picture className="block sm:hidden w-full h-full">
           <img
@@ -59,7 +59,7 @@ export function HeroSection() {
 
           {/* Headline — first */}
           <motion.h1
-            {...fadeUp(0.05)}
+            {...fadeUp(0.3)}
             className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-white leading-[1.1]"
           >
             Cook Like a Chef.<br className="hidden sm:block" />
@@ -70,7 +70,7 @@ export function HeroSection() {
 
           {/* Subtext — second */}
           <motion.p
-            {...fadeUp(0.22)}
+            {...fadeUp(0.55)}
             className="text-lg sm:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed"
           >
             Julizen seasoning powder is crafted to bring bold, authentic flavor to your meals — from everyday cooking to special occasions.
@@ -78,24 +78,24 @@ export function HeroSection() {
 
           {/* Buttons — last, with hover scale */}
           <motion.div
-            {...fadeUp(0.38)}
+            {...fadeUp(0.78)}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
           >
             <motion.a
               href="#products"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 340, damping: 22 }}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold text-lg shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5 transition-shadow duration-300 text-center"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 220, damping: 26 }}
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-primary to-accent text-white font-bold text-lg shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 transition-shadow duration-500 text-center"
             >
               Shop Now
             </motion.a>
             <motion.a
               href="#how-it-works"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 340, damping: 22 }}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold text-lg hover:bg-white/20 transition-colors duration-300 text-center"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 220, damping: 26 }}
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold text-lg hover:bg-white/20 transition-colors duration-500 text-center"
             >
               See How It Works
             </motion.a>
@@ -107,14 +107,14 @@ export function HeroSection() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.9 }}
+        transition={{ delay: 2.0, duration: 1.1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
         aria-hidden="true"
       >
         <span className="text-white/50 text-xs font-medium tracking-widest uppercase">Scroll</span>
         <motion.div
           animate={{ y: [0, 7, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
         >
           <ChevronDown className="w-5 h-5 text-white/50" />
         </motion.div>
