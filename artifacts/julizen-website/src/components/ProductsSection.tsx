@@ -57,29 +57,31 @@ function ProductCard({
   const whatsappLink = generateWhatsAppLink(product.whatsappMessage);
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ delay: index * 0.07, duration: 0.42 }}
+    <article
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-[0_4px_24px_rgba(15,23,42,0.07)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(15,23,42,0.12)]"
       itemScope
       itemType="https://schema.org/Product"
     >
       <div className="relative flex items-center justify-center bg-gradient-to-b from-[#fef9ee] to-white px-6 pt-8 pb-6">
         <div className="w-full max-w-[220px] overflow-hidden rounded-xl bg-white shadow-[0_8px_30px_rgba(0,0,0,0.10)]">
-          <img
-            src={getImageUrl(product.image)}
-            alt={`${product.name} — ${product.weight} Nigerian Seasoning Powder`}
-            className="h-auto w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
-            loading="eager"
-            decoding="sync"
-            fetchPriority="high"
-            width={440}
-            height={540}
-            style={{ aspectRatio: "4/5", objectFit: "contain" }}
-            itemProp="image"
-          />
+          <picture>
+            <source
+              srcSet={getImageUrl(product.image)}
+              type="image/webp"
+            />
+            <img
+              src={getImageUrl(product.imageFallback)}
+              alt={`${product.name} — ${product.weight} Nigerian Seasoning Powder`}
+              className="h-auto w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+              loading="eager"
+              decoding="sync"
+              fetchPriority={index < 2 ? "high" : "auto"}
+              width={440}
+              height={540}
+              style={{ aspectRatio: "4/5", objectFit: "contain" }}
+              itemProp="image"
+            />
+          </picture>
         </div>
       </div>
 
@@ -114,6 +116,6 @@ function ProductCard({
           Order via WhatsApp
         </a>
       </div>
-    </motion.article>
+    </article>
   );
 }

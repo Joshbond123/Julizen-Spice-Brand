@@ -12,13 +12,13 @@ const results = [
     title: "Fried Rice",
     image: "/images/food-fried-rice.webp",
     alt: "Plate of fried rice cooked with Julizen Fried Rice seasoning powder",
-    delay: 0.2
+    delay: 0.15
   },
   {
     title: "Authentic Soup",
     image: "/images/food-soup.webp",
     alt: "Bowl of rich soup made with Julizen Crayfish Flavour seasoning powder",
-    delay: 0.4
+    delay: 0.3
   }
 ];
 
@@ -52,12 +52,8 @@ export function FoodResultsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {results.map((result) => (
-            <motion.figure
+            <figure
               key={result.title}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: result.delay, duration: 0.5 }}
               className="group relative rounded-3xl overflow-hidden aspect-[4/5] bg-secondary-foreground/10"
             >
               <img
@@ -65,18 +61,18 @@ export function FoodResultsSection() {
                 alt={result.alt}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="eager"
-                decoding="sync"
+                decoding="async"
                 fetchPriority="high"
                 sizes="(min-width: 768px) 33vw, 100vw"
                 width={600}
                 height={750}
               />
               <figcaption className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8">
-                <h3 className="text-2xl font-display font-bold text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="text-2xl font-display font-bold text-white">
                   {result.title}
                 </h3>
               </figcaption>
-            </motion.figure>
+            </figure>
           ))}
         </div>
       </div>

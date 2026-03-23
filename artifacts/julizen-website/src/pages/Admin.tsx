@@ -302,7 +302,7 @@ function ProductsTab({ token, onRefetch }: { token: string; onRefetch: () => voi
       <div className="space-y-3">
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex items-center gap-4">
-            <img src={getImageUrl(product.image)} alt={product.name} className="w-16 h-16 object-cover rounded-xl flex-shrink-0" />
+            <img src={getImageUrl(product.image.replace(/\.jpg$/, '.webp'))} alt={product.name} className="w-16 h-16 object-cover rounded-xl flex-shrink-0" onError={(e) => { (e.currentTarget as HTMLImageElement).src = getImageUrl(product.image); }} />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <p className="font-semibold text-gray-900 text-sm truncate">{product.name}</p>
