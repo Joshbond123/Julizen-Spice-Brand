@@ -48,14 +48,14 @@ export function HeroSection() {
           className="max-w-4xl mx-auto space-y-7"
         >
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-white leading-[1.1]">
-            Julizen Seasoning Powder for{" "}
+            Cook Like a Chef.<br className="hidden sm:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-400">
-              Better Everyday Cooking
+              Taste the Difference.
             </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed">
-            Julizen seasoning powder is crafted to bring bold, authentic Nigerian flavor to every meal — from jollof rice and fried rice to hearty soups and stews, with consistent taste every time.
+            Julizen seasoning powder is crafted to bring bold, authentic flavor to your meals — from everyday cooking to special occasions.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">

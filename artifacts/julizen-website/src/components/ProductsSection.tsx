@@ -24,7 +24,7 @@ export function ProductsSection() {
             transition={{ delay: 0.05 }}
             className="mt-3 text-3xl font-display font-bold tracking-tight text-secondary sm:text-4xl lg:text-5xl"
           >
-            Seasoning Powders for Jollof Rice, Fried Rice &amp; Nigerian Soups
+            Bold Flavor. Every Meal. Every Time.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 18 }}
@@ -33,7 +33,7 @@ export function ProductsSection() {
             transition={{ delay: 0.1 }}
             className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg"
           >
-            Our seasoning powder Nigeria range covers everything from jollof rice seasoning to crayfish seasoning for soup — each blend crafted to help you cook with consistent, delicious results every time.
+            Julizen Seasoning Powders are crafted to bring out the full, natural flavor in every dish — from everyday home cooking to your most special meals. Choose the perfect blend and taste the difference.
           </motion.p>
         </div>
 
