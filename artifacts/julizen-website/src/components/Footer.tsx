@@ -14,7 +14,7 @@ export function Footer() {
               <picture>
                 <img
                   src={getImageUrl("/images/julizen-logo.webp")}
-                  alt="Julizen Seasoning — Nigerian seasoning powder for jollof rice, fried rice and soups"
+                  alt="Julizen Seasoning — seasoning powder for jollof rice, fried rice and soups"
                   className="h-20 sm:h-24 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
                   loading="eager"
                   decoding="async"
@@ -35,7 +35,16 @@ export function Footer() {
               <li><a href="#home" className="hover:text-white transition-colors">Home</a></li>
               <li><a href="#products" className="hover:text-white transition-colors">Products</a></li>
               <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
-              <li><a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors text-primary font-medium">Order via WhatsApp</a></li>
+              <li>
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors text-primary font-medium"
+                >
+                  Order via WhatsApp
+                </a>
+              </li>
             </ul>
           </nav>
 
@@ -43,8 +52,16 @@ export function Footer() {
             <h2 className="text-white font-bold mb-6 font-display">Contact Us</h2>
             <address className="not-italic">
               <ul className="space-y-4">
-                <li><a href="mailto:info@julizen.com" className="hover:text-white transition-colors">info@julizen.com</a></li>
-                <li><a href="tel:+2348000000000" className="hover:text-white transition-colors">+234 800 000 0000</a></li>
+                <li>
+                  <a
+                    href="https://wa.me/2348033975366"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    +234 803 397 5366
+                  </a>
+                </li>
                 <li className="pt-4 flex gap-4">
                   <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all" aria-label="Julizen on Instagram">
                     <Instagram className="w-5 h-5" aria-hidden="true" />
