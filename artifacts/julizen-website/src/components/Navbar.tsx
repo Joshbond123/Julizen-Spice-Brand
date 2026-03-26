@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from "react";
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const headerRef = useRef<HTMLElement>(null);
-    const [location] = useLocation();
+    const [location, navigate] = useLocation();
 
     useEffect(() => {
       const handleScroll = () => {
@@ -42,10 +42,13 @@ import { useState, useEffect, useRef } from "react";
       e.preventDefault();
       setIsMobileMenuOpen(false);
       if (isRoute) {
-        window.location.href = import.meta.env.BASE_URL.replace(/\/$/, "") + href;
+        // Use wouter client-side navigation — no full page reload, no GitHub Pages 404
+        navigate(href);
         return;
       }
       if (location !== "/") {
+        // On contact page clicking a hash link: navigate to homepage root with the hash
+        // Root index.html is always served by GitHub Pages, so this always works
         window.location.href = import.meta.env.BASE_URL + href;
         return;
       }
@@ -56,7 +59,7 @@ import { useState, useEffect, useRef } from "react";
       e.preventDefault();
       setIsMobileMenuOpen(false);
       if (location !== "/") {
-        window.location.href = import.meta.env.BASE_URL;
+        navigate("/");
         return;
       }
       scrollToSection("#home");
