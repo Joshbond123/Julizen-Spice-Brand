@@ -33,6 +33,7 @@ export function Footer() {
               <li><a href="#home" className="hover:text-white transition-colors">Home</a></li>
               <li><a href="#products" className="hover:text-white transition-colors">Products</a></li>
               <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
+                <li><a href="${import.meta.env.BASE_URL}contact" className="hover:text-white transition-colors">Contact Us</a></li>
               <li>
                 <a
                   href={whatsappLink}
