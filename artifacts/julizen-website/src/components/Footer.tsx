@@ -11,9 +11,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 border-b border-white/10 pb-16">
           <div className="md:col-span-2">
             <a href="#home" className="inline-block mb-6 group" aria-label="Julizen Seasoning — go to homepage">
-              <picture>
-                <img
-                  src={getImageUrl("/images/julizen-logo.webp")}
+              <img
+                  src={getImageUrl("/images/julizen-logo-transparent.png")}
                   alt="Julizen Seasoning — seasoning powder for jollof rice, fried rice and soups"
                   className="h-20 sm:h-24 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
                   loading="eager"
@@ -22,7 +21,6 @@ export function Footer() {
                   width={600}
                   height={400}
                 />
-              </picture>
             </a>
             <p className="max-w-md text-white/60 leading-relaxed">
               Julizen is a seasoning brand designed to support everyday cooking with consistent, reliable results. Suitable for home use, wholesale, and retail distribution.
