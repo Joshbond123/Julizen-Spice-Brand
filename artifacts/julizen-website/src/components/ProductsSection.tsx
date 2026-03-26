@@ -44,8 +44,8 @@ import { useState, useEffect, useCallback } from "react";
         "Stir into fried rice while cooking for a fuller, savory base.",
         "Add to your stew pot 10 minutes before serving for best results.",
       ],
-      foodImage: "/images/food-soup.webp",
-      foodCaption: "Rich chicken pepper soup enhanced with Julizen Chicken Flavour",
+      foodImage: "/images/food-egusi-semo.png",
+      foodCaption: "Hearty egusi soup with semo — elevated with Julizen Chicken Flavour",
       accentColor: "#D97706",
     },
     crayfish: {
@@ -60,8 +60,8 @@ import { useState, useEffect, useCallback } from "react";
         "Combine with fresh pepper and palm oil for an authentic pepper soup base.",
         "Add to ofe onugbu or bitterleaf soup for traditional depth.",
       ],
-      foodImage: "/images/food-soup.webp",
-      foodCaption: "Thick egusi soup with crayfish depth — made with Julizen Crayfish Flavour",
+      foodImage: "/images/food-okro-soup.png",
+      foodCaption: "Rich draw okro soup with crayfish, meat & fish — made with Julizen Crayfish Flavour",
       accentColor: "#B45309",
     },
     "fried-rice": {
@@ -76,8 +76,8 @@ import { useState, useEffect, useCallback } from "react";
         "Combine with a small amount of butter when stir-frying for restaurant-level richness.",
         "Add toward the end of cooking to preserve the aromatic spice notes.",
       ],
-      foodImage: "/images/food-fried-rice.webp",
-      foodCaption: "Golden Nigerian fried rice with chicken — seasoned with Julizen Fried Rice",
+      foodImage: "/images/food-nigerian-fried-rice.png",
+      foodCaption: "Golden Nigerian fried rice with chicken & plantain — seasoned with Julizen Fried Rice",
       accentColor: "#65A30D",
     },
     "stew-jollof": {
@@ -92,8 +92,8 @@ import { useState, useEffect, useCallback } from "react";
         "Use when browning meat for stew to build a flavourful, deeply seasoned base.",
         "Combine with stock and seasoning to create a concentrated sauce for rice dishes.",
       ],
-      foodImage: "/images/food-jollof-rice.webp",
-      foodCaption: "Smoky party jollof rice with stew — the Julizen Stew & Jollof taste",
+      foodImage: "/images/food-party-jollof.png",
+      foodCaption: "Smoky party jollof rice with grilled chicken — the Julizen Stew & Jollof taste",
       accentColor: "#DC2626",
     },
   };
@@ -256,16 +256,13 @@ import { useState, useEffect, useCallback } from "react";
               {/* Images: front + back */}
               <div className="mb-6 grid grid-cols-2 gap-3 rounded-2xl bg-[#fef9ee] p-4">
                 {[
-                  { img: product.frontImage, label: "Front" },
-                  { img: product.backImage,  label: "Back"  },
-                ].map(({ img, label }) => (
-                  <div key={label} className="relative">
-                    <span className="absolute top-1.5 left-1.5 z-10 rounded-md bg-white/90 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-gray-500">
-                      {label}
-                    </span>
+                  { img: product.frontImage, side: "front" },
+                  { img: product.backImage,  side: "back"  },
+                ].map(({ img, side }) => (
+                  <div key={side} className="relative">
                     <img
                       src={getImageUrl(img)}
-                      alt={`Julizen ${product.name} ${product.size} ${label.toLowerCase()}`}
+                      alt={`Julizen ${product.name} ${product.size} ${side} view`}
                       className="h-auto w-full rounded-xl object-contain"
                       style={{ aspectRatio: "3/4" }}
                       width={200}
@@ -358,10 +355,7 @@ import { useState, useEffect, useCallback } from "react";
         <div className="relative grid grid-cols-2 bg-gradient-to-b from-[#fef9ee] to-[#f1ede3]">
           {/* Front */}
           <div className="flex items-end justify-center border-r border-white/70 px-4 pt-6 pb-4">
-            <div className="relative w-full">
-              <span className="absolute top-0 left-0 rounded-br-md bg-white/80 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-gray-400">
-                Front
-              </span>
+            <div className="w-full">
               <img
                 src={getImageUrl(product.frontImage)}
                 alt={`Julizen ${product.name} ${product.size} — front view`}
@@ -377,10 +371,7 @@ import { useState, useEffect, useCallback } from "react";
           </div>
           {/* Back */}
           <div className="flex items-end justify-center px-4 pt-6 pb-4">
-            <div className="relative w-full">
-              <span className="absolute top-0 left-0 rounded-br-md bg-white/80 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-gray-400">
-                Back
-              </span>
+            <div className="w-full">
               <img
                 src={getImageUrl(product.backImage)}
                 alt={`Julizen ${product.name} ${product.size} — back label`}
