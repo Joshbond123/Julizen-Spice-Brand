@@ -5,7 +5,7 @@
       "id": "chicken",
       "name": "Chicken Flavour",
       "tagline": "Deep, savory richness that makes every soup and stew taste homemade.",
-      "fullDescription": "Julizen Chicken Flavour Seasoning Powder is carefully crafted to bring out the full, natural depth of chicken in every dish. Made from a balanced blend of quality spices and natural flavouring, it delivers that rich, slow-cooked taste without the hours of effort. Whether you're making a light vegetable soup, a hearty chicken stew, or a pot of jollof rice, Julizen Chicken gives your cooking a warm, well-rounded savory base that keeps people coming back for more. No harsh aftertaste — just clean, bold flavour you can trust every single time.",
+      "fullDescription": "Julizen Chicken Flavour Seasoning Powder is carefully crafted to bring out the full, natural depth of chicken in every dish. Made from a balanced blend of quality spices and natural flavouring, it delivers that rich, slow-cooked taste without the hours of effort. Whether you're making a light vegetable soup, a hearty chicken stew, or a pot of jollof rice, Julizen Chicken gives your cooking a warm, well-rounded savory base that keeps people coming back for more. No harsh aftertaste â just clean, bold flavour you can trust every single time.",
       "cookingTips": [
         "Stir one teaspoonful into 400ml of boiling water to build a rich, flavorful stock base.",
         "Rub directly onto chicken pieces before grilling, frying, or roasting for deeper seasoning.",
@@ -13,32 +13,32 @@
         "Stir into stews or vegetable soups 10 minutes before serving for the best result."
       ],
       "foodImage": "/images/food-egusi-semo-party.webp",
-      "foodCaption": "Rich egusi soup with semo & assorted meat — cooked with Julizen Chicken Flavour",
+      "foodCaption": "Rich egusi soup with semo & assorted meat â cooked with Julizen Chicken Flavour",
       "accentColor": "#D97706",
       "enabled": true,
       "sizes": {
         "10g": {
           "packLabel": "Sachet",
-          "packDetail": "10g × 10 × 42 rolls (carton)",
+          "packDetail": "10g Ã 10 Ã 42 rolls (carton)",
           "frontImage": "/images/product-chicken-10g-front.webp",
           "backImage": "/images/product-chicken-10g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Chicken Flavour Seasoning Powder — 10g × 42 rolls (carton). Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Chicken Flavour Seasoning Powder â 10g Ã 42 rolls (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "100g": {
           "packLabel": "Pouch",
-          "packDetail": "100g × 5 × 60 sachets (carton)",
+          "packDetail": "100g Ã 5 Ã 60 sachets (carton)",
           "frontImage": "/images/product-chicken-100g-front.webp",
           "backImage": "/images/product-chicken-100g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Chicken Flavour Seasoning Powder — 100g × 60 sachets. Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Chicken Flavour Seasoning Powder â 100g Ã 60 sachets. Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "400g": {
           "packLabel": "Value Pack",
-          "packDetail": "400g × 20 sachets (carton)",
+          "packDetail": "400g Ã 20 sachets (carton)",
           "frontImage": "/images/product-chicken-400g-front.webp",
           "backImage": "/images/product-chicken-400g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Chicken Flavour Seasoning Powder — 400g Value Pack × 20 sachets (carton). Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Chicken Flavour Seasoning Powder â 400g Value Pack Ã 20 sachets (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         }
       }
@@ -47,7 +47,7 @@
       "id": "crayfish",
       "name": "Crayfish Flavour",
       "tagline": "Bold, authentic crayfish taste in every traditional pot.",
-      "fullDescription": "Julizen Crayfish Flavour Seasoning Powder captures the bold, unmistakable taste of dried crayfish that defines real Nigerian cooking — without the fuss of grinding, washing, or storing raw crayfish. Carefully concentrated to deliver genuine umami richness, it deepens the flavour of egusi soup, oha, okra, bitterleaf, and every traditional recipe that calls for authentic crayfish depth. Just one teaspoon transforms your pot, giving your soup that thick, layered base that makes people lean in and ask: \"what did you put in this?\" A household essential for anyone who takes their traditional cooking seriously.",
+      "fullDescription": "Julizen Crayfish Flavour Seasoning Powder captures the bold, unmistakable taste of dried crayfish that defines real Nigerian cooking â without the fuss of grinding, washing, or storing raw crayfish. Carefully concentrated to deliver genuine umami richness, it deepens the flavour of egusi soup, oha, okra, bitterleaf, and every traditional recipe that calls for authentic crayfish depth. Just one teaspoon transforms your pot, giving your soup that thick, layered base that makes people lean in and ask: \"what did you put in this?\" A household essential for anyone who takes their traditional cooking seriously.",
       "cookingTips": [
         "Dissolve one teaspoonful in warm soup stock before adding your main ingredients.",
         "Add to egusi or okra soup to naturally amplify the crayfish base.",
@@ -55,32 +55,32 @@
         "Stir into ofe onugbu or bitterleaf soup for traditional, deeply savory flavour."
       ],
       "foodImage": "/images/food-okro-fufu-party.webp",
-      "foodCaption": "Thick okro soup with fufu & assorted meat — enhanced with Julizen Crayfish Flavour",
+      "foodCaption": "Thick okro soup with fufu & assorted meat â enhanced with Julizen Crayfish Flavour",
       "accentColor": "#B45309",
       "enabled": true,
       "sizes": {
         "10g": {
           "packLabel": "Sachet",
-          "packDetail": "10g × 10 × 42 rolls (carton)",
+          "packDetail": "10g Ã 10 Ã 42 rolls (carton)",
           "frontImage": "/images/product-crayfish-10g-front.webp",
           "backImage": "/images/product-crayfish-10g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder — 10g × 42 rolls (carton). Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder â 10g Ã 42 rolls (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "100g": {
           "packLabel": "Pouch",
-          "packDetail": "100g × 5 × 60 sachets (carton)",
+          "packDetail": "100g Ã 5 Ã 60 sachets (carton)",
           "frontImage": "/images/product-crayfish-100g-front.webp",
           "backImage": "/images/product-crayfish-100g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder — 100g × 60 sachets. Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder â 100g Ã 60 sachets. Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "400g": {
           "packLabel": "Value Pack",
-          "packDetail": "400g × 20 sachets (carton)",
+          "packDetail": "400g Ã 20 sachets (carton)",
           "frontImage": "/images/product-crayfish-400g-front.webp",
-          "backImage": "/images/product-crayfish-400g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder — 400g Value Pack × 20 sachets (carton). Please send me the price and delivery details.",
+          "backImage": "/images/1000234721-mn8xq4nk.webp",
+          "whatsappMessage": "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder â 400g Value Pack Ã 20 sachets (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         }
       }
@@ -88,8 +88,8 @@
     {
       "id": "fried-rice",
       "name": "Fried Rice",
-      "tagline": "Golden, aromatic party fried rice — perfectly seasoned every time.",
-      "fullDescription": "Julizen Fried Rice Seasoning Powder is precisely blended for Nigerian-style fried rice, delivering that vibrant golden colour, warm aromatic spices, and the satisfying savory depth that makes fried rice the centrepiece of every party spread. Carefully balanced with turmeric, natural spice extracts, and seasoning agents, it seasons your rice evenly from the first stir — no guessing, no over-salting, no dull flavour. Whether you're cooking for a family lunch or a hundred guests, one sachet gives you perfectly seasoned, beautifully coloured rice that looks and tastes like it came from a professional kitchen.",
+      "tagline": "Golden, aromatic party fried rice â perfectly seasoned every time.",
+      "fullDescription": "Julizen Fried Rice Seasoning Powder is precisely blended for Nigerian-style fried rice, delivering that vibrant golden colour, warm aromatic spices, and the satisfying savory depth that makes fried rice the centrepiece of every party spread. Carefully balanced with turmeric, natural spice extracts, and seasoning agents, it seasons your rice evenly from the first stir â no guessing, no over-salting, no dull flavour. Whether you're cooking for a family lunch or a hundred guests, one sachet gives you perfectly seasoned, beautifully coloured rice that looks and tastes like it came from a professional kitchen.",
       "cookingTips": [
         "Add one teaspoonful to 400ml of cooking water before putting in your rice.",
         "Stir into your vegetables while stir-frying for deeper, more even colour and aroma.",
@@ -97,32 +97,32 @@
         "Use half a teaspoon when seasoning chicken liver, gizzard, or shrimp for the dish."
       ],
       "foodImage": "/images/1000234720-mn8wiiws.webp",
-      "foodCaption": "Vibrant Nigerian party fried rice with prawns & vegetables — made with Julizen Fried Rice",
+      "foodCaption": "Vibrant Nigerian party fried rice with prawns & vegetables â made with Julizen Fried Rice",
       "accentColor": "#CA8A04",
       "enabled": true,
       "sizes": {
         "10g": {
           "packLabel": "Sachet",
-          "packDetail": "10g × 10 × 42 rolls (carton)",
+          "packDetail": "10g Ã 10 Ã 42 rolls (carton)",
           "frontImage": "/images/product-fried-rice-10g-front.webp",
           "backImage": "/images/product-fried-rice-10g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder — 10g × 42 rolls (carton). Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder â 10g Ã 42 rolls (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "100g": {
           "packLabel": "Pouch",
-          "packDetail": "100g × 5 × 60 sachets (carton)",
+          "packDetail": "100g Ã 5 Ã 60 sachets (carton)",
           "frontImage": "/images/product-fried-rice-100g-front.webp",
           "backImage": "/images/product-fried-rice-100g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder — 100g × 60 sachets. Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder â 100g Ã 60 sachets. Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "400g": {
           "packLabel": "Value Pack",
-          "packDetail": "400g × 20 sachets (carton)",
+          "packDetail": "400g Ã 20 sachets (carton)",
           "frontImage": "/images/product-fried-rice-100g-front.webp",
           "backImage": "/images/product-fried-rice-100g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder — 400g Value Pack × 20 sachets (carton). Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder â 400g Value Pack Ã 20 sachets (carton). Please send me the price and delivery details.",
           "sizeEnabled": false
         }
       }
@@ -130,41 +130,41 @@
     {
       "id": "stew-jollof",
       "name": "Stew & Jollof",
-      "tagline": "The smoky, party-jollof flavour everyone asks about — in every pot.",
-      "fullDescription": "Julizen Stew & Jollof Seasoning Powder is the secret behind that deep, smoky, never-burnt party jollof flavour that has guests helping themselves to a second plate. Crafted with a perfectly balanced blend of sun-dried tomato, onion, garlic, basil, and warming spices, it brings restaurant-level consistency to your home cooking — whether you are making everyday stew for four or a large pot for forty. The seasoning builds rich colour into your sauce from the moment it hits the oil, layering flavour at every stage of cooking for a finish that is bold, aromatic, and deeply satisfying. This is the one ingredient that makes your jollof and stew taste like they took all day.",
+      "tagline": "The smoky, party-jollof flavour everyone asks about â in every pot.",
+      "fullDescription": "Julizen Stew & Jollof Seasoning Powder is the secret behind that deep, smoky, never-burnt party jollof flavour that has guests helping themselves to a second plate. Crafted with a perfectly balanced blend of sun-dried tomato, onion, garlic, basil, and warming spices, it brings restaurant-level consistency to your home cooking â whether you are making everyday stew for four or a large pot for forty. The seasoning builds rich colour into your sauce from the moment it hits the oil, layering flavour at every stage of cooking for a finish that is bold, aromatic, and deeply satisfying. This is the one ingredient that makes your jollof and stew taste like they took all day.",
       "cookingTips": [
         "Add to your blended tomato-pepper mix while frying the stew for a deep, layered base.",
         "Stir one teaspoonful into your jollof pot after adding the tomato sauce for bold flavour.",
-        "Use when browning meat for stew — it builds a rich, well-seasoned crust.",
+        "Use when browning meat for stew â it builds a rich, well-seasoned crust.",
         "Combine with stock to create a concentrated sauce for rice dishes or grilled meats."
       ],
       "foodImage": "/images/food-jollof-party.webp",
-      "foodCaption": "Smoky Nigerian party jollof rice with grilled chicken & fried plantain — made with Julizen Stew & Jollof",
+      "foodCaption": "Smoky Nigerian party jollof rice with grilled chicken & fried plantain â made with Julizen Stew & Jollof",
       "accentColor": "#DC2626",
       "enabled": true,
       "sizes": {
         "10g": {
           "packLabel": "Sachet",
-          "packDetail": "10g × 10 × 42 rolls (carton)",
+          "packDetail": "10g Ã 10 Ã 42 rolls (carton)",
           "frontImage": "/images/product-stew-jollof-10g-front.webp",
           "backImage": "/images/product-stew-jollof-10g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Stew & Jollof Seasoning Powder — 10g × 42 rolls (carton). Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Stew & Jollof Seasoning Powder â 10g Ã 42 rolls (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "100g": {
           "packLabel": "Pouch",
-          "packDetail": "100g × 5 × 60 sachets (carton)",
+          "packDetail": "100g Ã 5 Ã 60 sachets (carton)",
           "frontImage": "/images/product-stew-jollof-100g-front.webp",
           "backImage": "/images/product-stew-jollof-100g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Stew & Jollof Seasoning Powder — 100g × 60 sachets. Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Stew & Jollof Seasoning Powder â 100g Ã 60 sachets. Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "400g": {
           "packLabel": "Value Pack",
-          "packDetail": "400g × 20 sachets (carton)",
+          "packDetail": "400g Ã 20 sachets (carton)",
           "frontImage": "/images/product-stew-jollof-100g-front.webp",
           "backImage": "/images/product-stew-jollof-100g-back.webp",
-          "whatsappMessage": "Hello, I want to order Julizen Stew & Jollof Seasoning Powder — 400g Value Pack × 20 sachets (carton). Please send me the price and delivery details.",
+          "whatsappMessage": "Hello, I want to order Julizen Stew & Jollof Seasoning Powder â 400g Value Pack Ã 20 sachets (carton). Please send me the price and delivery details.",
           "sizeEnabled": false
         }
       }
