@@ -1,14 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
-import { AdminProduct, DEFAULT_PRODUCTS, PRODUCTS_UPDATE_EVENT } from "@/lib/productStorage";
+import { AdminProduct, DEFAULT_PRODUCTS } from "@/lib/productStorage";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "";
+export const PRODUCTS_UPDATE_EVENT = "julizen:products:updated";
 
-export async function fetchProductsFromServer(): Promise<AdminProduct[]> {
-  const res = await fetch(`${API_BASE}/api/products`);
-  if (!res.ok) throw new Error("Failed to fetch products");
+const STORE_URL = import.meta.env.BASE_URL + "data/store.json";
+
+export async function fetchProductsFromStore(): Promise<AdminProduct[]> {
+  const res = await fetch(STORE_URL + "?t=" + Date.now());
+  if (!res.ok) throw new Error("Could not load store.json");
   const data = await res.json();
-  if (!Array.isArray(data) || data.length === 0) return DEFAULT_PRODUCTS;
-  return data as AdminProduct[];
+  const products = data?.products;
+  if (!Array.isArray(products) || products.length === 0) return DEFAULT_PRODUCTS;
+  return products as AdminProduct[];
 }
 
 export function useProducts(): AdminProduct[] {
@@ -16,7 +19,7 @@ export function useProducts(): AdminProduct[] {
 
   const load = useCallback(async () => {
     try {
-      const data = await fetchProductsFromServer();
+      const data = await fetchProductsFromStore();
       setProducts(data);
     } catch {
       setProducts(DEFAULT_PRODUCTS);
@@ -28,9 +31,7 @@ export function useProducts(): AdminProduct[] {
   }, [load]);
 
   useEffect(() => {
-    const handleUpdate = () => {
-      load();
-    };
+    const handleUpdate = () => load();
     window.addEventListener(PRODUCTS_UPDATE_EVENT, handleUpdate);
     return () => window.removeEventListener(PRODUCTS_UPDATE_EVENT, handleUpdate);
   }, [load]);
