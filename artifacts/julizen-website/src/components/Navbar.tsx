@@ -84,7 +84,7 @@ import { useState, useEffect, useRef } from "react";
               className="flex items-center group py-1"
             >
               <img
-                src={getImageUrl("/images/julizen-logo-transparent.png")}
+                src={getImageUrl("/images/julizen-logo-transparent.webp")}
                 alt="Julizen Seasoning Powder — Nigerian seasoning brand"
                 className="h-20 sm:h-24 md:h-28 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
                 fetchPriority="high"
