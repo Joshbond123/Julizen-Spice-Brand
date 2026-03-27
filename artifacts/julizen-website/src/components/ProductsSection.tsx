@@ -44,6 +44,7 @@ function adminProductsToEntries(products: AdminProduct[]): ProductEntry[] {
       if (!p.enabled) continue;
       const sizeData = p.sizes[sz];
       if (!sizeData) continue;
+      if (sizeData.sizeEnabled === false) continue;
       entries.push({
         id: p.id,
         name: p.name,
