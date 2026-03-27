@@ -12,7 +12,7 @@ export function Footer() {
           <div className="md:col-span-2">
             <a href="#home" className="inline-block mb-6 group" aria-label="Julizen Seasoning — go to homepage">
               <img
-                  src={getImageUrl("/images/julizen-logo-transparent.png")}
+                  src={getImageUrl("/images/julizen-logo-transparent.webp")}
                   alt="Julizen Seasoning — seasoning powder for jollof rice, fried rice and soups"
                   className="h-20 sm:h-24 w-auto object-contain transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-80"
                   loading="eager"
