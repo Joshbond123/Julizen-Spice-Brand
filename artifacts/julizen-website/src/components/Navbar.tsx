@@ -4,22 +4,36 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import { cn, generateWhatsAppLink } from "@/lib/utils";
 import { getImageUrl } from "@/lib/imageUrl";
+import { useSettings } from "@/hooks/useSettings";
+
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const [location, navigate] = useLocation();
+  const settings = useSettings();
 
   const logoClickCount = useRef(0);
   const logoClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // On non-home pages the navbar sits over a light background — always use the
+  // solid/dark style so icons and text are visible.
+  const isHomePage = location === "/";
+  const forceDark = !isHomePage;
+  const isDark = forceDark || isScrolled;
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    // Reset scroll state when navigating to a new page
+    setIsScrolled(window.scrollY > 20);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location]);
 
   const navLinks = [
     { name: "Home", href: "#home" },
@@ -29,7 +43,10 @@ export function Navbar() {
     { name: "Contact Us", href: "/contact", isRoute: true },
   ];
 
-  const whatsappLink = generateWhatsAppLink("Hello, I want to order Julizen seasoning");
+  const whatsappLink = generateWhatsAppLink(
+    "Hello, I want to order Julizen seasoning",
+    settings.whatsapp_number
+  );
 
   const scrollToSection = (href: string) => {
     setIsMobileMenuOpen(false);
@@ -40,7 +57,11 @@ export function Navbar() {
     window.scrollTo({ top, behavior: "smooth" });
   };
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isRoute?: boolean) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    isRoute?: boolean
+  ) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
     if (isRoute) {
@@ -54,39 +75,42 @@ export function Navbar() {
     scrollToSection(href);
   };
 
-  const handleLogoClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setIsMobileMenuOpen(false);
+  const handleLogoClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      setIsMobileMenuOpen(false);
 
-    logoClickCount.current += 1;
+      logoClickCount.current += 1;
 
-    if (logoClickTimer.current) clearTimeout(logoClickTimer.current);
+      if (logoClickTimer.current) clearTimeout(logoClickTimer.current);
 
-    if (logoClickCount.current >= 5) {
-      logoClickCount.current = 0;
-      navigate("/admin");
-      return;
-    }
+      if (logoClickCount.current >= 5) {
+        logoClickCount.current = 0;
+        navigate("/admin");
+        return;
+      }
 
-    logoClickTimer.current = setTimeout(() => {
-      logoClickCount.current = 0;
-    }, 2000);
+      logoClickTimer.current = setTimeout(() => {
+        logoClickCount.current = 0;
+      }, 2000);
 
-    if (location !== "/") {
-      navigate("/");
-      return;
-    }
-    scrollToSection("#home");
-  }, [location, navigate]);
+      if (location !== "/") {
+        navigate("/");
+        return;
+      }
+      scrollToSection("#home");
+    },
+    [location, navigate]
+  );
 
   return (
     <header
       ref={headerRef}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
-        isScrolled
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
+        isDark
           ? "bg-white/95 backdrop-blur-md shadow-sm border-border py-1"
-          : "bg-transparent py-2"
+          : "bg-transparent border-transparent py-2"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,12 +137,21 @@ export function Navbar() {
             {navLinks.map((link) => (
               <a
                 key={link.name}
-                href={link.isRoute ? import.meta.env.BASE_URL.replace(/\/$/, "") + link.href : link.href}
+                href={
+                  link.isRoute
+                    ? import.meta.env.BASE_URL.replace(/\/$/, "") + link.href
+                    : link.href
+                }
                 onClick={(e) => handleNavClick(e, link.href, link.isRoute)}
                 className={cn(
                   "font-medium text-sm hover:text-primary transition-colors cursor-pointer",
-                  isScrolled ? "text-foreground" : "text-white/90 hover:text-white",
-                  link.isRoute && location === "/contact" && isScrolled && "text-primary font-semibold"
+                  isDark
+                    ? "text-foreground hover:text-primary"
+                    : "text-white/90 hover:text-white",
+                  link.isRoute &&
+                    location === "/contact" &&
+                    isDark &&
+                    "text-primary font-semibold"
                 )}
               >
                 {link.name}
@@ -130,7 +163,7 @@ export function Navbar() {
               rel="noopener noreferrer"
               className={cn(
                 "px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 shadow-lg hover:-translate-y-0.5",
-                isScrolled
+                isDark
                   ? "bg-primary text-white shadow-primary/25 hover:shadow-primary/40 hover:bg-primary/90"
                   : "bg-white text-primary shadow-black/10 hover:shadow-white/20"
               )}
@@ -145,9 +178,19 @@ export function Navbar() {
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
           >
             {isMobileMenuOpen ? (
-              <X className={cn("w-6 h-6", isScrolled ? "text-foreground" : "text-white")} />
+              <X
+                className={cn(
+                  "w-6 h-6",
+                  isDark ? "text-foreground" : "text-white"
+                )}
+              />
             ) : (
-              <Menu className={cn("w-6 h-6", isScrolled ? "text-foreground" : "text-white")} />
+              <Menu
+                className={cn(
+                  "w-6 h-6",
+                  isDark ? "text-foreground" : "text-white"
+                )}
+              />
             )}
           </button>
         </div>
@@ -167,11 +210,17 @@ export function Navbar() {
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <a
-                    href={link.isRoute ? import.meta.env.BASE_URL.replace(/\/$/, "") + link.href : link.href}
+                    href={
+                      link.isRoute
+                        ? import.meta.env.BASE_URL.replace(/\/$/, "") + link.href
+                        : link.href
+                    }
                     onClick={(e) => handleNavClick(e, link.href, link.isRoute)}
                     className={cn(
                       "block w-full text-left px-4 py-3 text-lg font-medium text-foreground hover:bg-muted rounded-xl transition-colors",
-                      link.isRoute && location === "/contact" && "text-primary"
+                      link.isRoute &&
+                        location === "/contact" &&
+                        "text-primary"
                     )}
                   >
                     {link.name}

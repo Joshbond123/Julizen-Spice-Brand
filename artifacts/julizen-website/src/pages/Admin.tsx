@@ -904,6 +904,7 @@ function SettingsTab() {
   const [whatsapp, setWhatsapp] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [phone2, setPhone2] = useState("");
   const [saving, setSaving] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; msg: string } | null>(null);
   const pat = getPat();
@@ -913,6 +914,7 @@ function SettingsTab() {
     setWhatsapp(store.settings.whatsapp_number ?? "");
     setEmail(store.settings.contact_email ?? "");
     setPhone(store.settings.contact_phone ?? "");
+    setPhone2(store.settings.contact_phone_2 ?? "");
   }, [store]);
 
   const save = async () => {
@@ -923,7 +925,12 @@ function SettingsTab() {
     try {
       const newStore: StoreData = {
         ...store,
-        settings: { whatsapp_number: whatsapp, contact_email: email, contact_phone: phone },
+        settings: {
+          whatsapp_number: whatsapp,
+          contact_email: email,
+          contact_phone: phone,
+          contact_phone_2: phone2,
+        },
       };
       await writeStore(newStore, "admin: update contact settings", pat);
       setStore(newStore);
@@ -983,7 +990,8 @@ function SettingsTab() {
               placeholder="2348000000000" />
           </div>
           <Field label="Contact Email" value={email} onChange={setEmail} type="email" placeholder="info@julizen.com" />
-          <Field label="Contact Phone (display)" value={phone} onChange={setPhone} placeholder="+234 800 000 0000" />
+          <Field label="Phone Number 1 (display)" value={phone} onChange={setPhone} placeholder="+234 803 397 5366" />
+          <Field label="Phone Number 2 (display)" value={phone2} onChange={setPhone2} placeholder="+234 803 423 7281" />
 
           {result && (
             <div className={`flex items-center gap-2 p-3 rounded-xl ${result.ok ? "bg-green-50" : "bg-red-50"}`}>

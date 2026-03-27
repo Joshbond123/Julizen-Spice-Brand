@@ -9,14 +9,17 @@ const IMAGES_DIR = "artifacts/julizen-website/public/images";
 const PAT_STORAGE_KEY = "julizen_github_pat";
 const SESSION_KEY = "julizen_admin_session";
 
+export interface StoreSettings {
+  whatsapp_number: string;
+  contact_email: string;
+  contact_phone: string;
+  contact_phone_2: string;
+}
+
 export interface StoreData {
   admin_password_hash?: string;
   products: AdminProduct[];
-  settings: {
-    whatsapp_number: string;
-    contact_email: string;
-    contact_phone: string;
-  };
+  settings: StoreSettings;
 }
 
 export async function hashPassword(password: string): Promise<string> {
@@ -102,11 +105,33 @@ async function getFileSha(
   return { sha: data.sha, exists: true };
 }
 
-function encodeContent(text: string): string {
+/**
+ * Encode a UTF-8 string to base64 without corrupting multi-byte characters.
+ * TextEncoder produces the correct UTF-8 bytes; we convert byte-by-byte to
+ * a binary string that btoa can safely process.
+ */
+function encodeUtf8ToBase64(text: string): string {
   const bytes = new TextEncoder().encode(text);
   let bin = "";
   for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
   return btoa(bin);
+}
+
+/**
+ * Decode base64 from the GitHub Contents API back to a UTF-8 string.
+ *
+ * WHY: atob() returns a Latin-1 binary string where each character represents
+ * one raw byte. Multi-byte UTF-8 sequences (e.g. × = 0xC3 0x97) would be
+ * returned as two Latin-1 characters (Ã + chr(0x97)), corrupting the text.
+ * TextDecoder("utf-8") reads the byte array correctly.
+ */
+function decodeBase64ToUtf8(base64: string): string {
+  const binaryString = atob(base64.replace(/\n/g, ""));
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return new TextDecoder("utf-8").decode(bytes);
 }
 
 async function putFile(
@@ -116,7 +141,10 @@ async function putFile(
   sha: string | undefined,
   token: string
 ): Promise<void> {
-  const body: Record<string, unknown> = { message, content: encodeContent(content) };
+  const body: Record<string, unknown> = {
+    message,
+    content: encodeUtf8ToBase64(content),
+  };
   if (sha) body.sha = sha;
   const res = await fetch(
     `${GITHUB_API}/repos/${OWNER}/${REPO}/contents/${path}`,
@@ -137,7 +165,7 @@ export async function readStore(token: string): Promise<StoreData> {
   );
   if (!res.ok) throw new Error(`Cannot read store.json (${res.status})`);
   const file = (await res.json()) as GHFile;
-  const json = atob(file.content.replace(/\n/g, ""));
+  const json = decodeBase64ToUtf8(file.content);
   return JSON.parse(json) as StoreData;
 }
 
@@ -147,7 +175,13 @@ export async function writeStore(
   token: string
 ): Promise<void> {
   const { sha } = await getFileSha(STORE_FILE, token);
-  await putFile(STORE_FILE, JSON.stringify(store, null, 2), message, sha || undefined, token);
+  await putFile(
+    STORE_FILE,
+    JSON.stringify(store, null, 2),
+    message,
+    sha || undefined,
+    token
+  );
 }
 
 export async function uploadImage(token: string, file: File): Promise<string> {
