@@ -1,6 +1,6 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { getImageUrl } from "@/lib/imageUrl";
 import { generateWhatsAppLink } from "@/lib/utils";
 import { ShoppingBag, Info, X, ChefHat, Package2, Flame } from "lucide-react";
@@ -68,6 +68,55 @@ function adminProductsToEntries(products: AdminProduct[]): ProductEntry[] {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// IMAGE WITH SKELETON LOADER
+// ─────────────────────────────────────────────────────────────────────────────
+
+function LazyImage({
+  src,
+  alt,
+  className,
+  style,
+  width,
+  height,
+  priority,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  style?: React.CSSProperties;
+  width?: number;
+  height?: number;
+  priority?: boolean;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const [errored, setErrored] = useState(false);
+
+  return (
+    <div className="relative w-full h-full">
+      {!loaded && !errored && (
+        <div
+          className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 rounded-xl"
+          style={{ backgroundSize: "200% 100%", animation: "shimmer 1.5s infinite" }}
+        />
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        style={{ ...style, opacity: loaded ? 1 : 0, transition: "opacity 0.35s ease" }}
+        width={width}
+        height={height}
+        fetchPriority={priority ? "high" : "auto"}
+        decoding={priority ? "sync" : "async"}
+        loading={priority ? "eager" : "lazy"}
+        onLoad={() => setLoaded(true)}
+        onError={() => { setLoaded(true); setErrored(true); }}
+      />
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // MODAL
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -97,33 +146,34 @@ function ProductModal({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.22 }}
         className="fixed inset-0 z-[9999] flex items-end justify-center sm:items-center sm:p-4"
         onClick={onClose}
         role="dialog"
         aria-modal="true"
         aria-label={`Product details: Julizen ${product.name} ${product.size}`}
       >
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-black/65 backdrop-blur-sm" />
 
         <motion.div
           key="modal-panel"
-          initial={{ opacity: 0, y: 48, scale: 0.97 }}
+          initial={{ opacity: 0, y: 56, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 32, scale: 0.97 }}
-          transition={{ type: "spring", stiffness: 400, damping: 38 }}
+          exit={{ opacity: 0, y: 40, scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 380, damping: 36, mass: 0.8 }}
           className="relative z-10 w-full max-w-3xl max-h-[92dvh] overflow-y-auto rounded-t-3xl sm:rounded-3xl bg-white shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           <button
             onClick={onClose}
             aria-label="Close product details"
-            className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition hover:bg-gray-200 hover:text-gray-900"
+            className="absolute top-4 right-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/30 backdrop-blur-sm text-white transition-all hover:bg-black/50 hover:scale-110 active:scale-95"
           >
             <X className="h-4 w-4" />
           </button>
 
-          <div className="relative h-52 w-full overflow-hidden rounded-t-3xl sm:h-64 sm:rounded-t-3xl">
+          {/* Hero image */}
+          <div className="relative h-52 w-full overflow-hidden rounded-t-3xl sm:h-64">
             <img
               src={foodSrc}
               alt={product.foodCaption}
@@ -132,21 +182,45 @@ function ProductModal({
               height={256}
               fetchPriority="high"
               decoding="sync"
+              loading="eager"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+
+            {/* Accent colour strip at top */}
+            <div
+              className="absolute top-0 left-0 right-0 h-1"
+              style={{ backgroundColor: product.accentColor }}
+            />
+
             <div className="absolute bottom-0 left-0 p-5">
-              <span
-                className="mb-1 inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider text-white"
+              <motion.span
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15 }}
+                className="mb-1.5 inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-md"
                 style={{ backgroundColor: product.accentColor }}
               >
                 {product.category}
-              </span>
-              <p className="text-[13px] text-white/80">{product.foodCaption}</p>
+              </motion.span>
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-[13px] text-white/85 leading-snug"
+              >
+                {product.foodCaption}
+              </motion.p>
             </div>
           </div>
 
           <div className="p-5 sm:p-7">
-            <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
+            {/* Header row */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between"
+            >
               <div>
                 <h2 className="text-xl font-display font-bold text-secondary sm:text-2xl">
                   Julizen {product.name}
@@ -154,73 +228,118 @@ function ProductModal({
                 <p className="mt-0.5 text-sm text-muted-foreground">{product.tagline}</p>
               </div>
               <div className="mt-2 shrink-0 sm:mt-0 sm:text-right">
-                <span className="inline-flex items-center gap-1.5 rounded-xl border border-primary/20 bg-primary/8 px-3 py-1.5 text-sm font-bold text-primary">
+                <span
+                  className="inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-sm font-bold"
+                  style={{
+                    borderColor: product.accentColor + "30",
+                    backgroundColor: product.accentColor + "12",
+                    color: product.accentColor,
+                  }}
+                >
                   <Package2 className="h-3.5 w-3.5" />
                   {product.size} — {product.packLabel}
                 </span>
                 <p className="mt-1.5 text-xs text-muted-foreground">{product.packDetail}</p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="mb-6 grid grid-cols-2 gap-3 rounded-2xl bg-[#fef9ee] p-4">
+            {/* Packaging images */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.16, duration: 0.4 }}
+              className="mb-6 grid grid-cols-2 gap-3 rounded-2xl bg-[#fef9ee] p-4"
+            >
               {[
                 { src: frontSrc, side: "front" },
                 { src: backSrc, side: "back" },
-              ].map(({ src, side }) => (
-                <div key={side} className="relative">
+              ].map(({ src, side }, si) => (
+                <motion.div
+                  key={side}
+                  initial={{ opacity: 0, scale: 0.94 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 + si * 0.08, type: "spring", stiffness: 300 }}
+                  className="relative"
+                >
                   <img
                     src={src}
                     alt={`Julizen ${product.name} ${product.size} ${side} view`}
-                    className="h-auto w-full rounded-xl object-contain"
+                    className="h-auto w-full rounded-xl object-contain drop-shadow-sm"
                     style={{ aspectRatio: "3/4" }}
                     width={200}
                     height={267}
                     fetchPriority="high"
                     decoding="sync"
+                    loading="eager"
                   />
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <div className="mb-6">
-              <div className="mb-2 flex items-center gap-2">
-                <Flame className="h-4 w-4 text-primary" />
+            {/* Description */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.22 }}
+              className="mb-6"
+            >
+              <div className="mb-2.5 flex items-center gap-2">
+                <Flame className="h-4 w-4" style={{ color: product.accentColor }} />
                 <h3 className="text-sm font-bold uppercase tracking-wider text-secondary">About This Product</h3>
               </div>
               <p className="text-sm leading-7 text-muted-foreground">{product.fullDescription}</p>
-            </div>
+            </motion.div>
 
-            <div className="mb-8">
+            {/* Cooking tips */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.28 }}
+              className="mb-8"
+            >
               <div className="mb-3 flex items-center gap-2">
-                <ChefHat className="h-4 w-4 text-primary" />
+                <ChefHat className="h-4 w-4" style={{ color: product.accentColor }} />
                 <h3 className="text-sm font-bold uppercase tracking-wider text-secondary">Cooking Tips</h3>
               </div>
               <ol className="space-y-2.5">
                 {product.cookingTips.map((tip, i) => (
-                  <li key={i} className="flex items-start gap-3">
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.32 + i * 0.07 }}
+                    className="flex items-start gap-3"
+                  >
                     <span
-                      className="mt-px flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
+                      className="mt-px flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white shadow-sm"
                       style={{ backgroundColor: product.accentColor }}
                     >
                       {i + 1}
                     </span>
                     <span className="text-sm leading-6 text-muted-foreground">{tip}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ol>
-            </div>
+            </motion.div>
 
-            <div className="flex gap-3">
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.38 }}
+              className="flex gap-3"
+            >
               <a
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-secondary px-6 py-4 text-sm font-bold text-white shadow-md transition hover:bg-secondary/90 hover:shadow-lg active:scale-[0.98]"
+                className="flex flex-1 items-center justify-center gap-2 rounded-2xl px-6 py-4 text-sm font-bold text-white shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0"
+                style={{ backgroundColor: product.accentColor }}
               >
                 <ShoppingBag className="h-4 w-4" />
                 Order via WhatsApp
               </a>
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       </motion.div>
@@ -236,13 +355,19 @@ function ProductModal({
 function ProductCard({
   product,
   priority,
+  index,
   onViewDetails,
 }: {
   product: ProductEntry;
   priority: boolean;
+  index: number;
   onViewDetails: (p: ProductEntry) => void;
 }) {
   const whatsappLink = generateWhatsAppLink(product.whatsappMessage);
+  const [frontLoaded, setFrontLoaded] = useState(false);
+  const [backLoaded, setBackLoaded] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
   const frontSrc = product.frontImage.startsWith("/")
     ? getImageUrl(product.frontImage)
     : product.frontImage;
@@ -251,46 +376,89 @@ function ProductCard({
     : product.backImage;
 
   return (
-    <article
-      className="group flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm transition-all hover:shadow-lg hover:-translate-y-0.5"
+    <motion.article
+      initial={{ opacity: 0, y: 28, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{
+        delay: index * 0.07,
+        duration: 0.42,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      }}
+      whileHover={{ y: -5, transition: { duration: 0.22, ease: "easeOut" } }}
+      className="group flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm cursor-default"
+      style={{
+        boxShadow: hovered
+          ? `0 12px 40px -8px ${product.accentColor}22, 0 4px 16px -4px rgba(0,0,0,0.10)`
+          : "0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06)",
+        transition: "box-shadow 0.28s ease",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       itemScope
       itemType="https://schema.org/Product"
     >
-      <div className="relative grid grid-cols-2 bg-gradient-to-b from-[#fef9ee] to-[#f1ede3]">
+      {/* Image area */}
+      <div className="relative grid grid-cols-2 bg-gradient-to-b from-[#fef9ee] to-[#f1ede3] overflow-hidden">
+        {/* Accent top border that reveals on hover */}
+        <div
+          className="absolute top-0 left-0 right-0 h-0.5 transition-all duration-300"
+          style={{
+            backgroundColor: product.accentColor,
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? "scaleX(1)" : "scaleX(0)",
+          }}
+        />
+
         <div className="flex items-end justify-center border-r border-white/70 px-4 pt-6 pb-4">
-          <div className="w-full">
+          <div className="w-full relative">
+            {!frontLoaded && (
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" style={{ aspectRatio: "3/4" }} />
+            )}
             <img
               src={frontSrc}
               alt={`Julizen ${product.name} ${product.size} — front view`}
-              className="h-auto w-full object-contain drop-shadow-md"
-              style={{ aspectRatio: "3/4" }}
+              className="h-auto w-full object-contain drop-shadow-md transition-transform duration-500 group-hover:scale-[1.04]"
+              style={{ aspectRatio: "3/4", opacity: frontLoaded ? 1 : 0, transition: "opacity 0.3s ease, transform 0.5s ease" }}
               width={160}
               height={213}
               fetchPriority={priority ? "high" : "auto"}
               decoding={priority ? "sync" : "async"}
+              loading={priority ? "eager" : "lazy"}
+              onLoad={() => setFrontLoaded(true)}
               itemProp="image"
             />
           </div>
         </div>
         <div className="flex items-end justify-center px-4 pt-6 pb-4">
-          <div className="w-full">
+          <div className="w-full relative">
+            {!backLoaded && (
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" style={{ aspectRatio: "3/4" }} />
+            )}
             <img
               src={backSrc}
               alt={`Julizen ${product.name} ${product.size} — back label`}
-              className="h-auto w-full object-contain drop-shadow-md"
-              style={{ aspectRatio: "3/4" }}
+              className="h-auto w-full object-contain drop-shadow-md transition-transform duration-500 group-hover:scale-[1.04]"
+              style={{ aspectRatio: "3/4", opacity: backLoaded ? 1 : 0, transition: "opacity 0.3s ease, transform 0.5s ease" }}
               width={160}
               height={213}
               fetchPriority="auto"
               decoding="async"
+              loading="lazy"
+              onLoad={() => setBackLoaded(true)}
             />
           </div>
         </div>
-        <span className="absolute bottom-2 right-2 rounded-full bg-secondary/85 px-2.5 py-1 text-[11px] font-bold text-white shadow">
+
+        <span
+          className="absolute bottom-2 right-2 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow transition-transform duration-200 group-hover:scale-105"
+          style={{ backgroundColor: product.accentColor }}
+        >
           {product.size}
         </span>
       </div>
 
+      {/* Card body */}
       <div className="flex flex-1 flex-col px-4 pb-5 pt-4">
         <span
           className="mb-2 inline-block self-start rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white"
@@ -309,14 +477,14 @@ function ProductCard({
         </p>
 
         <div className="mb-4 flex items-center gap-2 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2">
-          <Package2 className="h-3.5 w-3.5 shrink-0 text-primary" />
+          <Package2 className="h-3.5 w-3.5 shrink-0" style={{ color: product.accentColor }} />
           <span className="text-[11px] font-semibold text-gray-600">{product.packDetail}</span>
         </div>
 
         <div className="mt-auto grid grid-cols-2 gap-2">
           <button
             onClick={() => onViewDetails(product)}
-            className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-secondary/20 bg-secondary/5 px-3 py-2.5 text-center text-[12px] font-semibold text-secondary transition hover:bg-secondary/10 active:scale-[0.97]"
+            className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-secondary/20 bg-secondary/5 px-3 py-2.5 text-center text-[12px] font-semibold text-secondary transition-all duration-200 hover:bg-secondary/10 hover:border-secondary/30 hover:shadow-sm active:scale-[0.97]"
           >
             <Info className="h-3.5 w-3.5 shrink-0" />
             View Details
@@ -326,14 +494,15 @@ function ProductCard({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Order Julizen ${product.name} ${product.size} via WhatsApp`}
-            className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-secondary px-3 py-2.5 text-center text-[12px] font-semibold text-white shadow-sm transition hover:bg-secondary/90 hover:shadow-md active:scale-[0.97]"
+            className="inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-center text-[12px] font-semibold text-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-px active:scale-[0.97] active:translate-y-0"
+            style={{ backgroundColor: product.accentColor }}
           >
             <ShoppingBag className="h-3.5 w-3.5 shrink-0" />
             Order Now
           </a>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
@@ -352,41 +521,51 @@ function SizeGroup({
   groupIndex: number;
   onViewDetails: (p: ProductEntry) => void;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+
   if (products.length === 0) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ delay: groupIndex * 0.04, duration: 0.45 }}
-    >
-      <div className="mb-7 flex items-center gap-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-sm font-bold text-white shadow-md">
-            {size}
+    <div ref={ref}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: groupIndex * 0.06, duration: 0.42 }}
+      >
+        <div className="mb-7 flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <motion.div
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={inView ? { scale: 1, opacity: 1 } : {}}
+              transition={{ delay: groupIndex * 0.06 + 0.1, type: "spring", stiffness: 320 }}
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-sm font-bold text-white shadow-md"
+            >
+              {size}
+            </motion.div>
+            <div>
+              <h3 className="font-display text-xl font-bold text-secondary sm:text-2xl">
+                {size} Products
+              </h3>
+              <p className="text-sm text-muted-foreground">{SIZE_LABELS[size]}</p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-display text-xl font-bold text-secondary sm:text-2xl">
-              {size} Products
-            </h3>
-            <p className="text-sm text-muted-foreground">{SIZE_LABELS[size]}</p>
-          </div>
+          <div className="ml-2 h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent" aria-hidden />
         </div>
-        <div className="ml-2 h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent" aria-hidden />
-      </div>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-        {products.map((product, pi) => (
-          <ProductCard
-            key={product.id + product.size}
-            product={product}
-            priority={groupIndex === 0 && pi < 2}
-            onViewDetails={onViewDetails}
-          />
-        ))}
-      </div>
-    </motion.div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {products.map((product, pi) => (
+            <ProductCard
+              key={product.id + product.size}
+              product={product}
+              priority={groupIndex === 0 && pi < 2}
+              index={pi}
+              onViewDetails={onViewDetails}
+            />
+          ))}
+        </div>
+      </motion.div>
+    </div>
   );
 }
 
