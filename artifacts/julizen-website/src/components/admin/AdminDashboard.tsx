@@ -26,7 +26,6 @@ function makeDefaultSize(size: SizeKey): AdminProductSize {
     frontImage: "",
     backImage: "",
     whatsappMessage: "",
-    sizeEnabled: true,
   };
 }
 
@@ -313,33 +312,6 @@ function ProductEditor({
 
         <div className="bg-white rounded-xl border border-gray-200 p-4 space-y-4">
           <h3 className="font-semibold text-gray-800 text-sm">Size Variants</h3>
-
-          <div className="bg-gray-50 rounded-xl border border-gray-100 p-3">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Size Visibility</p>
-            <div className="flex gap-2 flex-wrap">
-              {SIZE_KEYS.map(sz => {
-                const isEnabled = draft.sizes[sz]?.sizeEnabled !== false;
-                return (
-                  <button
-                    key={sz}
-                    type="button"
-                    onClick={() => sizeField(sz, "sizeEnabled", !isEnabled)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                      isEnabled
-                        ? "bg-green-50 border-green-200 text-green-700"
-                        : "bg-gray-100 border-gray-200 text-gray-400 line-through"
-                    }`}
-                    title={isEnabled ? `Disable ${sz} size` : `Enable ${sz} size`}
-                  >
-                    {isEnabled ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
-                    {sz}
-                  </button>
-                );
-              })}
-            </div>
-            <p className="text-xs text-gray-400 mt-2">Toggle each size to show or hide it on the website independently.</p>
-          </div>
-
           <div className="flex gap-2 border-b border-gray-200 pb-3">
             {SIZE_KEYS.map(sz => (
               <button
@@ -415,13 +387,11 @@ function ProductRow({
   product,
   onEdit,
   onToggle,
-  onToggleSize,
   onDelete,
 }: {
   product: AdminProduct;
   onEdit: () => void;
   onToggle: () => void;
-  onToggleSize: (size: SizeKey) => void;
   onDelete: () => void;
 }) {
   const frontImg = product.sizes["100g"]?.frontImage || product.sizes["10g"]?.frontImage || "";
@@ -433,81 +403,61 @@ function ProductRow({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -20, height: 0, marginBottom: 0 }}
-      className={`flex flex-col gap-3 p-4 bg-white rounded-xl border transition-all ${
+      className={`flex items-center gap-4 p-4 bg-white rounded-xl border transition-all ${
         product.enabled ? "border-gray-200" : "border-gray-100 opacity-60"
       }`}
     >
-      <div className="flex items-center gap-4">
-        <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 flex-shrink-0">
-          {src ? (
-            <img src={src} alt={product.name} className="w-full h-full object-contain" />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-300">
-              <Package className="w-6 h-6" />
-            </div>
+      <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 flex-shrink-0">
+        {src ? (
+          <img src={src} alt={product.name} className="w-full h-full object-contain" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-300">
+            <Package className="w-6 h-6" />
+          </div>
+        )}
+      </div>
+
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <h3 className="font-semibold text-gray-900 text-sm truncate">{product.name}</h3>
+          {!product.enabled && (
+            <span className="flex-shrink-0 text-xs px-2 py-0.5 bg-gray-100 text-gray-500 rounded-full">Hidden</span>
           )}
         </div>
-
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-gray-900 text-sm truncate">{product.name}</h3>
-            {!product.enabled && (
-              <span className="flex-shrink-0 text-xs px-2 py-0.5 bg-gray-100 text-gray-500 rounded-full">Hidden</span>
-            )}
-          </div>
-          <p className="text-xs text-gray-500 truncate mt-0.5">{product.tagline}</p>
-        </div>
-
-        <div className="flex items-center gap-2 flex-shrink-0">
-          <button
-            onClick={onToggle}
-            title={product.enabled ? "Hide product from site" : "Show product on site"}
-            className={`p-2 rounded-lg transition-colors ${
-              product.enabled
-                ? "text-green-600 hover:bg-green-50"
-                : "text-gray-400 hover:bg-gray-100"
-            }`}
-          >
-            {product.enabled ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-          </button>
-          <button
-            onClick={onEdit}
-            className="p-2 rounded-lg text-gray-500 hover:text-primary hover:bg-primary/5 transition-colors"
-          >
-            <Edit3 className="w-4 h-4" />
-          </button>
-          <button
-            onClick={onDelete}
-            className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
+        <p className="text-xs text-gray-500 truncate mt-0.5">{product.tagline}</p>
+        <div className="flex items-center gap-1 mt-1.5">
+          {(["10g", "100g", "400g"] as SizeKey[]).map(sz => (
+            <span key={sz} className="text-xs px-1.5 py-0.5 bg-primary/8 text-primary/70 rounded font-medium" style={{backgroundColor: product.accentColor + "15", color: product.accentColor}}>
+              {sz}
+            </span>
+          ))}
         </div>
       </div>
 
-      <div className="flex items-center gap-1.5 flex-wrap pl-[4.5rem]">
-        <span className="text-xs text-gray-400 mr-1">Sizes:</span>
-        {(["10g", "100g", "400g"] as SizeKey[]).map(sz => {
-          const isEnabled = product.sizes[sz]?.sizeEnabled !== false;
-          return (
-            <button
-              key={sz}
-              type="button"
-              onClick={() => onToggleSize(sz)}
-              title={isEnabled ? `Hide ${sz} size` : `Show ${sz} size`}
-              className={`flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold border transition-all ${
-                isEnabled
-                  ? "border-transparent text-white"
-                  : "bg-gray-100 border-gray-200 text-gray-400 line-through"
-              }`}
-              style={isEnabled ? { backgroundColor: product.accentColor } : undefined}
-            >
-              {isEnabled ? <Eye className="w-2.5 h-2.5" /> : <EyeOff className="w-2.5 h-2.5" />}
-              {sz}
-            </button>
-          );
-        })}
-        <span className="text-xs text-gray-400 ml-1">(click to toggle)</span>
+      <div className="flex items-center gap-2 flex-shrink-0">
+        <button
+          onClick={onToggle}
+          title={product.enabled ? "Hide from site" : "Show on site"}
+          className={`p-2 rounded-lg transition-colors ${
+            product.enabled
+              ? "text-green-600 hover:bg-green-50"
+              : "text-gray-400 hover:bg-gray-100"
+          }`}
+        >
+          {product.enabled ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+        </button>
+        <button
+          onClick={onEdit}
+          className="p-2 rounded-lg text-gray-500 hover:text-primary hover:bg-primary/5 transition-colors"
+        >
+          <Edit3 className="w-4 h-4" />
+        </button>
+        <button
+          onClick={onDelete}
+          className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+        >
+          <Trash2 className="w-4 h-4" />
+        </button>
       </div>
     </motion.div>
   );
@@ -562,24 +512,6 @@ export function AdminDashboard() {
       p.id === id ? { ...p, enabled: !p.enabled } : p
     );
     persistAndUpdate(updated);
-  }
-
-  function handleToggleSize(id: string, size: SizeKey) {
-    const updated = products.map(p => {
-      if (p.id !== id) return p;
-      const currentEnabled = p.sizes[size]?.sizeEnabled !== false;
-      return {
-        ...p,
-        sizes: {
-          ...p.sizes,
-          [size]: { ...p.sizes[size], sizeEnabled: !currentEnabled },
-        },
-      };
-    });
-    persistAndUpdate(updated);
-    const product = updated.find(p => p.id === id);
-    const newState = product?.sizes[size]?.sizeEnabled !== false;
-    showToast(`${size} size ${newState ? "enabled" : "disabled"} on site.`);
   }
 
   function handleDelete(id: string) {
@@ -640,43 +572,72 @@ export function AdminDashboard() {
                     <RotateCcw className="w-4 h-4" />
                   </button>
                   <button
-                    onClick={startNew}
-                    className="flex items-center gap-1.5 px-3 py-2 text-sm bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
-                  >
-                    <Plus className="w-4 h-4" /> Add
-                  </button>
-                  <button
                     onClick={handleLogout}
                     className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                   >
-                    <LogOut className="w-4 h-4" /> Logout
+                    <LogOut className="w-4 h-4" />
+                    <span className="hidden sm:inline">Logout</span>
+                  </button>
+                  <button
+                    onClick={closeDashboard}
+                    className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
                   </button>
                 </div>
               </header>
 
-              <div className="flex-1 overflow-y-auto p-4">
-                <AnimatePresence>
-                  <div className="space-y-3">
-                    {products.map(product => (
-                      <ProductRow
-                        key={product.id}
-                        product={product}
-                        onEdit={() => startEdit(product)}
-                        onToggle={() => handleToggle(product.id)}
-                        onToggleSize={(size) => handleToggleSize(product.id, size)}
-                        onDelete={() => handleDelete(product.id)}
-                      />
-                    ))}
+              <div className="flex-1 overflow-y-auto">
+                <div className="max-w-2xl mx-auto p-4 space-y-3">
+                  <div className="flex items-center justify-between py-2">
+                    <h2 className="font-semibold text-gray-800 text-sm">Products</h2>
+                    <button
+                      onClick={startNew}
+                      className="flex items-center gap-1.5 px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold shadow-sm shadow-primary/20 hover:bg-primary/90 transition-all"
+                    >
+                      <Plus className="w-4 h-4" /> Add Product
+                    </button>
                   </div>
-                </AnimatePresence>
 
-                {products.length === 0 && (
-                  <div className="text-center py-16 text-gray-400">
-                    <Package className="w-12 h-12 mx-auto mb-3 opacity-30" />
-                    <p className="text-sm font-medium">No products yet</p>
-                    <p className="text-xs mt-1">Click "Add" to create your first product</p>
+                  {products.length === 0 && (
+                    <div className="text-center py-16 text-gray-400">
+                      <Package className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                      <p className="text-sm">No products yet.</p>
+                      <button onClick={startNew} className="mt-3 text-primary text-sm font-medium">Add your first product</button>
+                    </div>
+                  )}
+
+                  <AnimatePresence>
+                    {products.map(product => (
+                      <div key={product.id} className="relative">
+                        <ProductRow
+                          product={product}
+                          onEdit={() => startEdit(product)}
+                          onToggle={() => handleToggle(product.id)}
+                          onDelete={() => handleDelete(product.id)}
+                        />
+                        {deleteConfirm === product.id && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            className="mx-1 px-4 py-3 bg-red-50 border border-red-200 rounded-b-xl border-t-0 flex items-center justify-between gap-3"
+                          >
+                            <p className="text-sm text-red-700 font-medium">Delete this product?</p>
+                            <div className="flex gap-2">
+                              <button onClick={() => setDeleteConfirm(null)} className="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">Cancel</button>
+                              <button onClick={() => handleDelete(product.id)} className="px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors">Delete</button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </div>
+                    ))}
+                  </AnimatePresence>
+
+                  <div className="pt-4 pb-8 text-center">
+                    <p className="text-xs text-gray-400">Changes save instantly and reflect on the site immediately.</p>
+                    <p className="text-xs text-gray-400 mt-1">Data is stored locally in this browser.</p>
                   </div>
-                )}
+                </div>
               </div>
             </>
           ) : (
