@@ -2,11 +2,17 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 
 export interface Product {
   id: string;
+  slug?: string;
+  size?: "10g" | "100g" | "400g";
   name: string;
   category: string;
   price: number;
   description: string;
+  packagingDetails?: string;
   image: string;
+  imageFront?: string;
+  imageBack?: string;
+  foodImage?: string;
   status: "available" | "coming_soon";
 }
 
@@ -31,30 +37,63 @@ const DEFAULT_SETTINGS: PublicSettings = {
 
 const DEFAULT_PRODUCTS: Product[] = [
   {
-    id: "chicken-seasoning",
-    name: "Julizen Chicken Seasoning Powder",
-    category: "Chicken",
+    id: "chicken-flavour-seasoning-powder-100g",
+    slug: "chicken-flavour-seasoning-powder",
+    size: "100g",
+    name: "Julizen Chicken Flavour Seasoning Powder 100G",
+    category: "Chicken Flavour",
     price: 1500,
-    description: "A well-balanced seasoning blend crafted to bring out the full depth of flavor in every chicken dish — grilled, stewed, or roasted.",
+    description: "Prepared for chicken dishes and everyday meals where a fuller savory taste is needed.",
+    packagingDetails: "Laminated sachet with secure top seal.",
     image: "/images/product-chicken.webp",
+    imageFront: "/images/product-chicken.webp",
+    imageBack: "/images/product-chicken.webp",
+    foodImage: "/images/product-chicken.webp",
     status: "available",
   },
   {
-    id: "fried-rice-seasoning",
-    name: "Julizen Fried Rice Seasoning Powder",
+    id: "crayfish-flavour-seasoning-powder-100g",
+    slug: "crayfish-flavour-seasoning-powder",
+    size: "100g",
+    name: "Julizen Crayfish Flavour Seasoning Powder 100G",
+    category: "Crayfish Flavour",
+    price: 1500,
+    description: "Suitable for soups, sauces, and traditional dishes where crayfish flavor adds depth.",
+    packagingDetails: "Laminated sachet with secure top seal.",
+    image: "/images/product-crayfish.webp",
+    imageFront: "/images/product-crayfish.webp",
+    imageBack: "/images/product-crayfish.webp",
+    foodImage: "/images/product-crayfish.webp",
+    status: "available",
+  },
+  {
+    id: "fried-rice-seasoning-powder-100g",
+    slug: "fried-rice-seasoning-powder",
+    size: "100g",
+    name: "Julizen Fried Rice Seasoning Powder 100G",
     category: "Fried Rice",
     price: 1500,
-    description: "A carefully measured blend of spices designed specifically for fried rice — giving each grain a savory, aromatic finish.",
+    description: "Made for fried rice meals with a balanced taste and satisfying result.",
+    packagingDetails: "Laminated sachet with secure top seal.",
     image: "/images/product-fried-rice.webp",
+    imageFront: "/images/product-fried-rice.webp",
+    imageBack: "/images/product-fried-rice.webp",
+    foodImage: "/images/product-fried-rice.webp",
     status: "available",
   },
   {
-    id: "crayfish-seasoning",
-    name: "Julizen Crayfish Seasoning Powder",
-    category: "Crayfish",
+    id: "stew-jollof-seasoning-powder-100g",
+    slug: "stew-jollof-seasoning-powder",
+    size: "100g",
+    name: "Julizen Stew & Jollof Seasoning Powder 100G",
+    category: "Stew & Jollof",
     price: 1500,
-    description: "A rich, smoky crayfish-infused blend perfect for soups, stews, and traditional Nigerian dishes that call for depth and body.",
-    image: "/images/product-crayfish.webp",
+    description: "Designed for stew and jollof dishes to support a richer and more consistent cooking result.",
+    packagingDetails: "Laminated sachet with secure top seal.",
+    image: "/images/food-jollof-rice.webp",
+    imageFront: "/images/food-jollof-rice.webp",
+    imageBack: "/images/food-jollof-rice.webp",
+    foodImage: "/images/food-jollof-rice.webp",
     status: "available",
   },
 ];
@@ -89,20 +128,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const fetchData = useCallback(async () => {
     try {
-      const [productsRes, settingsRes] = await Promise.all([
-        fetch("/api/products"),
-        fetch("/api/settings/public"),
-      ]);
+      const [productsRes, settingsRes] = await Promise.all([fetch("/api/products"), fetch("/api/settings/public")]);
       if (productsRes.ok) {
-        const data = await productsRes.json();
-        if (Array.isArray(data) && data.length > 0) setProducts(data);
+        const data = (await productsRes.json()) as Product[];
+        if (Array.isArray(data) && data.length > 0) {
+          const normalized = data.map((item) => ({
+            ...item,
+            image: item.foodImage || item.imageFront || item.image,
+          }));
+          setProducts(normalized);
+        }
       }
       if (settingsRes.ok) {
         const data = await settingsRes.json();
         setSettings((prev) => ({ ...prev, ...data }));
       }
     } catch {
-      // silently fall back to defaults
+      // fall back to defaults when API is not available.
     } finally {
       setLoading(false);
     }
@@ -112,9 +154,5 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     fetchData();
   }, [fetchData]);
 
-  return (
-    <AppContext.Provider value={{ products, settings, loading, refetch: fetchData }}>
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={{ products, settings, loading, refetch: fetchData }}>{children}</AppContext.Provider>;
 }
