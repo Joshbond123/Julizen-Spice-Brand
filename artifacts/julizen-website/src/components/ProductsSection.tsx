@@ -332,7 +332,7 @@ function ProductModal({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.38 }}
-              className="flex gap-3"
+              className="flex flex-col gap-3"
             >
               <a
                 href={whatsappLink}
@@ -344,6 +344,12 @@ function ProductModal({
                 <ShoppingBag className="h-4 w-4" />
                 Order via WhatsApp
               </a>
+              <button
+                onClick={onClose}
+                className="flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-gray-500 border border-gray-200 bg-gray-50 hover:bg-gray-100 hover:text-gray-700 transition-all duration-200 active:scale-[0.98]"
+              >
+                Cancel
+              </button>
             </motion.div>
           </div>
         </motion.div>
