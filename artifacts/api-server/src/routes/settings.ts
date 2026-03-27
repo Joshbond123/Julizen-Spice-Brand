@@ -1,27 +1,16 @@
 import { Router } from "express";
-import { db } from "@workspace/db";
-import { settingsTable } from "@workspace/db/schema";
-import { inArray } from "drizzle-orm";
+import { getSettings } from "../lib/contentStore";
 
 const router = Router();
 
-const PUBLIC_KEYS = ["whatsapp_number", "contact_email", "contact_phone"];
-
-router.get("/settings/public", async (_req, res) => {
+router.get("/settings/public", (_req, res) => {
   try {
-    const rows = await db
-      .select()
-      .from(settingsTable)
-      .where(inArray(settingsTable.key, PUBLIC_KEYS));
-    const settings: Record<string, string> = {
-      whatsapp_number: "2348000000000",
-      contact_email: "info@julizen.com",
-      contact_phone: "+234 800 000 0000",
-    };
-    for (const row of rows) {
-      settings[row.key] = row.value;
-    }
-    res.json(settings);
+    const s = getSettings();
+    res.json({
+      whatsapp_number: s.whatsapp_number,
+      contact_email: s.contact_email,
+      contact_phone: s.contact_phone,
+    });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch settings" });
   }

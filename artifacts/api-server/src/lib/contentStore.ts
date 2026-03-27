@@ -1,3 +1,7 @@
+import fs from "fs";
+import path from "path";
+import bcrypt from "bcryptjs";
+
 export type SizeKey = "10g" | "100g" | "400g";
 
 export interface AdminProductSize {
@@ -22,9 +26,23 @@ export interface AdminProduct {
   sizes: Record<SizeKey, AdminProductSize>;
 }
 
-export const PRODUCTS_UPDATE_EVENT = "julizen:products:updated";
+export interface Settings {
+  whatsapp_number: string;
+  contact_email: string;
+  contact_phone: string;
+  admin_password_hash: string;
+}
 
-export const DEFAULT_PRODUCTS: AdminProduct[] = [
+interface Store {
+  products: AdminProduct[];
+  settings: Settings;
+}
+
+const DATA_DIR = path.resolve(process.cwd(), "data");
+const STORE_FILE = path.join(DATA_DIR, "store.json");
+export const IMAGES_DIR = path.join(DATA_DIR, "images");
+
+const DEFAULT_PRODUCTS: AdminProduct[] = [
   {
     id: "chicken",
     name: "Chicken Flavour",
@@ -76,7 +94,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
     name: "Crayfish Flavour",
     tagline: "Authentic crayfish depth for traditional soups & native dishes.",
     fullDescription:
-      'Julizen Crayfish Flavour Seasoning Powder delivers the bold, unmistakable taste of crayfish that Nigerians know and love — without the mess. It brings deep umami richness to egusi soup, oha, bitterleaf, okra, and any traditional dish that calls for real crayfish flavour. Each sachet is concentrated to give your soup that thick, flavorful base that makes people ask "what did you put in this?"',
+      "Julizen Crayfish Flavour Seasoning Powder delivers the bold, unmistakable taste of crayfish that Nigerians know and love — without the mess. It brings deep umami richness to egusi soup, oha, bitterleaf, okra, and any traditional dish that calls for real crayfish flavour. Each sachet is concentrated to give your soup that thick, flavorful base that makes people ask \"what did you put in this?\"",
     cookingTips: [
       "Dissolve one teaspoonful in soup stock before adding your main ingredients.",
       "Use in egusi or okra soup to amplify the crayfish flavour naturally.",
@@ -84,8 +102,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "Add to ofe onugbu or bitterleaf soup for traditional depth.",
     ],
     foodImage: "/images/food-okro-fufu-party.webp",
-    foodCaption:
-      "Thick okro soup with fufu, assorted meat & crayfish — made with Julizen Crayfish Flavour",
+    foodCaption: "Thick okro soup with fufu, assorted meat & crayfish — made with Julizen Crayfish Flavour",
     accentColor: "#B45309",
     enabled: true,
     sizes: {
@@ -131,8 +148,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "Use half a teaspoon to season your chicken liver and gizzards.",
     ],
     foodImage: "/images/food-fried-rice-party.webp",
-    foodCaption:
-      "Vibrant Nigerian party fried rice with prawns & vegetables — made with Julizen Fried Rice",
+    foodCaption: "Vibrant Nigerian party fried rice with prawns & vegetables — made with Julizen Fried Rice",
     accentColor: "#CA8A04",
     enabled: true,
     sizes: {
@@ -178,8 +194,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "Combine with stock and seasoning to create a concentrated sauce for rice dishes.",
     ],
     foodImage: "/images/food-jollof-party.webp",
-    foodCaption:
-      "Smoky Nigerian party jollof rice with grilled chicken & plantain — made with Julizen Stew & Jollof",
+    foodCaption: "Smoky Nigerian party jollof rice with grilled chicken & plantain — made with Julizen Stew & Jollof",
     accentColor: "#DC2626",
     enabled: true,
     sizes: {
@@ -213,3 +228,87 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
     },
   },
 ];
+
+const DEFAULT_SETTINGS: Settings = {
+  whatsapp_number: "2348000000000",
+  contact_email: "info@julizen.com",
+  contact_phone: "+234 800 000 0000",
+  admin_password_hash: "",
+};
+
+function ensureDirectories(): void {
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
+}
+
+function readStore(): Store {
+  ensureDirectories();
+  try {
+    if (fs.existsSync(STORE_FILE)) {
+      const raw = fs.readFileSync(STORE_FILE, "utf-8");
+      const parsed = JSON.parse(raw) as Partial<Store>;
+      return {
+        products:
+          Array.isArray(parsed.products) && parsed.products.length > 0
+            ? parsed.products
+            : JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)),
+        settings: parsed.settings
+          ? { ...DEFAULT_SETTINGS, ...parsed.settings }
+          : { ...DEFAULT_SETTINGS },
+      };
+    }
+  } catch {
+    // fall through to defaults
+  }
+  return {
+    products: JSON.parse(JSON.stringify(DEFAULT_PRODUCTS)),
+    settings: { ...DEFAULT_SETTINGS },
+  };
+}
+
+function writeStore(store: Store): void {
+  ensureDirectories();
+  fs.writeFileSync(STORE_FILE, JSON.stringify(store, null, 2), "utf-8");
+}
+
+export async function initStore(): Promise<void> {
+  const store = readStore();
+  if (!store.settings.admin_password_hash) {
+    store.settings.admin_password_hash = await bcrypt.hash("julizen2024", 10);
+    writeStore(store);
+  }
+}
+
+export function getProducts(): AdminProduct[] {
+  return readStore().products;
+}
+
+export function updateProduct(id: string, update: Partial<AdminProduct>): AdminProduct | null {
+  const store = readStore();
+  const idx = store.products.findIndex((p) => p.id === id);
+  if (idx === -1) return null;
+  store.products[idx] = { ...store.products[idx], ...update, id };
+  writeStore(store);
+  return store.products[idx];
+}
+
+export function getSettings(): Settings {
+  return readStore().settings;
+}
+
+export function updateSettings(partial: Partial<Omit<Settings, "admin_password_hash">>): Settings {
+  const store = readStore();
+  store.settings = { ...store.settings, ...partial };
+  writeStore(store);
+  return store.settings;
+}
+
+export function getAdminPasswordHash(): string {
+  return readStore().settings.admin_password_hash;
+}
+
+export function setAdminPasswordHash(hash: string): void {
+  const store = readStore();
+  store.settings.admin_password_hash = hash;
+  writeStore(store);
+}

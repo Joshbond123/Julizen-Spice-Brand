@@ -4,14 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import { cn, generateWhatsAppLink } from "@/lib/utils";
 import { getImageUrl } from "@/lib/imageUrl";
-import { useAdmin } from "@/components/admin/AdminProvider";
-
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const [location, navigate] = useLocation();
-  const { triggerLogin } = useAdmin();
 
   const logoClickCount = useRef(0);
   const logoClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -67,7 +64,7 @@ export function Navbar() {
 
     if (logoClickCount.current >= 5) {
       logoClickCount.current = 0;
-      triggerLogin();
+      navigate("/admin");
       return;
     }
 
@@ -80,7 +77,7 @@ export function Navbar() {
       return;
     }
     scrollToSection("#home");
-  }, [location, navigate, triggerLogin]);
+  }, [location, navigate]);
 
   return (
     <header
