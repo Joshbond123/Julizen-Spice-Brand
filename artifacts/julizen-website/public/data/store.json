@@ -123,7 +123,7 @@
           "frontImage": "/images/product-fried-rice-100g-front.webp",
           "backImage": "/images/product-fried-rice-100g-back.webp",
           "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder 400g Ã 20 sachets (carton). Please send me the details and price.",
-          "sizeEnabled": true
+          "sizeEnabled": false
         }
       }
     },
