@@ -1,53 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import {
-  Eye,
-  EyeOff,
-  Flame,
-  ImagePlus,
-  KeyRound,
-  LogOut,
-  Save,
-  Settings,
-  ShieldCheck,
-  ShoppingBag,
-} from "lucide-react";
+import { Flame, Plus, Pencil, Trash2, Save, X, LogOut, KeyRound, Settings, Package, Eye, EyeOff } from "lucide-react";
+import { useApp, type Product } from "@/context/AppContext";
+import { formatNaira } from "@/context/AppContext";
 import { getImageUrl } from "@/lib/imageUrl";
-import { useApp } from "@/context/AppContext";
-
-type ProductSize = "10g" | "100g" | "400g";
-
-type ManagedProduct = {
-  id: string;
-  slug: string;
-  size: ProductSize;
-  name: string;
-  category: string;
-  price: number;
-  description: string;
-  packagingDetails: string;
-  imageFront: string;
-  imageBack: string;
-  foodImage: string;
-  image: string;
-  status: "available" | "coming_soon";
-};
-
-type PublicSettings = {
-  whatsapp_number: string;
-  contact_email: string;
-  contact_phone: string;
-};
 
 const API = (path: string) => path;
 
-function authHeaders(token: string) {
-  return { "Content-Type": "application/json", Authorization: `Bearer ${token}` };
-}
-
 function useAdminAuth() {
-  const [token, setToken] = useState<string | null>(null);
-
+  const [token, setToken] = useState<string | null>(() => sessionStorage.getItem("julizen_admin_token"));
   const login = async (password: string): Promise<string | null> => {
     try {
       const res = await fetch(API("/api/admin/login"), {
@@ -59,19 +20,23 @@ function useAdminAuth() {
         const data = await res.json();
         return data.error ?? "Login failed";
       }
-      const data = await res.json();
-      setToken(data.token as string);
+      const { token: t } = await res.json();
+      sessionStorage.setItem("julizen_admin_token", t);
+      setToken(t);
       return null;
     } catch {
       return "Network error. Please try again.";
     }
   };
-
-  return {
-    token,
-    login,
-    logout: () => setToken(null),
+  const logout = () => {
+    sessionStorage.removeItem("julizen_admin_token");
+    setToken(null);
   };
+  return { token, login, logout };
+}
+
+function authHeaders(token: string) {
+  return { "Content-Type": "application/json", Authorization: `Bearer ${token}` };
 }
 
 export default function Admin() {
@@ -81,14 +46,14 @@ export default function Admin() {
   const [tab, setTab] = useState<"products" | "settings" | "password">("products");
 
   if (!token) {
-    return <LoginPage onBack={() => navigate("/")} onLogin={login} />;
+    return <LoginPage onLogin={login} onBack={() => navigate("/")} />;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <AdminNav onLogout={logout} setTab={setTab} tab={tab} />
-      <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        {tab === "products" && <ProductsTab token={token} onSaved={refetch} />}
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <AdminNav tab={tab} setTab={setTab} onLogout={logout} />
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
+        {tab === "products" && <ProductsTab token={token} onRefetch={refetch} />}
         {tab === "settings" && <SettingsTab token={token} />}
         {tab === "password" && <PasswordTab token={token} />}
       </main>
@@ -96,68 +61,66 @@ export default function Admin() {
   );
 }
 
-function LoginPage({ onLogin, onBack }: { onLogin: (password: string) => Promise<string | null>; onBack: () => void }) {
+function LoginPage({ onLogin, onBack }: { onLogin: (p: string) => Promise<string | null>; onBack: () => void }) {
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const submit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     setError("");
-    const result = await onLogin(password);
+    const err = await onLogin(password);
     setLoading(false);
-    if (result) setError(result);
+    if (err) setError(err);
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-sm rounded-2xl border border-gray-100 bg-white p-8 shadow-xl">
-        <div className="mb-8 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-red-600 to-orange-500">
-            <Flame className="h-6 w-6 fill-white text-white" />
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center">
+            <Flame className="w-6 h-6 text-white fill-white" />
           </div>
           <div>
-            <p className="text-lg font-bold text-gray-900 leading-tight">Julizen Admin</p>
-            <p className="text-xs text-gray-400">Secure product management</p>
+            <p className="font-bold text-gray-900 text-lg leading-tight">Julizen Admin</p>
+            <p className="text-xs text-gray-400">Restricted access</p>
           </div>
         </div>
 
-        <form className="space-y-5" onSubmit={submit}>
+        <form onSubmit={submit} className="space-y-5">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">Admin Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Admin Password</label>
             <div className="relative">
               <input
-                autoFocus
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 pr-11 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="Enter password"
-                required
                 type={showPw ? "text" : "password"}
                 value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent pr-11"
+                placeholder="Enter password"
+                autoFocus
+                required
               />
               <button
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                onClick={() => setShowPw((value) => !value)}
                 type="button"
+                onClick={() => setShowPw((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
-            {error && <p className="mt-2 text-xs text-red-500">{error}</p>}
+            {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
           </div>
-
           <button
-            className="w-full rounded-xl bg-red-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-60"
-            disabled={loading}
             type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition-colors disabled:opacity-60"
           >
             {loading ? "Signing in…" : "Sign In"}
           </button>
         </form>
-
-        <button className="mt-5 w-full text-center text-xs text-gray-400 transition-colors hover:text-gray-600" onClick={onBack}>
+        <button onClick={onBack} className="mt-5 text-xs text-gray-400 hover:text-gray-600 w-full text-center transition-colors">
           ← Back to website
         </button>
       </div>
@@ -165,46 +128,37 @@ function LoginPage({ onLogin, onBack }: { onLogin: (password: string) => Promise
   );
 }
 
-function AdminNav({
-  tab,
-  setTab,
-  onLogout,
-}: {
-  tab: "products" | "settings" | "password";
-  setTab: (tab: "products" | "settings" | "password") => void;
-  onLogout: () => void;
-}) {
+function AdminNav({ tab, setTab, onLogout }: { tab: string; setTab: (t: any) => void; onLogout: () => void }) {
   const tabs = [
-    { id: "products" as const, label: "Products", icon: ShoppingBag },
-    { id: "settings" as const, label: "Settings", icon: Settings },
-    { id: "password" as const, label: "Password", icon: KeyRound },
+    { id: "products", label: "Products", icon: Package },
+    { id: "settings", label: "Settings", icon: Settings },
+    { id: "password", label: "Password", icon: KeyRound },
   ];
-
   return (
-    <header className="sticky top-0 z-30 border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-30">
+      <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img alt="Julizen" className="h-10 w-auto object-contain" src={getImageUrl("/images/julizen-logo.webp")} />
-          <span className="hidden text-xs font-semibold uppercase tracking-wider text-gray-400 sm:block">Admin Panel</span>
+          <img src={getImageUrl("/images/julizen-logo.webp")} alt="Julizen" className="h-10 w-auto object-contain" />
+          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider hidden sm:block">Admin Panel</span>
         </div>
         <nav className="flex items-center gap-1">
-          {tabs.map(({ id, icon: Icon, label }) => (
+          {tabs.map(({ id, label, icon: Icon }) => (
             <button
-              className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                tab === id ? "bg-red-50 text-red-600" : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-              }`}
               key={id}
               onClick={() => setTab(id)}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                tab === id ? "bg-red-50 text-red-600" : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+              }`}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className="w-4 h-4" />
               <span className="hidden sm:inline">{label}</span>
             </button>
           ))}
           <button
-            className="ml-2 flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600"
             onClick={onLogout}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:bg-red-50 hover:text-red-600 transition-colors ml-2"
           >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="w-4 h-4" />
           </button>
         </nav>
       </div>
@@ -212,440 +166,306 @@ function AdminNav({
   );
 }
 
-function ProductsTab({ token, onSaved }: { token: string; onSaved: () => void }) {
-  const [products, setProducts] = useState<ManagedProduct[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [savingId, setSavingId] = useState<string | null>(null);
+function ProductsTab({ token, onRefetch }: { token: string; onRefetch: () => void }) {
+  const { products } = useApp();
+  const [editing, setEditing] = useState<Product | null>(null);
+  const [adding, setAdding] = useState(false);
   const [error, setError] = useState("");
-  const [successId, setSuccessId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
-  const loadProducts = async () => {
-    setLoading(true);
+  const emptyProduct: Omit<Product, "id"> = {
+    name: "",
+    category: "",
+    price: 1500,
+    description: "",
+    image: "/images/product-chicken.webp",
+    status: "available",
+  };
+  const [form, setForm] = useState<Partial<Product>>(emptyProduct);
+
+  const startEdit = (p: Product) => { setEditing(p); setForm(p); setAdding(false); setError(""); };
+  const startAdd = () => { setAdding(true); setEditing(null); setForm({ ...emptyProduct, id: Date.now().toString() }); setError(""); };
+  const cancel = () => { setEditing(null); setAdding(false); setError(""); };
+
+  const save = async () => {
+    if (!form.name?.trim() || !form.category?.trim() || !form.description?.trim() || !form.image?.trim()) {
+      setError("All fields are required.");
+      return;
+    }
+    setSaving(true);
     setError("");
     try {
-      const response = await fetch(API("/api/admin/products"), { headers: authHeaders(token) });
-      const payload = await response.json();
-      if (!response.ok) {
-        setError(payload.error ?? "Failed to load products");
-        setLoading(false);
-        return;
-      }
-      setProducts(payload as ManagedProduct[]);
-    } catch {
-      setError("Network error while loading products");
-    } finally {
-      setLoading(false);
-    }
+      const isNew = adding;
+      const url = isNew ? "/api/products" : `/api/products/${editing!.id}`;
+      const method = isNew ? "POST" : "PUT";
+      const res = await fetch(API(url), { method, headers: authHeaders(token), body: JSON.stringify(form) });
+      if (!res.ok) { const d = await res.json(); setError(d.error ?? "Save failed"); return; }
+      cancel();
+      onRefetch();
+    } catch { setError("Network error."); }
+    finally { setSaving(false); }
   };
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
-
-  const groupedProducts = useMemo(() => {
-    const groups: Record<string, ManagedProduct[]> = {};
-    for (const product of products) {
-      if (!groups[product.slug]) groups[product.slug] = [];
-      groups[product.slug].push(product);
-    }
-    const order: ProductSize[] = ["10g", "100g", "400g"];
-    return Object.entries(groups)
-      .map(([slug, group]) => [slug, [...group].sort((a, b) => order.indexOf(a.size) - order.indexOf(b.size))] as const)
-      .sort((a, b) => a[1][0].name.localeCompare(b[1][0].name));
-  }, [products]);
-
-  const updateProductField = (id: string, field: keyof ManagedProduct, value: string | number) => {
-    setProducts((current) => current.map((product) => (product.id === id ? { ...product, [field]: value } : product)));
-  };
-
-  const readFileAsDataUrl = async (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(String(reader.result ?? ""));
-      reader.onerror = () => reject(new Error("Failed to read file"));
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const handleImageUpload = async (id: string, field: "imageFront" | "imageBack" | "foodImage", file?: File) => {
-    if (!file) return;
-    const dataUrl = await readFileAsDataUrl(file);
-    updateProductField(id, field, dataUrl);
-    if (field === "foodImage") {
-      updateProductField(id, "image", dataUrl);
-    }
-  };
-
-  const saveProduct = async (product: ManagedProduct) => {
-    setSavingId(product.id);
-    setError("");
-    setSuccessId(null);
-
+  const remove = async (id: string) => {
+    if (!confirm("Delete this product?")) return;
     try {
-      const response = await fetch(API(`/api/admin/products/${product.id}`), {
-        method: "PUT",
-        headers: authHeaders(token),
-        body: JSON.stringify(product),
-      });
-      const payload = await response.json();
-      if (!response.ok) {
-        setError(payload.error ?? "Save failed");
-        setSavingId(null);
-        return;
-      }
-      setProducts((current) => current.map((item) => (item.id === product.id ? (payload as ManagedProduct) : item)));
-      setSuccessId(product.id);
-      onSaved();
-    } catch {
-      setError("Network error while saving");
-    } finally {
-      setSavingId(null);
-    }
+      const res = await fetch(API(`/api/products/${id}`), { method: "DELETE", headers: authHeaders(token) });
+      if (!res.ok) { alert("Failed to delete product."); return; }
+      onRefetch();
+    } catch { alert("Network error."); }
   };
 
-  if (loading) {
-    return <p className="text-sm text-gray-500">Loading product management data…</p>;
-  }
+  const imageOptions = [
+    { label: "Chicken", value: "/images/product-chicken.webp" },
+    { label: "Fried Rice", value: "/images/product-fried-rice.webp" },
+    { label: "Crayfish", value: "/images/product-crayfish.webp" },
+  ];
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900">Product Management</h2>
-        <p className="mt-1 text-sm text-gray-500">
-          Manage each Julizen product independently across 10G, 100G and 400G sizes. Changes are written to persistent server storage.
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-gray-900">Products</h2>
+          <p className="text-sm text-gray-500 mt-0.5">Manage your product catalog</p>
+        </div>
+        {!adding && !editing && (
+          <button onClick={startAdd} className="flex items-center gap-2 px-4 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition-colors">
+            <Plus className="w-4 h-4" /> Add Product
+          </button>
+        )}
       </div>
 
-      {error && (
-        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</div>
-      )}
-
-      <div className="space-y-5">
-        {groupedProducts.map(([slug, records]) => (
-          <section className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm sm:p-6" key={slug}>
-            <h3 className="mb-4 text-lg font-semibold text-gray-900">{records[0]?.category}</h3>
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-              {records.map((product) => (
-                <article className="rounded-2xl border border-gray-100 bg-gray-50 p-4" key={product.id}>
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-red-600">
-                      {product.size}
-                    </span>
-                    {successId === product.id && (
-                      <span className="inline-flex items-center gap-1 text-xs font-medium text-green-600">
-                        <ShieldCheck className="h-4 w-4" /> Saved
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="space-y-3">
-                    <Field label="Product name" value={product.name} onChange={(value) => updateProductField(product.id, "name", value)} />
-                    <Field label="Description" textarea value={product.description} onChange={(value) => updateProductField(product.id, "description", value)} />
-                    <Field
-                      label="Packaging details"
-                      textarea
-                      value={product.packagingDetails}
-                      onChange={(value) => updateProductField(product.id, "packagingDetails", value)}
-                    />
-                    <Field label="Category" value={product.category} onChange={(value) => updateProductField(product.id, "category", value)} />
-                    <Field
-                      label="Price (₦)"
-                      type="number"
-                      value={String(product.price)}
-                      onChange={(value) => updateProductField(product.id, "price", Number(value) || 0)}
-                    />
-                    <div>
-                      <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Status</label>
-                      <select
-                        className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                        onChange={(event) => updateProductField(product.id, "status", event.target.value)}
-                        value={product.status}
-                      >
-                        <option value="available">Available</option>
-                        <option value="coming_soon">Coming soon</option>
-                      </select>
-                    </div>
-
-                    <ImageEditor
-                      label="Front pack image"
-                      preview={product.imageFront}
-                      onFileChange={(file) => handleImageUpload(product.id, "imageFront", file)}
-                      onUrlChange={(value) => updateProductField(product.id, "imageFront", value)}
-                    />
-
-                    <ImageEditor
-                      label="Back pack image"
-                      preview={product.imageBack}
-                      onFileChange={(file) => handleImageUpload(product.id, "imageBack", file)}
-                      onUrlChange={(value) => updateProductField(product.id, "imageBack", value)}
-                    />
-
-                    <ImageEditor
-                      label="Food display image"
-                      preview={product.foodImage}
-                      onFileChange={(file) => handleImageUpload(product.id, "foodImage", file)}
-                      onUrlChange={(value) => {
-                        updateProductField(product.id, "foodImage", value);
-                        updateProductField(product.id, "image", value);
-                      }}
-                    />
-
-                    <button
-                      className="mt-2 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-60"
-                      disabled={savingId === product.id}
-                      onClick={() => saveProduct(product)}
-                      type="button"
-                    >
-                      <Save className="h-4 w-4" />
-                      {savingId === product.id ? "Saving…" : "Save this size"}
-                    </button>
-                  </div>
-                </article>
+      {(adding || editing) && (
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
+          <h3 className="font-semibold text-gray-900">{adding ? "Add New Product" : "Edit Product"}</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Field label="Product Name" value={form.name ?? ""} onChange={(v) => setForm((f) => ({ ...f, name: v }))} placeholder="e.g. Julizen Chicken Seasoning Powder" />
+            <Field label="Category" value={form.category ?? ""} onChange={(v) => setForm((f) => ({ ...f, category: v }))} placeholder="e.g. Chicken" />
+            <Field label="Price (₦)" type="number" value={String(form.price ?? 1500)} onChange={(v) => setForm((f) => ({ ...f, price: Number(v) }))} placeholder="1500" />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Status</label>
+              <select
+                value={form.status ?? "available"}
+                onChange={(e) => setForm((f) => ({ ...f, status: e.target.value as any }))}
+                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                <option value="available">Available</option>
+                <option value="coming_soon">Coming Soon</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Image</label>
+            <div className="flex gap-2 flex-wrap mb-2">
+              {imageOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setForm((f) => ({ ...f, image: opt.value }))}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium transition-colors ${form.image === opt.value ? "border-red-500 bg-red-50 text-red-600" : "border-gray-200 text-gray-500 hover:border-gray-300"}`}
+                >
+                  <img src={opt.value} alt={opt.label} className="w-6 h-6 object-cover rounded" />
+                  {opt.label}
+                </button>
               ))}
             </div>
-          </section>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ImageEditor({
-  label,
-  preview,
-  onFileChange,
-  onUrlChange,
-}: {
-  label: string;
-  preview: string;
-  onFileChange: (file?: File) => void;
-  onUrlChange: (value: string) => void;
-}) {
-  return (
-    <div className="rounded-xl border border-gray-200 bg-white p-3">
-      <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-500">{label}</label>
-      <div className="mb-2 flex h-28 items-center justify-center rounded-lg border border-dashed border-gray-200 bg-gray-50 p-2">
-        {preview ? <img alt={label} className="h-full w-full object-contain" src={preview} /> : <span className="text-xs text-gray-400">No image</span>}
-      </div>
-      <div className="space-y-2">
-        <label className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-50">
-          <ImagePlus className="h-4 w-4" />
-          Upload image
-          <input className="hidden" onChange={(event) => onFileChange(event.target.files?.[0])} type="file" accept="image/*" />
-        </label>
-        <input
-          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500"
-          onChange={(event) => onUrlChange(event.target.value)}
-          placeholder="Or paste image URL / data URI"
-          type="text"
-          value={preview}
-        />
-      </div>
-    </div>
-  );
-}
-
-function Field({
-  label,
-  value,
-  onChange,
-  type = "text",
-  textarea = false,
-}: {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  type?: string;
-  textarea?: boolean;
-}) {
-  return (
-    <div>
-      <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">{label}</label>
-      {textarea ? (
-        <textarea
-          className="w-full resize-none rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-          onChange={(event) => onChange(event.target.value)}
-          rows={3}
-          value={value}
-        />
-      ) : (
-        <input
-          className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-          onChange={(event) => onChange(event.target.value)}
-          type={type}
-          value={value}
-        />
+            <input
+              type="text"
+              value={form.image ?? ""}
+              onChange={(e) => setForm((f) => ({ ...f, image: e.target.value }))}
+              className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Or enter a custom image URL / path"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Description</label>
+            <textarea
+              value={form.description ?? ""}
+              onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+              rows={3}
+              className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"
+              placeholder="Product description…"
+            />
+          </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <div className="flex gap-3">
+            <button onClick={save} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition-colors disabled:opacity-60">
+              <Save className="w-4 h-4" /> {saving ? "Saving…" : "Save Product"}
+            </button>
+            <button onClick={cancel} className="flex items-center gap-2 px-5 py-2.5 bg-gray-100 text-gray-700 text-sm font-semibold rounded-xl hover:bg-gray-200 transition-colors">
+              <X className="w-4 h-4" /> Cancel
+            </button>
+          </div>
+        </div>
       )}
+
+      <div className="space-y-3">
+        {products.map((product) => (
+          <div key={product.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex items-center gap-4">
+            <img src={getImageUrl(product.image.replace(/\.jpg$/, '.webp'))} alt={product.name} className="w-16 h-16 object-cover rounded-xl flex-shrink-0" onError={(e) => { (e.currentTarget as HTMLImageElement).src = getImageUrl(product.image); }} />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <p className="font-semibold text-gray-900 text-sm truncate">{product.name}</p>
+                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${product.status === "available" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}>
+                  {product.status === "available" ? "Available" : "Coming Soon"}
+                </span>
+              </div>
+              <p className="text-xs text-gray-400 mt-0.5">{product.category} · {formatNaira(product.price)}</p>
+              <p className="text-xs text-gray-500 mt-1 line-clamp-1">{product.description}</p>
+            </div>
+            <div className="flex gap-2 flex-shrink-0">
+              <button onClick={() => startEdit(product)} className="p-2 rounded-xl text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                <Pencil className="w-4 h-4" />
+              </button>
+              <button onClick={() => remove(product.id)} className="p-2 rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors">
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        ))}
+        {products.length === 0 && (
+          <div className="text-center py-16 text-gray-400">
+            <Package className="w-10 h-10 mx-auto mb-3 opacity-40" />
+            <p className="text-sm">No products yet. Add one above.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 function SettingsTab({ token }: { token: string }) {
-  const [settings, setSettings] = useState<PublicSettings>({
-    whatsapp_number: "",
-    contact_email: "",
-    contact_phone: "",
-  });
+  const [whatsapp, setWhatsapp] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetch(API("/api/admin/settings"), { headers: authHeaders(token) })
-      .then((response) => response.json())
-      .then((payload) => setSettings(payload as PublicSettings))
-      .catch(() => setError("Failed to load settings"))
-      .finally(() => setLoading(false));
+      .then((r) => r.json())
+      .then((d) => {
+        setWhatsapp(d.whatsapp_number ?? "");
+        setEmail(d.contact_email ?? "");
+        setPhone(d.contact_phone ?? "");
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, [token]);
 
   const save = async () => {
-    setSaving(true);
-    setError("");
-    setSuccess(false);
+    if (!whatsapp.trim()) { setError("WhatsApp number is required."); return; }
+    setSaving(true); setError(""); setSuccess(false);
     try {
-      const response = await fetch(API("/api/admin/settings"), {
+      const res = await fetch(API("/api/admin/settings"), {
         method: "PUT",
         headers: authHeaders(token),
-        body: JSON.stringify(settings),
+        body: JSON.stringify({ whatsapp_number: whatsapp, contact_email: email, contact_phone: phone }),
       });
-      const payload = await response.json();
-      if (!response.ok) {
-        setError(payload.error ?? "Failed to save settings");
-        setSaving(false);
-        return;
-      }
+      if (!res.ok) { const d = await res.json(); setError(d.error ?? "Save failed"); return; }
       setSuccess(true);
-    } catch {
-      setError("Network error");
-    } finally {
-      setSaving(false);
-    }
+      setTimeout(() => setSuccess(false), 3000);
+    } catch { setError("Network error."); }
+    finally { setSaving(false); }
   };
 
-  if (loading) return <p className="text-sm text-gray-500">Loading settings…</p>;
-
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-      <h2 className="text-xl font-bold text-gray-900">Public Contact Settings</h2>
-      <p className="mt-1 text-sm text-gray-500">These values are stored on the server and reflected on the public website.</p>
-
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Field
-          label="WhatsApp number"
-          value={settings.whatsapp_number}
-          onChange={(value) => setSettings((current) => ({ ...current, whatsapp_number: value }))}
-        />
-        <Field
-          label="Contact phone"
-          value={settings.contact_phone}
-          onChange={(value) => setSettings((current) => ({ ...current, contact_phone: value }))}
-        />
-        <div className="sm:col-span-2">
-          <Field
-            label="Contact email"
-            value={settings.contact_email}
-            onChange={(value) => setSettings((current) => ({ ...current, contact_email: value }))}
-          />
-        </div>
+    <div className="max-w-lg space-y-6">
+      <div>
+        <h2 className="text-xl font-bold text-gray-900">Contact Settings</h2>
+        <p className="text-sm text-gray-500 mt-0.5">These details appear on the website and power the WhatsApp order buttons.</p>
       </div>
-
-      {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
-      {success && <p className="mt-4 text-sm text-green-600">Settings updated successfully.</p>}
-
-      <button
-        className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-60"
-        disabled={saving}
-        onClick={save}
-      >
-        <Save className="h-4 w-4" />
-        {saving ? "Saving…" : "Save Settings"}
-      </button>
-    </section>
+      {loading ? (
+        <div className="text-sm text-gray-400">Loading…</div>
+      ) : (
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-5">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">WhatsApp Number</label>
+            <p className="text-xs text-gray-400 mb-2">Include country code, no spaces or dashes (e.g. 2348012345678)</p>
+            <input type="text" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="2348000000000" />
+          </div>
+          <Field label="Contact Email" value={email} onChange={setEmail} placeholder="info@julizen.com" type="email" />
+          <Field label="Contact Phone (display)" value={phone} onChange={setPhone} placeholder="+234 800 000 0000" />
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {success && <p className="text-green-600 text-sm font-medium">Settings saved successfully.</p>}
+          <button onClick={save} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition-colors disabled:opacity-60">
+            <Save className="w-4 h-4" /> {saving ? "Saving…" : "Save Settings"}
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
 function PasswordTab({ token }: { token: string }) {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [current, setCurrent] = useState("");
+  const [next, setNext] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [showPw, setShowPw] = useState(false);
 
   const save = async () => {
-    if (!currentPassword || !newPassword || !confirmPassword) {
-      setError("All password fields are required.");
-      return;
-    }
-    if (newPassword.length < 6) {
-      setError("New password must be at least 6 characters.");
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setError("New password and confirm password must match.");
-      return;
-    }
-
-    setSaving(true);
-    setError("");
-    setSuccess(false);
+    if (!current || !next || !confirm) { setError("All fields are required."); return; }
+    if (next !== confirm) { setError("New passwords do not match."); return; }
+    if (next.length < 6) { setError("New password must be at least 6 characters."); return; }
+    setSaving(true); setError(""); setSuccess(false);
     try {
-      const response = await fetch(API("/api/admin/password"), {
+      const res = await fetch(API("/api/admin/password"), {
         method: "PUT",
         headers: authHeaders(token),
-        body: JSON.stringify({ currentPassword, newPassword }),
+        body: JSON.stringify({ currentPassword: current, newPassword: next }),
       });
-      const payload = await response.json();
-      if (!response.ok) {
-        setError(payload.error ?? "Failed to update password");
-        setSaving(false);
-        return;
-      }
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-      setSuccess(true);
-    } catch {
-      setError("Network error");
-    } finally {
-      setSaving(false);
-    }
+      if (!res.ok) { const d = await res.json(); setError(d.error ?? "Update failed"); return; }
+      setSuccess(true); setCurrent(""); setNext(""); setConfirm("");
+      setTimeout(() => setSuccess(false), 3000);
+    } catch { setError("Network error."); }
+    finally { setSaving(false); }
   };
 
   return (
-    <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-      <h2 className="text-xl font-bold text-gray-900">Admin Password</h2>
-      <p className="mt-1 text-sm text-gray-500">Update your admin login password. This is persisted to the server file storage.</p>
-
-      <div className="mt-6 space-y-4">
+    <div className="max-w-md space-y-6">
+      <div>
+        <h2 className="text-xl font-bold text-gray-900">Change Password</h2>
+        <p className="text-sm text-gray-500 mt-0.5">You must enter your current password to set a new one.</p>
+      </div>
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
         <div className="relative">
-          <Field label="Current password" type={showPassword ? "text" : "password"} value={currentPassword} onChange={setCurrentPassword} />
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">Current Password</label>
+          <input type={showPw ? "text" : "password"} value={current} onChange={(e) => setCurrent(e.target.value)} className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 pr-10" placeholder="Current password" />
+          <button type="button" onClick={() => setShowPw((v) => !v)} className="absolute right-3 bottom-2.5 text-gray-400 hover:text-gray-600">
+            {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+          </button>
         </div>
-        <Field label="New password" type={showPassword ? "text" : "password"} value={newPassword} onChange={setNewPassword} />
-        <Field label="Confirm new password" type={showPassword ? "text" : "password"} value={confirmPassword} onChange={setConfirmPassword} />
-        <button
-          className="inline-flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-700"
-          onClick={() => setShowPassword((value) => !value)}
-          type="button"
-        >
-          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-          {showPassword ? "Hide password fields" : "Show password fields"}
+        <Field label="New Password" type="password" value={next} onChange={setNext} placeholder="At least 6 characters" />
+        <Field label="Confirm New Password" type="password" value={confirm} onChange={setConfirm} placeholder="Repeat new password" />
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {success && <p className="text-green-600 text-sm font-medium">Password updated successfully.</p>}
+        <button onClick={save} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-xl hover:bg-red-700 transition-colors disabled:opacity-60">
+          <KeyRound className="w-4 h-4" /> {saving ? "Updating…" : "Update Password"}
         </button>
       </div>
+    </div>
+  );
+}
 
-      {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
-      {success && <p className="mt-4 text-sm text-green-600">Password updated successfully.</p>}
-
-      <button
-        className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-60"
-        disabled={saving}
-        onClick={save}
-      >
-        <Save className="h-4 w-4" />
-        {saving ? "Saving…" : "Update Password"}
-      </button>
-    </section>
+function Field({ label, value, onChange, placeholder, type = "text" }: {
+  label: string; value: string; onChange: (v: string) => void;
+  placeholder?: string; type?: string;
+}) {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1.5">{label}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+      />
+    </div>
   );
 }
