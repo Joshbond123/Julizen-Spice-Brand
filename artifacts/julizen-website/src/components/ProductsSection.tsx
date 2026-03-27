@@ -44,8 +44,8 @@ import { useState, useEffect, useCallback } from "react";
         "Stir into fried rice while cooking for a fuller, savory base.",
         "Add to your stew pot 10 minutes before serving for best results.",
       ],
-      foodImage: "/images/food-jollof-rice-real.png",
-      foodCaption: "Smoky jollof rice with golden fried chicken — cooked with Julizen Chicken Flavour",
+      foodImage: "/images/food-egusi-semo-party.png",
+      foodCaption: "Rich egusi soup with semo & assorted meat — cooked with Julizen Chicken Flavour",
       accentColor: "#D97706",
     },
     crayfish: {
@@ -60,8 +60,8 @@ import { useState, useEffect, useCallback } from "react";
         "Combine with fresh pepper and palm oil for an authentic pepper soup base.",
         "Add to ofe onugbu or bitterleaf soup for traditional depth.",
       ],
-      foodImage: "/images/food-okro-soup-real.png",
-      foodCaption: "Rich okro soup with assorted meat & crayfish — made with Julizen Crayfish Flavour",
+      foodImage: "/images/food-okro-fufu-party.png",
+      foodCaption: "Thick okro soup with fufu, assorted meat & crayfish — made with Julizen Crayfish Flavour",
       accentColor: "#B45309",
     },
     "fried-rice": {
@@ -76,8 +76,8 @@ import { useState, useEffect, useCallback } from "react";
         "Combine with a small amount of butter when stir-frying for restaurant-level richness.",
         "Add toward the end of cooking to preserve the aromatic spice notes.",
       ],
-      foodImage: "/images/food-fried-rice-real.png",
-      foodCaption: "Golden Nigerian fried rice with grilled chicken & plantain — seasoned with Julizen Fried Rice",
+      foodImage: "/images/food-fried-rice-party.png",
+      foodCaption: "Golden Nigerian fried rice with grilled chicken, liver & vegetables — seasoned with Julizen Fried Rice",
       accentColor: "#65A30D",
     },
     "stew-jollof": {
@@ -92,8 +92,8 @@ import { useState, useEffect, useCallback } from "react";
         "Use when browning meat for stew to build a flavourful, deeply seasoned base.",
         "Combine with stock and seasoning to create a concentrated sauce for rice dishes.",
       ],
-      foodImage: "/images/food-egusi-soup-real.png",
-      foodCaption: "Hearty egusi soup with semo & assorted meat — made rich with Julizen Stew & Jollof",
+      foodImage: "/images/food-jollof-party.png",
+      foodCaption: "Smoky Nigerian party jollof rice with grilled chicken & plantain — made with Julizen Stew & Jollof",
       accentColor: "#DC2626",
     },
   };
