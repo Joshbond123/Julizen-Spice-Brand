@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef } from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { getImageUrl } from "@/lib/imageUrl";
@@ -88,22 +88,27 @@ function LazyImage({
   height?: number;
   priority?: boolean;
 }) {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(priority ?? false);
   const [errored, setErrored] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current?.complete && !loaded) setLoaded(true);
+  }, []);
 
   return (
     <div className="relative w-full h-full">
       {!loaded && !errored && (
         <div
           className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 rounded-xl"
-          style={{ backgroundSize: "200% 100%", animation: "shimmer 1.5s infinite" }}
         />
       )}
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         className={className}
-        style={{ ...style, opacity: loaded ? 1 : 0, transition: "opacity 0.35s ease" }}
+        style={{ ...style, opacity: loaded ? 1 : 0, transition: loaded ? "none" : "opacity 0.35s ease" }}
         width={width}
         height={height}
         fetchPriority={priority ? "high" : "auto"}
@@ -364,9 +369,16 @@ function ProductCard({
   onViewDetails: (p: ProductEntry) => void;
 }) {
   const whatsappLink = generateWhatsAppLink(product.whatsappMessage);
-  const [frontLoaded, setFrontLoaded] = useState(false);
+  const [frontLoaded, setFrontLoaded] = useState(priority);
   const [backLoaded, setBackLoaded] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const frontImgRef = useRef<HTMLImageElement>(null);
+  const backImgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (frontImgRef.current?.complete) setFrontLoaded(true);
+    if (backImgRef.current?.complete) setBackLoaded(true);
+  }, []);
 
   const frontSrc = product.frontImage.startsWith("/")
     ? getImageUrl(product.frontImage)
@@ -416,10 +428,11 @@ function ProductCard({
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" style={{ aspectRatio: "3/4" }} />
             )}
             <img
+              ref={frontImgRef}
               src={frontSrc}
               alt={`Julizen ${product.name} ${product.size} — front view`}
               className="h-auto w-full object-contain drop-shadow-md transition-transform duration-500 group-hover:scale-[1.04]"
-              style={{ aspectRatio: "3/4", opacity: frontLoaded ? 1 : 0, transition: "opacity 0.3s ease, transform 0.5s ease" }}
+              style={{ aspectRatio: "3/4", opacity: frontLoaded ? 1 : 0, transition: frontLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease" }}
               width={160}
               height={213}
               fetchPriority={priority ? "high" : "auto"}
@@ -436,15 +449,16 @@ function ProductCard({
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" style={{ aspectRatio: "3/4" }} />
             )}
             <img
+              ref={backImgRef}
               src={backSrc}
               alt={`Julizen ${product.name} ${product.size} — back label`}
               className="h-auto w-full object-contain drop-shadow-md transition-transform duration-500 group-hover:scale-[1.04]"
-              style={{ aspectRatio: "3/4", opacity: backLoaded ? 1 : 0, transition: "opacity 0.3s ease, transform 0.5s ease" }}
+              style={{ aspectRatio: "3/4", opacity: backLoaded ? 1 : 0, transition: backLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease" }}
               width={160}
               height={213}
-              fetchPriority="auto"
-              decoding="async"
-              loading="lazy"
+              fetchPriority={priority ? "high" : "auto"}
+              decoding={priority ? "sync" : "async"}
+              loading={priority ? "eager" : "lazy"}
               onLoad={() => setBackLoaded(true)}
             />
           </div>
@@ -558,7 +572,7 @@ function SizeGroup({
             <ProductCard
               key={product.id + product.size}
               product={product}
-              priority={groupIndex === 0 && pi < 2}
+              priority={groupIndex === 0}
               index={pi}
               onViewDetails={onViewDetails}
             />
