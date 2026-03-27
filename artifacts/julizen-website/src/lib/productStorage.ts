@@ -6,6 +6,7 @@ export interface AdminProductSize {
   frontImage: string;
   backImage: string;
   whatsappMessage: string;
+  sizeEnabled: boolean;
 }
 
 export interface AdminProduct {
@@ -48,6 +49,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-chicken-10g-front.webp",
         backImage: "/images/product-chicken-10g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Chicken Flavour Seasoning Powder 10g × 42 rolls (carton). Please send me the details and price.",
+        sizeEnabled: true,
       },
       "100g": {
         packLabel: "Pouch",
@@ -55,6 +57,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-chicken-100g-front.webp",
         backImage: "/images/product-chicken-100g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Chicken Flavour Seasoning Powder 100g × 60 sachets. Please send me the details and price.",
+        sizeEnabled: true,
       },
       "400g": {
         packLabel: "Value Pack",
@@ -62,6 +65,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-chicken-400g-front.webp",
         backImage: "/images/product-chicken-400g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Chicken Flavour Seasoning Powder 400g × 20 sachets (carton). Please send me the details and price.",
+        sizeEnabled: true,
       },
     },
   },
@@ -88,6 +92,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-crayfish-10g-front.webp",
         backImage: "/images/product-crayfish-10g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder 10g × 42 rolls (carton). Please send me the details and price.",
+        sizeEnabled: true,
       },
       "100g": {
         packLabel: "Pouch",
@@ -95,6 +100,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-crayfish-100g-front.webp",
         backImage: "/images/product-crayfish-100g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder 100g × 60 sachets. Please send me the details and price.",
+        sizeEnabled: true,
       },
       "400g": {
         packLabel: "Value Pack",
@@ -102,6 +108,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-crayfish-400g-front.webp",
         backImage: "/images/product-crayfish-400g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder 400g × 20 sachets (carton). Please send me the details and price.",
+        sizeEnabled: true,
       },
     },
   },
@@ -128,6 +135,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-fried-rice-10g-front.webp",
         backImage: "/images/product-fried-rice-10g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Fried Rice Seasoning Powder 10g × 42 rolls (carton). Please send me the details and price.",
+        sizeEnabled: true,
       },
       "100g": {
         packLabel: "Pouch",
@@ -135,6 +143,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-fried-rice-100g-front.webp",
         backImage: "/images/product-fried-rice-100g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Fried Rice Seasoning Powder 100g × 60 sachets. Please send me the details and price.",
+        sizeEnabled: true,
       },
       "400g": {
         packLabel: "Value Pack",
@@ -142,6 +151,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-fried-rice-100g-front.webp",
         backImage: "/images/product-fried-rice-100g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Fried Rice Seasoning Powder 400g × 20 sachets (carton). Please send me the details and price.",
+        sizeEnabled: true,
       },
     },
   },
@@ -168,6 +178,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-stew-jollof-10g-front.webp",
         backImage: "/images/product-stew-jollof-10g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Stew & Jollof Seasoning Powder 10g × 42 rolls (carton). Please send me the details and price.",
+        sizeEnabled: true,
       },
       "100g": {
         packLabel: "Pouch",
@@ -175,6 +186,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-stew-jollof-100g-front.webp",
         backImage: "/images/product-stew-jollof-100g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Stew & Jollof Seasoning Powder 100g × 60 sachets. Please send me the details and price.",
+        sizeEnabled: true,
       },
       "400g": {
         packLabel: "Value Pack",
@@ -182,20 +194,33 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
         frontImage: "/images/product-stew-jollof-100g-front.webp",
         backImage: "/images/product-stew-jollof-100g-back.webp",
         whatsappMessage: "Hello, I want to order Julizen Stew & Jollof Seasoning Powder 400g × 20 sachets (carton). Please send me the details and price.",
+        sizeEnabled: true,
       },
     },
   },
 ];
 
+function migrateProduct(p: AdminProduct): AdminProduct {
+  const sizes = { ...p.sizes } as Record<SizeKey, AdminProductSize>;
+  for (const sz of ["10g", "100g", "400g"] as SizeKey[]) {
+    if (sizes[sz] && typeof sizes[sz].sizeEnabled === "undefined") {
+      sizes[sz] = { ...sizes[sz], sizeEnabled: true };
+    }
+  }
+  return { ...p, sizes };
+}
+
 export function getProducts(): AdminProduct[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [...DEFAULT_PRODUCTS.map(p => ({ ...p }))];
+    if (!raw) return DEFAULT_PRODUCTS.map(p => JSON.parse(JSON.stringify(p)));
     const parsed = JSON.parse(raw) as AdminProduct[];
-    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-    return [...DEFAULT_PRODUCTS.map(p => ({ ...p }))];
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      return parsed.map(migrateProduct);
+    }
+    return DEFAULT_PRODUCTS.map(p => JSON.parse(JSON.stringify(p)));
   } catch {
-    return [...DEFAULT_PRODUCTS.map(p => ({ ...p }))];
+    return DEFAULT_PRODUCTS.map(p => JSON.parse(JSON.stringify(p)));
   }
 }
 
@@ -205,7 +230,7 @@ export function saveProducts(products: AdminProduct[]): void {
 }
 
 export function resetToDefaults(): AdminProduct[] {
-  const fresh = [...DEFAULT_PRODUCTS.map(p => ({ ...p }))];
+  const fresh = DEFAULT_PRODUCTS.map(p => JSON.parse(JSON.stringify(p)));
   localStorage.setItem(STORAGE_KEY, JSON.stringify(fresh));
   window.dispatchEvent(new CustomEvent(PRODUCTS_UPDATE_EVENT, { detail: fresh }));
   return fresh;
