@@ -24,25 +24,25 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section id="how-it-works" aria-label="How to use Julizen seasoning powder" className="py-24 bg-muted relative scroll-mt-36">
+    <section id="how-it-works" aria-label="Instructions for using Julizen seasoning powder" className="py-24 bg-muted relative scroll-mt-36">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-display font-bold text-secondary mb-6"
           >
-            How It Works
+            Instructions
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground"
           >
-            Great cooking doesn't have to be complicated. Add Julizen seasoning powder to your jollof rice, fried rice, or soup and taste the difference in every bite.
+            Great cooking doesn&apos;t have to be complicated. Add Julizen seasoning powder to your jollof rice, fried rice, or soup and taste the difference in every bite.
           </motion.p>
         </div>
 
@@ -64,7 +64,7 @@ export function HowItWorksSection() {
                 </span>
                 <step.icon className="w-10 h-10 text-primary" />
               </div>
-              
+
               <h3 className="text-2xl font-bold font-display text-foreground mb-4">
                 {step.title}
               </h3>
