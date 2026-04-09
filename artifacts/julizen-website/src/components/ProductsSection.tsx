@@ -253,7 +253,7 @@ function ProductModal({
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.4 }}
-              className="mb-6 overflow-hidden rounded-2xl bg-white"
+              className="mb-6 overflow-hidden rounded-2xl bg-transparent"
               style={{ height: "230px" }}
             >
               <div className="flex h-full">
@@ -435,7 +435,7 @@ function ProductCard({
         transparent padding is cropped on all four sides, leaving only
         the visible sachet. No outer padding so sachets fill the card.
       */}
-      <div className="relative overflow-hidden bg-white" style={{ height: "190px" }}>
+      <div className="relative overflow-hidden bg-transparent" style={{ height: "190px" }}>
         {/* Accent top border — fades in on hover */}
         <div
           className="absolute top-0 left-0 right-0 z-10 h-0.5 transition-all duration-300"

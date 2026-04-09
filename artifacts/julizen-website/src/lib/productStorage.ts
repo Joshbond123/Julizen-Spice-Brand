@@ -43,8 +43,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "10g": {
         packLabel: "Sachet",
         packDetail: "10g × 10 × 42 rolls (carton)",
-        frontImage: "/images/product-chicken-new-front.png",
-        backImage: "/images/product-chicken-new-back.png",
+        frontImage: "/images/product-chicken-new-front.webp",
+        backImage: "/images/product-chicken-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Chicken Flavour 10g × 42 rolls. Please send me the details.",
         sizeEnabled: true,
@@ -52,8 +52,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "100g": {
         packLabel: "Pouch",
         packDetail: "100g × 5 × 60 sachets (carton)",
-        frontImage: "/images/product-chicken-new-front.png",
-        backImage: "/images/product-chicken-new-back.png",
+        frontImage: "/images/product-chicken-new-front.webp",
+        backImage: "/images/product-chicken-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Chicken Flavour 100g × 60 sachets. Please send me the details.",
         sizeEnabled: true,
@@ -61,8 +61,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "400g": {
         packLabel: "Value Pack",
         packDetail: "400g × 20 sachets (carton)",
-        frontImage: "/images/product-chicken-new-front.png",
-        backImage: "/images/product-chicken-new-back.png",
+        frontImage: "/images/product-chicken-new-front.webp",
+        backImage: "/images/product-chicken-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Chicken Flavour 400g × 20 sachets. Please send me the details.",
         sizeEnabled: true,
@@ -87,8 +87,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "10g": {
         packLabel: "Sachet",
         packDetail: "10g × 10 × 42 rolls (carton)",
-        frontImage: "/images/product-crayfish-new-front.png",
-        backImage: "/images/product-crayfish-new-back.png",
+        frontImage: "/images/product-crayfish-new-front.webp",
+        backImage: "/images/product-crayfish-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Crayfish Flavour 10g × 42 rolls. Please send me the details.",
         sizeEnabled: true,
@@ -96,8 +96,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "100g": {
         packLabel: "Pouch",
         packDetail: "100g × 5 × 60 sachets (carton)",
-        frontImage: "/images/product-crayfish-new-front.png",
-        backImage: "/images/product-crayfish-new-back.png",
+        frontImage: "/images/product-crayfish-new-front.webp",
+        backImage: "/images/product-crayfish-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Crayfish Flavour 100g × 60 sachets. Please send me the details.",
         sizeEnabled: true,
@@ -105,8 +105,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "400g": {
         packLabel: "Value Pack",
         packDetail: "400g × 20 sachets (carton)",
-        frontImage: "/images/product-crayfish-new-front.png",
-        backImage: "/images/product-crayfish-new-back.png",
+        frontImage: "/images/product-crayfish-new-front.webp",
+        backImage: "/images/product-crayfish-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Crayfish Flavour 400g × 20 sachets. Please send me the details.",
         sizeEnabled: true,
@@ -131,8 +131,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "10g": {
         packLabel: "Sachet",
         packDetail: "10g × 10 × 42 rolls (carton)",
-        frontImage: "/images/product-fried-rice-new-front.png",
-        backImage: "/images/product-fried-rice-new-back.png",
+        frontImage: "/images/product-fried-rice-new-front.webp",
+        backImage: "/images/product-fried-rice-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Fried Rice Seasoning 10g × 42 rolls. Please send me the details.",
         sizeEnabled: true,
@@ -140,8 +140,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "100g": {
         packLabel: "Pouch",
         packDetail: "100g × 5 × 60 sachets (carton)",
-        frontImage: "/images/product-fried-rice-new-front.png",
-        backImage: "/images/product-fried-rice-new-back.png",
+        frontImage: "/images/product-fried-rice-new-front.webp",
+        backImage: "/images/product-fried-rice-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Fried Rice Seasoning 100g × 60 sachets. Please send me the details.",
         sizeEnabled: true,
@@ -149,8 +149,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "400g": {
         packLabel: "Value Pack",
         packDetail: "400g × 20 sachets (carton)",
-        frontImage: "/images/product-fried-rice-new-front.png",
-        backImage: "/images/product-fried-rice-new-back.png",
+        frontImage: "/images/product-fried-rice-new-front.webp",
+        backImage: "/images/product-fried-rice-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Fried Rice Seasoning 400g × 20 sachets. Please send me the details.",
         sizeEnabled: true,
@@ -175,8 +175,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "10g": {
         packLabel: "Sachet",
         packDetail: "10g × 10 × 42 rolls (carton)",
-        frontImage: "/images/product-stew-jollof-new-front.png",
-        backImage: "/images/product-stew-jollof-new-back.png",
+        frontImage: "/images/product-stew-jollof-new-front.webp",
+        backImage: "/images/product-stew-jollof-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Stew & Jollof Seasoning 10g × 42 rolls. Please send me the details.",
         sizeEnabled: true,
@@ -184,8 +184,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "100g": {
         packLabel: "Pouch",
         packDetail: "100g × 5 × 60 sachets (carton)",
-        frontImage: "/images/product-stew-jollof-new-front.png",
-        backImage: "/images/product-stew-jollof-new-back.png",
+        frontImage: "/images/product-stew-jollof-new-front.webp",
+        backImage: "/images/product-stew-jollof-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Stew & Jollof Seasoning 100g × 60 sachets. Please send me the details.",
         sizeEnabled: true,
@@ -193,8 +193,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "400g": {
         packLabel: "Value Pack",
         packDetail: "400g × 20 sachets (carton)",
-        frontImage: "/images/product-stew-jollof-new-front.png",
-        backImage: "/images/product-stew-jollof-new-back.png",
+        frontImage: "/images/product-stew-jollof-new-front.webp",
+        backImage: "/images/product-stew-jollof-new-back.webp",
         whatsappMessage:
           "Hello, I want to order Julizen Stew & Jollof Seasoning 400g × 20 sachets. Please send me the details.",
         sizeEnabled: true,
