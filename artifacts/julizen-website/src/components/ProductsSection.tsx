@@ -450,7 +450,7 @@ function ProductCard({
         <div className="flex h-full">
 
           {/* ── Front sachet ── */}
-          <div className="relative flex flex-1 items-center justify-center" style={{ padding: "12px 8px 20px 12px" }}>
+          <div className="relative flex flex-1 items-center justify-center" style={{ padding: "6px 3px 6px 6px" }}>
             {!frontLoaded && (
               <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tl-3xl" />
             )}
@@ -478,7 +478,7 @@ function ProductCard({
           </div>
 
           {/* ── Back sachet ── */}
-          <div className="relative flex flex-1 items-center justify-center" style={{ padding: "12px 12px 20px 8px" }}>
+          <div className="relative flex flex-1 items-center justify-center" style={{ padding: "6px 6px 6px 3px" }}>
             {!backLoaded && (
               <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tr-3xl" />
             )}
@@ -511,11 +511,6 @@ function ProductCard({
           style={{ backgroundColor: product.accentColor }}
         >
           {product.size}
-        </span>
-
-        {/* Front / Back labels */}
-        <span className="absolute bottom-3 left-4 z-10 text-[10px] font-semibold text-gray-400 tracking-wide">
-          Front · Back
         </span>
       </div>
 
