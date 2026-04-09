@@ -253,32 +253,44 @@ function ProductModal({
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.4 }}
-              className="mb-6 flex gap-3 rounded-2xl bg-white p-2"
+              className="mb-6 overflow-hidden rounded-2xl bg-white"
+              style={{ height: "230px" }}
             >
-              {[
-                { src: frontSrc, side: "front" },
-                { src: backSrc, side: "back" },
-              ].map(({ src, side }, si) => (
-                <motion.div
-                  key={side}
-                  initial={{ opacity: 0, scale: 0.94 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2 + si * 0.08, type: "spring", stiffness: 300 }}
-                  className="relative flex-1"
-                  style={{ height: "220px" }}
-                >
-                  <img
-                    src={src}
-                    alt={`Julizen ${product.name} ${product.size} ${side} view`}
-                    className="absolute inset-0 h-full w-full object-contain"
-                    width={220}
-                    height={220}
-                    fetchPriority="high"
-                    decoding="sync"
-                    loading="eager"
-                  />
-                </motion.div>
-              ))}
+              <div className="flex h-full">
+                {[
+                  { src: frontSrc, side: "front" },
+                  { src: backSrc, side: "back" },
+                ].map(({ src, side }, si) => (
+                  <motion.div
+                    key={side}
+                    initial={{ opacity: 0, scale: 0.94 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 + si * 0.08, type: "spring", stiffness: 300 }}
+                    className="relative flex-1 overflow-hidden"
+                  >
+                    <img
+                      src={src}
+                      alt={`Julizen ${product.name} ${product.size} ${side} view`}
+                      width={240}
+                      height={240}
+                      fetchPriority="high"
+                      decoding="sync"
+                      loading="eager"
+                      style={{
+                        position: "absolute",
+                        width: "124%",
+                        height: "124%",
+                        top: "-12%",
+                        left: "-12%",
+                        objectFit: "contain",
+                      }}
+                    />
+                    {si === 0 && (
+                      <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-100" />
+                    )}
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
 
             {/* Description */}
@@ -416,11 +428,17 @@ function ProductCard({
       itemScope
       itemType="https://schema.org/Product"
     >
-      {/* Image area */}
-      <div className="relative bg-white overflow-hidden px-3 pt-5 pb-4">
-        {/* Accent top border that reveals on hover */}
+      {/* ── Image area ──────────────────────────────────────────────────── */}
+      {/*
+        Technique: each image div is overflow-hidden.
+        The <img> is positioned at -12% offset with 124% w/h so its
+        transparent padding is cropped on all four sides, leaving only
+        the visible sachet. No outer padding so sachets fill the card.
+      */}
+      <div className="relative overflow-hidden bg-white" style={{ height: "190px" }}>
+        {/* Accent top border — fades in on hover */}
         <div
-          className="absolute top-0 left-0 right-0 h-0.5 transition-all duration-300"
+          className="absolute top-0 left-0 right-0 z-10 h-0.5 transition-all duration-300"
           style={{
             backgroundColor: product.accentColor,
             opacity: hovered ? 1 : 0,
@@ -428,57 +446,75 @@ function ProductCard({
           }}
         />
 
-        {/* Fixed-height image row — front & back side by side, uniform for all products */}
-        <div className="flex items-center justify-center gap-1.5">
-          {/* Front image */}
-          <div className="relative w-[46%] flex-shrink-0" style={{ height: "170px" }}>
+        {/* Side-by-side row — no gap, each half fills exactly 50% */}
+        <div className="flex h-full">
+
+          {/* ── Front sachet ── */}
+          <div className="relative flex-1 overflow-hidden">
             {!frontLoaded && (
-              <div className="absolute inset-0 animate-pulse bg-white/60 rounded-lg" />
+              <div className="absolute inset-0 animate-pulse bg-gray-100" />
             )}
             <img
               ref={frontImgRef}
               src={frontSrc}
-              alt={`Julizen ${product.name} ${product.size} — front view`}
-              className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-              style={{
-                opacity: frontLoaded ? 1 : 0,
-                transition: frontLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease",
-              }}
-              width={200}
-              height={200}
+              alt={`Julizen ${product.name} ${product.size} — front`}
+              width={220}
+              height={220}
               fetchPriority={priority ? "high" : "auto"}
               decoding={priority ? "sync" : "async"}
               loading={priority ? "eager" : "lazy"}
               onLoad={() => setFrontLoaded(true)}
               itemProp="image"
+              style={{
+                position: "absolute",
+                width: "124%",
+                height: "124%",
+                top: "-12%",
+                left: "-12%",
+                objectFit: "contain",
+                opacity: frontLoaded ? 1 : 0,
+                transition: "opacity 0.3s ease, transform 0.5s ease",
+                transform: hovered ? "scale(1.05)" : "scale(1)",
+              }}
             />
           </div>
-          {/* Back image — same fixed dimensions as front */}
-          <div className="relative w-[46%] flex-shrink-0" style={{ height: "170px" }}>
+
+          {/* Hairline divider between the two sachets */}
+          <div className="w-px flex-shrink-0 bg-gray-100" />
+
+          {/* ── Back sachet ── */}
+          <div className="relative flex-1 overflow-hidden">
             {!backLoaded && (
-              <div className="absolute inset-0 animate-pulse bg-white/60 rounded-lg" />
+              <div className="absolute inset-0 animate-pulse bg-gray-100" />
             )}
             <img
               ref={backImgRef}
               src={backSrc}
-              alt={`Julizen ${product.name} ${product.size} — back label`}
-              className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-              style={{
-                opacity: backLoaded ? 1 : 0,
-                transition: backLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease",
-              }}
-              width={200}
-              height={200}
+              alt={`Julizen ${product.name} ${product.size} — back`}
+              width={220}
+              height={220}
               fetchPriority={priority ? "high" : "auto"}
               decoding={priority ? "sync" : "async"}
               loading={priority ? "eager" : "lazy"}
               onLoad={() => setBackLoaded(true)}
+              style={{
+                position: "absolute",
+                width: "124%",
+                height: "124%",
+                top: "-12%",
+                left: "-12%",
+                objectFit: "contain",
+                opacity: backLoaded ? 1 : 0,
+                transition: "opacity 0.3s ease, transform 0.5s ease",
+                transform: hovered ? "scale(1.05)" : "scale(1)",
+              }}
             />
           </div>
         </div>
 
+        {/* Size badge */}
         <span
-          className="absolute bottom-2 right-2 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow transition-transform duration-200 group-hover:scale-105"
+          className="absolute bottom-2 right-2 z-10 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow transition-transform duration-200 group-hover:scale-105"
           style={{ backgroundColor: product.accentColor }}
         >
           {product.size}
