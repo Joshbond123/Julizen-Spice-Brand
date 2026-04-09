@@ -253,7 +253,7 @@ function ProductModal({
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.4 }}
-              className="mb-6 flex gap-3 rounded-2xl bg-[#fef9ee] p-4"
+              className="mb-6 flex gap-3 rounded-2xl bg-white p-2"
             >
               {[
                 { src: frontSrc, side: "front" },
@@ -270,7 +270,7 @@ function ProductModal({
                   <img
                     src={src}
                     alt={`Julizen ${product.name} ${product.size} ${side} view`}
-                    className="absolute inset-0 h-full w-full rounded-xl object-contain drop-shadow-sm"
+                    className="absolute inset-0 h-full w-full object-contain"
                     width={220}
                     height={220}
                     fetchPriority="high"
@@ -417,7 +417,7 @@ function ProductCard({
       itemType="https://schema.org/Product"
     >
       {/* Image area */}
-      <div className="relative bg-gradient-to-b from-[#fef9ee] to-[#f1ede3] overflow-hidden px-2 pt-4 pb-3">
+      <div className="relative bg-white overflow-hidden px-3 pt-5 pb-4">
         {/* Accent top border that reveals on hover */}
         <div
           className="absolute top-0 left-0 right-0 h-0.5 transition-all duration-300"
