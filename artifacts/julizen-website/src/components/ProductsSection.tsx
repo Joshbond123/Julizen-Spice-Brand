@@ -428,47 +428,47 @@ function ProductCard({
           }}
         />
 
-        <div className="flex items-stretch justify-center gap-2">
-            {/* Front image — fixed-ratio container ensures identical box for all images */}
-            <div className="relative flex-1 overflow-hidden" style={{ aspectRatio: "3/4" }}>
-              {!frontLoaded && (
-                <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100" />
-              )}
-              <img
-                ref={frontImgRef}
-                src={frontSrc}
-                alt={`Julizen ${product.name} ${product.size} — front view`}
-                className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                style={{ opacity: frontLoaded ? 1 : 0, transition: frontLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease" }}
-                width={160}
-                height={213}
-                fetchPriority={priority ? "high" : "auto"}
-                decoding={priority ? "sync" : "async"}
-                loading={priority ? "eager" : "lazy"}
-                onLoad={() => setFrontLoaded(true)}
-                itemProp="image"
-              />
+        <div className="rounded-2xl bg-white p-2.5 flex items-stretch gap-2">
+              {/* Front image — fixed 3:4 ratio box, white background fills letterbox gaps */}
+              <div className="relative flex-1 overflow-hidden bg-white" style={{ aspectRatio: "3/4" }}>
+                {!frontLoaded && (
+                  <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-lg" />
+                )}
+                <img
+                  ref={frontImgRef}
+                  src={frontSrc}
+                  alt={`Julizen ${product.name} ${product.size} — front view`}
+                  className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+                  style={{ opacity: frontLoaded ? 1 : 0, transition: frontLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease" }}
+                  width={160}
+                  height={213}
+                  fetchPriority={priority ? "high" : "auto"}
+                  decoding={priority ? "sync" : "async"}
+                  loading={priority ? "eager" : "lazy"}
+                  onLoad={() => setFrontLoaded(true)}
+                  itemProp="image"
+                />
+              </div>
+              {/* Back image — identical box to front */}
+              <div className="relative flex-1 overflow-hidden bg-white" style={{ aspectRatio: "3/4" }}>
+                {!backLoaded && (
+                  <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-lg" />
+                )}
+                <img
+                  ref={backImgRef}
+                  src={backSrc}
+                  alt={`Julizen ${product.name} ${product.size} — back label`}
+                  className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+                  style={{ opacity: backLoaded ? 1 : 0, transition: backLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease" }}
+                  width={160}
+                  height={213}
+                  fetchPriority={priority ? "high" : "auto"}
+                  decoding={priority ? "sync" : "async"}
+                  loading={priority ? "eager" : "lazy"}
+                  onLoad={() => setBackLoaded(true)}
+                />
+              </div>
             </div>
-            {/* Back image — same fixed-ratio container as front */}
-            <div className="relative flex-1 overflow-hidden" style={{ aspectRatio: "3/4" }}>
-              {!backLoaded && (
-                <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100" />
-              )}
-              <img
-                ref={backImgRef}
-                src={backSrc}
-                alt={`Julizen ${product.name} ${product.size} — back label`}
-                className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                style={{ opacity: backLoaded ? 1 : 0, transition: backLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease" }}
-                width={160}
-                height={213}
-                fetchPriority={priority ? "high" : "auto"}
-                decoding={priority ? "sync" : "async"}
-                loading={priority ? "eager" : "lazy"}
-                onLoad={() => setBackLoaded(true)}
-              />
-            </div>
-          </div>
 
         <span
           className="absolute bottom-2 right-2 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow transition-transform duration-200 group-hover:scale-105"
