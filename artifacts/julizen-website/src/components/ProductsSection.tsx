@@ -417,7 +417,7 @@ function ProductCard({
       itemType="https://schema.org/Product"
     >
       {/* Image area */}
-      <div className="relative grid grid-cols-2 bg-gradient-to-b from-[#fef9ee] to-[#f1ede3] overflow-hidden">
+      <div className="relative bg-gradient-to-b from-[#fef9ee] to-[#f1ede3] overflow-hidden px-3 pt-5 pb-4">
         {/* Accent top border that reveals on hover */}
         <div
           className="absolute top-0 left-0 right-0 h-0.5 transition-all duration-300"
@@ -428,8 +428,9 @@ function ProductCard({
           }}
         />
 
-        <div className="flex items-end justify-center border-r border-white/70 px-4 pt-6 pb-4">
-          <div className="w-full relative">
+        <div className="flex items-end justify-center gap-2">
+          {/* Front image */}
+          <div className="relative flex-1">
             {!frontLoaded && (
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" style={{ aspectRatio: "3/4" }} />
             )}
@@ -448,9 +449,8 @@ function ProductCard({
               itemProp="image"
             />
           </div>
-        </div>
-        <div className="flex items-end justify-center px-4 pt-6 pb-4">
-          <div className="w-full relative">
+          {/* Back image */}
+          <div className="relative flex-1">
             {!backLoaded && (
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse" style={{ aspectRatio: "3/4" }} />
             )}
@@ -645,13 +645,15 @@ export function ProductsSection() {
               <p>
                 Julizen Seasoning is the real{" "}
                 <strong className="font-bold text-secondary">&ldquo;Baba&rdquo;</strong>{" "}
-                in cooking &mdash; crafted to deliver rich, mouth-watering flavour in every
-                spoonful. Whether it&apos;s your everyday meal or a special dish, Julizen
-                brings out the deep, authentic taste that keeps people asking for more.
+                in cooking, giving your food rich and mouth-watering flavour every time.
+                Whether it is everyday cooking or a special meal, Julizen helps your food
+                come out tasty and well balanced.
               </p>
               <p>
-                From quick home cooking to full family feasts, one thing stays the same &mdash;
-                bold flavour, perfect balance, and a taste you can trust every time.
+                Easy to use and reliable, Julizen gives you consistent results you can trust.
+              </p>
+              <p>
+                Available in different sizes: 10g, 100g, and 400g.
               </p>
             </motion.div>
           </div>
