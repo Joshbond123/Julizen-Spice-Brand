@@ -428,11 +428,11 @@ function ProductCard({
           }}
         />
 
-        <div className="rounded-2xl bg-white p-2.5 flex items-stretch gap-2">
-              {/* Front image — fixed 3:4 ratio box, white background fills letterbox gaps */}
-              <div className="relative flex-1 overflow-hidden bg-white" style={{ aspectRatio: "3/4" }}>
+        <div className="flex items-stretch gap-3 px-1">
+              {/* Front — fixed 3:4 box; transparent PNG floats on cream card background */}
+              <div className="relative flex-1 overflow-hidden" style={{ aspectRatio: "3/4" }}>
                 {!frontLoaded && (
-                  <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-lg" />
+                  <div className="absolute inset-0 animate-pulse bg-white/60 rounded-lg" />
                 )}
                 <img
                   ref={frontImgRef}
@@ -449,10 +449,10 @@ function ProductCard({
                   itemProp="image"
                 />
               </div>
-              {/* Back image — identical box to front */}
-              <div className="relative flex-1 overflow-hidden bg-white" style={{ aspectRatio: "3/4" }}>
+              {/* Back — identical box to front */}
+              <div className="relative flex-1 overflow-hidden" style={{ aspectRatio: "3/4" }}>
                 {!backLoaded && (
-                  <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-lg" />
+                  <div className="absolute inset-0 animate-pulse bg-white/60 rounded-lg" />
                 )}
                 <img
                   ref={backImgRef}
