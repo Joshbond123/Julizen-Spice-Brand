@@ -20,24 +20,24 @@
         "10g": {
           "packLabel": "Sachet",
           "packDetail": "10g x 10 x 42 rolls (carton)",
-          "frontImage": "/images/product-chicken-10g-front.webp",
-          "backImage": "/images/product-chicken-10g-back.webp",
+          "frontImage": "/images/product-chicken-new-front.png",
+          "backImage": "/images/product-chicken-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Chicken Flavour Seasoning Powder - 10g x 42 rolls (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "100g": {
           "packLabel": "Pouch",
           "packDetail": "100g x 5 x 60 sachets (carton)",
-          "frontImage": "/images/product-chicken-100g-front.webp",
-          "backImage": "/images/product-chicken-100g-back.webp",
+          "frontImage": "/images/product-chicken-new-front.png",
+          "backImage": "/images/product-chicken-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Chicken Flavour Seasoning Powder - 100g x 60 sachets. Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "400g": {
           "packLabel": "Value Pack",
           "packDetail": "400g x 20 sachets (carton)",
-          "frontImage": "/images/product-chicken-400g-front.webp",
-          "backImage": "/images/product-chicken-400g-back.webp",
+          "frontImage": "/images/product-chicken-new-front.png",
+          "backImage": "/images/product-chicken-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Chicken Flavour Seasoning Powder - 400g Value Pack x 20 sachets (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         }
@@ -62,24 +62,24 @@
         "10g": {
           "packLabel": "Sachet",
           "packDetail": "10g x 10 x 42 rolls (carton)",
-          "frontImage": "/images/product-crayfish-10g-front.webp",
-          "backImage": "/images/product-crayfish-10g-back.webp",
+          "frontImage": "/images/product-crayfish-new-front.png",
+          "backImage": "/images/product-crayfish-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder - 10g x 42 rolls (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "100g": {
           "packLabel": "Pouch",
           "packDetail": "100g x 5 x 60 sachets (carton)",
-          "frontImage": "/images/product-crayfish-100g-front.webp",
-          "backImage": "/images/1000234722-mn8zdol5.webp",
+          "frontImage": "/images/product-crayfish-new-front.png",
+          "backImage": "/images/product-crayfish-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder - 100g x 60 sachets. Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "400g": {
           "packLabel": "Value Pack",
           "packDetail": "400g x 20 sachets (carton)",
-          "frontImage": "/images/product-crayfish-400g-front.webp",
-          "backImage": "/images/1000234721-mn8ze4fg.webp",
+          "frontImage": "/images/product-crayfish-new-front.png",
+          "backImage": "/images/product-crayfish-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Crayfish Flavour Seasoning Powder - 400g Value Pack x 20 sachets (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         }
@@ -104,26 +104,26 @@
         "10g": {
           "packLabel": "Sachet",
           "packDetail": "10g x 10 x 42 rolls (carton)",
-          "frontImage": "/images/product-fried-rice-10g-front.webp",
-          "backImage": "/images/1000234762-mn8zrufo.webp",
+          "frontImage": "/images/product-fried-rice-new-front.png",
+          "backImage": "/images/product-fried-rice-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder - 10g x 42 rolls (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "100g": {
           "packLabel": "Pouch",
           "packDetail": "100g x 5 x 60 sachets (carton)",
-          "frontImage": "/images/product-fried-rice-100g-front.webp",
-          "backImage": "/images/product-fried-rice-100g-back.webp",
+          "frontImage": "/images/product-fried-rice-new-front.png",
+          "backImage": "/images/product-fried-rice-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder - 100g x 60 sachets. Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "400g": {
           "packLabel": "Value Pack",
           "packDetail": "400g x 20 sachets (carton)",
-          "frontImage": "/images/product-fried-rice-100g-front.webp",
-          "backImage": "/images/product-fried-rice-100g-back.webp",
+          "frontImage": "/images/product-fried-rice-new-front.png",
+          "backImage": "/images/product-fried-rice-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Fried Rice Seasoning Powder - 400g Value Pack x 20 sachets (carton). Please send me the price and delivery details.",
-          "sizeEnabled": false
+          "sizeEnabled": true
         }
       }
     },
@@ -146,26 +146,26 @@
         "10g": {
           "packLabel": "Sachet",
           "packDetail": "10g x 10 x 42 rolls (carton)",
-          "frontImage": "/images/product-stew-jollof-10g-front.webp",
-          "backImage": "/images/product-stew-jollof-10g-back.webp",
+          "frontImage": "/images/product-stew-jollof-new-front.png",
+          "backImage": "/images/product-stew-jollof-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Stew & Jollof Seasoning Powder - 10g x 42 rolls (carton). Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "100g": {
           "packLabel": "Pouch",
           "packDetail": "100g x 5 x 60 sachets (carton)",
-          "frontImage": "/images/product-stew-jollof-100g-front.webp",
-          "backImage": "/images/product-stew-jollof-100g-back.webp",
+          "frontImage": "/images/product-stew-jollof-new-front.png",
+          "backImage": "/images/product-stew-jollof-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Stew & Jollof Seasoning Powder - 100g x 60 sachets. Please send me the price and delivery details.",
           "sizeEnabled": true
         },
         "400g": {
           "packLabel": "Value Pack",
           "packDetail": "400g x 20 sachets (carton)",
-          "frontImage": "/images/product-stew-jollof-100g-front.webp",
-          "backImage": "/images/product-stew-jollof-100g-back.webp",
+          "frontImage": "/images/product-stew-jollof-new-front.png",
+          "backImage": "/images/product-stew-jollof-new-back.png",
           "whatsappMessage": "Hello, I want to order Julizen Stew & Jollof Seasoning Powder - 400g Value Pack x 20 sachets (carton). Please send me the price and delivery details.",
-          "sizeEnabled": false
+          "sizeEnabled": true
         }
       }
     }

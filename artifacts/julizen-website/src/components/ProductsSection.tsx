@@ -253,7 +253,7 @@ function ProductModal({
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.4 }}
-              className="mb-6 grid grid-cols-2 gap-3 rounded-2xl bg-[#fef9ee] p-4"
+              className="mb-6 flex gap-3 rounded-2xl bg-[#fef9ee] p-4"
             >
               {[
                 { src: frontSrc, side: "front" },
@@ -264,15 +264,15 @@ function ProductModal({
                   initial={{ opacity: 0, scale: 0.94 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2 + si * 0.08, type: "spring", stiffness: 300 }}
-                  className="relative"
+                  className="relative flex-1"
+                  style={{ height: "220px" }}
                 >
                   <img
                     src={src}
                     alt={`Julizen ${product.name} ${product.size} ${side} view`}
-                    className="h-auto w-full rounded-xl object-contain drop-shadow-sm"
-                    style={{ aspectRatio: "3/4" }}
-                    width={200}
-                    height={267}
+                    className="absolute inset-0 h-full w-full rounded-xl object-contain drop-shadow-sm"
+                    width={220}
+                    height={220}
                     fetchPriority="high"
                     decoding="sync"
                     loading="eager"
@@ -417,7 +417,7 @@ function ProductCard({
       itemType="https://schema.org/Product"
     >
       {/* Image area */}
-      <div className="relative bg-gradient-to-b from-[#fef9ee] to-[#f1ede3] overflow-hidden px-3 pt-5 pb-4">
+      <div className="relative bg-gradient-to-b from-[#fef9ee] to-[#f1ede3] overflow-hidden px-2 pt-4 pb-3">
         {/* Accent top border that reveals on hover */}
         <div
           className="absolute top-0 left-0 right-0 h-0.5 transition-all duration-300"
@@ -428,47 +428,54 @@ function ProductCard({
           }}
         />
 
-        <div className="flex items-stretch gap-3 px-1">
-              {/* Front — fixed 3:4 box; transparent PNG floats on cream card background */}
-              <div className="relative flex-1 overflow-hidden" style={{ aspectRatio: "3/4" }}>
-                {!frontLoaded && (
-                  <div className="absolute inset-0 animate-pulse bg-white/60 rounded-lg" />
-                )}
-                <img
-                  ref={frontImgRef}
-                  src={frontSrc}
-                  alt={`Julizen ${product.name} ${product.size} — front view`}
-                  className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                  style={{ opacity: frontLoaded ? 1 : 0, transition: frontLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease" }}
-                  width={160}
-                  height={213}
-                  fetchPriority={priority ? "high" : "auto"}
-                  decoding={priority ? "sync" : "async"}
-                  loading={priority ? "eager" : "lazy"}
-                  onLoad={() => setFrontLoaded(true)}
-                  itemProp="image"
-                />
-              </div>
-              {/* Back — identical box to front */}
-              <div className="relative flex-1 overflow-hidden" style={{ aspectRatio: "3/4" }}>
-                {!backLoaded && (
-                  <div className="absolute inset-0 animate-pulse bg-white/60 rounded-lg" />
-                )}
-                <img
-                  ref={backImgRef}
-                  src={backSrc}
-                  alt={`Julizen ${product.name} ${product.size} — back label`}
-                  className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-                  style={{ opacity: backLoaded ? 1 : 0, transition: backLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease" }}
-                  width={160}
-                  height={213}
-                  fetchPriority={priority ? "high" : "auto"}
-                  decoding={priority ? "sync" : "async"}
-                  loading={priority ? "eager" : "lazy"}
-                  onLoad={() => setBackLoaded(true)}
-                />
-              </div>
-            </div>
+        {/* Fixed-height image row — front & back side by side, uniform for all products */}
+        <div className="flex items-center justify-center gap-1.5">
+          {/* Front image */}
+          <div className="relative w-[46%] flex-shrink-0" style={{ height: "170px" }}>
+            {!frontLoaded && (
+              <div className="absolute inset-0 animate-pulse bg-white/60 rounded-lg" />
+            )}
+            <img
+              ref={frontImgRef}
+              src={frontSrc}
+              alt={`Julizen ${product.name} ${product.size} — front view`}
+              className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+              style={{
+                opacity: frontLoaded ? 1 : 0,
+                transition: frontLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease",
+              }}
+              width={200}
+              height={200}
+              fetchPriority={priority ? "high" : "auto"}
+              decoding={priority ? "sync" : "async"}
+              loading={priority ? "eager" : "lazy"}
+              onLoad={() => setFrontLoaded(true)}
+              itemProp="image"
+            />
+          </div>
+          {/* Back image — same fixed dimensions as front */}
+          <div className="relative w-[46%] flex-shrink-0" style={{ height: "170px" }}>
+            {!backLoaded && (
+              <div className="absolute inset-0 animate-pulse bg-white/60 rounded-lg" />
+            )}
+            <img
+              ref={backImgRef}
+              src={backSrc}
+              alt={`Julizen ${product.name} ${product.size} — back label`}
+              className="absolute inset-0 h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+              style={{
+                opacity: backLoaded ? 1 : 0,
+                transition: backLoaded ? "transform 0.5s ease" : "opacity 0.3s ease, transform 0.5s ease",
+              }}
+              width={200}
+              height={200}
+              fetchPriority={priority ? "high" : "auto"}
+              decoding={priority ? "sync" : "async"}
+              loading={priority ? "eager" : "lazy"}
+              onLoad={() => setBackLoaded(true)}
+            />
+          </div>
+        </div>
 
         <span
           className="absolute bottom-2 right-2 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow transition-transform duration-200 group-hover:scale-105"
