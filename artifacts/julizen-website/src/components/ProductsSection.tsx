@@ -254,7 +254,7 @@ function ProductModal({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.4 }}
               className="mb-6 rounded-2xl overflow-hidden"
-              style={{ height: "240px", background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}
+              style={{ height: "300px", background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}
             >
               <div className="flex h-full">
                 {[
@@ -266,7 +266,7 @@ function ProductModal({
                     initial={{ opacity: 0, scale: 0.94 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 + si * 0.08, type: "spring", stiffness: 300 }}
-                    className="relative flex flex-1 items-center justify-center p-3"
+                    className="relative flex flex-1 items-center justify-center p-1"
                   >
                     <img
                       src={src}
@@ -283,7 +283,7 @@ function ProductModal({
                       }}
                     />
                     {si === 0 && (
-                      <div className="absolute right-0 top-4 bottom-4 w-px bg-gray-200" />
+                      <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-200" />
                     )}
                   </motion.div>
                 ))}
@@ -431,7 +431,7 @@ function ProductCard({
         Each half gets exactly 50% width; both use object-fit:contain so the
         sachet always fills its box at the same visual scale.
       */}
-      <div className="relative rounded-t-3xl" style={{ height: "260px", background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}>
+      <div className="relative rounded-t-3xl" style={{ height: "320px", background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}>
         {/* Accent top border — fades in on hover */}
         <div
           className="absolute top-0 left-0 right-0 z-10 h-1 rounded-t-3xl transition-all duration-300"
@@ -446,7 +446,7 @@ function ProductCard({
         <div className="flex h-full">
 
           {/* ── Front sachet ── */}
-          <div className="relative flex flex-1 items-center justify-center p-3">
+          <div className="relative flex flex-1 items-center justify-center p-1">
             {!frontLoaded && (
               <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tl-3xl" />
             )}
@@ -473,10 +473,10 @@ function ProductCard({
           </div>
 
           {/* Hairline divider between the two sachets */}
-          <div className="w-px flex-shrink-0 self-stretch my-4 bg-gray-200" />
+          <div className="w-px flex-shrink-0 self-stretch bg-gray-200" />
 
           {/* ── Back sachet ── */}
-          <div className="relative flex flex-1 items-center justify-center p-3">
+          <div className="relative flex flex-1 items-center justify-center p-1">
             {!backLoaded && (
               <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tr-3xl" />
             )}
