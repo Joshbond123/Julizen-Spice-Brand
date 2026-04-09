@@ -253,8 +253,8 @@ function ProductModal({
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.4 }}
-              className="mb-6 overflow-hidden rounded-2xl bg-transparent"
-              style={{ height: "230px" }}
+              className="mb-6 rounded-2xl overflow-hidden"
+              style={{ height: "240px", background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}
             >
               <div className="flex h-full">
                 {[
@@ -266,27 +266,24 @@ function ProductModal({
                     initial={{ opacity: 0, scale: 0.94 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 + si * 0.08, type: "spring", stiffness: 300 }}
-                    className="relative flex-1 overflow-hidden"
+                    className="relative flex flex-1 items-center justify-center p-3"
                   >
                     <img
                       src={src}
                       alt={`Julizen ${product.name} ${product.size} ${side} view`}
-                      width={240}
-                      height={240}
+                      width={300}
+                      height={300}
                       fetchPriority="high"
                       decoding="sync"
                       loading="eager"
                       style={{
-                        position: "absolute",
-                        width: "124%",
-                        height: "124%",
-                        top: "-12%",
-                        left: "-12%",
+                        width: "100%",
+                        height: "100%",
                         objectFit: "contain",
                       }}
                     />
                     {si === 0 && (
-                      <div className="absolute right-0 top-0 bottom-0 w-px bg-gray-100" />
+                      <div className="absolute right-0 top-4 bottom-4 w-px bg-gray-200" />
                     )}
                   </motion.div>
                 ))}
@@ -430,15 +427,14 @@ function ProductCard({
     >
       {/* ── Image area ──────────────────────────────────────────────────── */}
       {/*
-        Technique: each image div is overflow-hidden.
-        The <img> is positioned at -12% offset with 124% w/h so its
-        transparent padding is cropped on all four sides, leaving only
-        the visible sachet. No outer padding so sachets fill the card.
+        Images are all normalized to 800×800 with consistent sachet bounds.
+        Each half gets exactly 50% width; both use object-fit:contain so the
+        sachet always fills its box at the same visual scale.
       */}
-      <div className="relative overflow-hidden bg-transparent" style={{ height: "190px" }}>
+      <div className="relative rounded-t-3xl" style={{ height: "260px", background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}>
         {/* Accent top border — fades in on hover */}
         <div
-          className="absolute top-0 left-0 right-0 z-10 h-0.5 transition-all duration-300"
+          className="absolute top-0 left-0 right-0 z-10 h-1 rounded-t-3xl transition-all duration-300"
           style={{
             backgroundColor: product.accentColor,
             opacity: hovered ? 1 : 0,
@@ -446,67 +442,61 @@ function ProductCard({
           }}
         />
 
-        {/* Side-by-side row — no gap, each half fills exactly 50% */}
+        {/* Side-by-side sachets — flex, no gap, each exactly 50% */}
         <div className="flex h-full">
 
           {/* ── Front sachet ── */}
-          <div className="relative flex-1 overflow-hidden">
+          <div className="relative flex flex-1 items-center justify-center p-3">
             {!frontLoaded && (
-              <div className="absolute inset-0 animate-pulse bg-gray-100" />
+              <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tl-3xl" />
             )}
             <img
               ref={frontImgRef}
               src={frontSrc}
               alt={`Julizen ${product.name} ${product.size} — front`}
-              width={220}
-              height={220}
+              width={400}
+              height={400}
               fetchPriority={priority ? "high" : "auto"}
               decoding={priority ? "sync" : "async"}
               loading={priority ? "eager" : "lazy"}
               onLoad={() => setFrontLoaded(true)}
               itemProp="image"
               style={{
-                position: "absolute",
-                width: "124%",
-                height: "124%",
-                top: "-12%",
-                left: "-12%",
+                width: "100%",
+                height: "100%",
                 objectFit: "contain",
                 opacity: frontLoaded ? 1 : 0,
-                transition: "opacity 0.3s ease, transform 0.5s ease",
-                transform: hovered ? "scale(1.05)" : "scale(1)",
+                transition: "opacity 0.3s ease, transform 0.4s ease",
+                transform: hovered ? "scale(1.04)" : "scale(1)",
               }}
             />
           </div>
 
           {/* Hairline divider between the two sachets */}
-          <div className="w-px flex-shrink-0 bg-gray-100" />
+          <div className="w-px flex-shrink-0 self-stretch my-4 bg-gray-200" />
 
           {/* ── Back sachet ── */}
-          <div className="relative flex-1 overflow-hidden">
+          <div className="relative flex flex-1 items-center justify-center p-3">
             {!backLoaded && (
-              <div className="absolute inset-0 animate-pulse bg-gray-100" />
+              <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tr-3xl" />
             )}
             <img
               ref={backImgRef}
               src={backSrc}
               alt={`Julizen ${product.name} ${product.size} — back`}
-              width={220}
-              height={220}
+              width={400}
+              height={400}
               fetchPriority={priority ? "high" : "auto"}
               decoding={priority ? "sync" : "async"}
               loading={priority ? "eager" : "lazy"}
               onLoad={() => setBackLoaded(true)}
               style={{
-                position: "absolute",
-                width: "124%",
-                height: "124%",
-                top: "-12%",
-                left: "-12%",
+                width: "100%",
+                height: "100%",
                 objectFit: "contain",
                 opacity: backLoaded ? 1 : 0,
-                transition: "opacity 0.3s ease, transform 0.5s ease",
-                transform: hovered ? "scale(1.05)" : "scale(1)",
+                transition: "opacity 0.3s ease, transform 0.4s ease",
+                transform: hovered ? "scale(1.04)" : "scale(1)",
               }}
             />
           </div>
@@ -514,7 +504,7 @@ function ProductCard({
 
         {/* Size badge */}
         <span
-          className="absolute bottom-2 right-2 z-10 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow transition-transform duration-200 group-hover:scale-105"
+          className="absolute bottom-2.5 right-3 z-10 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow transition-transform duration-200 group-hover:scale-105"
           style={{ backgroundColor: product.accentColor }}
         >
           {product.size}
