@@ -430,8 +430,12 @@ function ProductCard({
         Images are all normalized to 800×800 with consistent sachet bounds.
         Each half gets exactly 50% width; both use object-fit:contain so the
         sachet always fills its box at the same visual scale.
+        Height increased to 400px and padding reduced so sachets are large and prominent.
       */}
-      <div className="relative rounded-t-3xl" style={{ height: "320px", background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}>
+      <div
+        className="relative rounded-t-3xl"
+        style={{ height: "400px", background: "linear-gradient(160deg,#f6f5f3 0%,#ffffff 100%)" }}
+      >
         {/* Accent top border — fades in on hover */}
         <div
           className="absolute top-0 left-0 right-0 z-10 h-1 rounded-t-3xl transition-all duration-300"
@@ -446,7 +450,7 @@ function ProductCard({
         <div className="flex h-full">
 
           {/* ── Front sachet ── */}
-          <div className="relative flex flex-1 items-center justify-center p-1">
+          <div className="relative flex flex-1 items-center justify-center" style={{ padding: "12px 8px 20px 12px" }}>
             {!frontLoaded && (
               <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tl-3xl" />
             )}
@@ -467,16 +471,14 @@ function ProductCard({
                 objectFit: "contain",
                 opacity: frontLoaded ? 1 : 0,
                 transition: "opacity 0.3s ease, transform 0.4s ease",
-                transform: hovered ? "scale(1.04)" : "scale(1)",
+                transform: hovered ? "scale(1.05)" : "scale(1)",
+                filter: "drop-shadow(0 6px 18px rgba(0,0,0,0.12))",
               }}
             />
           </div>
 
-          {/* Hairline divider between the two sachets */}
-          <div className="w-px flex-shrink-0 self-stretch bg-gray-200" />
-
           {/* ── Back sachet ── */}
-          <div className="relative flex flex-1 items-center justify-center p-1">
+          <div className="relative flex flex-1 items-center justify-center" style={{ padding: "12px 12px 20px 8px" }}>
             {!backLoaded && (
               <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tr-3xl" />
             )}
@@ -496,7 +498,8 @@ function ProductCard({
                 objectFit: "contain",
                 opacity: backLoaded ? 1 : 0,
                 transition: "opacity 0.3s ease, transform 0.4s ease",
-                transform: hovered ? "scale(1.04)" : "scale(1)",
+                transform: hovered ? "scale(1.05)" : "scale(1)",
+                filter: "drop-shadow(0 6px 18px rgba(0,0,0,0.10))",
               }}
             />
           </div>
@@ -504,10 +507,15 @@ function ProductCard({
 
         {/* Size badge */}
         <span
-          className="absolute bottom-2.5 right-3 z-10 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow transition-transform duration-200 group-hover:scale-105"
+          className="absolute bottom-3 right-3.5 z-10 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow transition-transform duration-200 group-hover:scale-105"
           style={{ backgroundColor: product.accentColor }}
         >
           {product.size}
+        </span>
+
+        {/* Front / Back labels */}
+        <span className="absolute bottom-3 left-4 z-10 text-[10px] font-semibold text-gray-400 tracking-wide">
+          Front · Back
         </span>
       </div>
 
@@ -586,7 +594,7 @@ function SizeGroup({
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: groupIndex * 0.06, duration: 0.42 }}
       >
-        <div className="mb-7 flex items-center gap-4">
+        <div className="mb-6 flex items-center gap-4">
           <div className="flex items-center gap-3">
             <motion.div
               initial={{ scale: 0.7, opacity: 0 }}
@@ -647,10 +655,10 @@ export function ProductsSection() {
       <section
         id="products"
         aria-label="Julizen Seasoning Products"
-        className="scroll-mt-24 bg-white py-20 sm:py-28"
+        className="scroll-mt-24 bg-white py-14 sm:py-20"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto mb-16 max-w-3xl text-center sm:mb-20">
+          <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-14">
             <motion.span
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -691,7 +699,7 @@ export function ProductsSection() {
             </motion.div>
           </div>
 
-          <div className="space-y-16 sm:space-y-24">
+          <div className="space-y-10 sm:space-y-14">
             {grouped.map((g, gi) => (
               <SizeGroup
                 key={g.size}
