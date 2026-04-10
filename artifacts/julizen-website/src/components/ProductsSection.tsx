@@ -254,9 +254,9 @@ function ProductModal({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.4 }}
               className="mb-6 rounded-2xl overflow-hidden"
-              style={{ height: "300px", background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}
+              style={{ background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}
             >
-              <div className="flex h-full">
+              <div className="flex">
                 {[
                   { src: frontSrc, side: "front" },
                   { src: backSrc, side: "back" },
@@ -266,7 +266,7 @@ function ProductModal({
                     initial={{ opacity: 0, scale: 0.94 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 + si * 0.08, type: "spring", stiffness: 300 }}
-                    className="relative flex flex-1 items-center justify-center p-1"
+                    className="relative flex-1 min-w-0 overflow-hidden"
                   >
                     <img
                       src={src}
@@ -278,8 +278,10 @@ function ProductModal({
                       loading="eager"
                       style={{
                         width: "100%",
-                        height: "100%",
+                        height: "auto",
+                        display: "block",
                         objectFit: "contain",
+                        transform: si === 0 ? "translateX(10%)" : "translateX(-10%)",
                       }}
                     />
                     {si === 0 && (
