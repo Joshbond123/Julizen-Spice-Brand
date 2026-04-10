@@ -436,8 +436,8 @@ function ProductCard({
       <div
         className="relative flex overflow-hidden rounded-t-3xl"
         style={{
-          gap: "2px",
-          padding: "12px 8px 32px",
+          gap: "0",
+          padding: "12px 0 32px",
           background: "linear-gradient(160deg,#f6f5f3 0%,#ffffff 100%)",
         }}
       >
@@ -466,9 +466,10 @@ function ProductCard({
             onLoad={() => setFrontLoaded(true)}
             itemProp="image"
             style={{
-              width: "100%",
+              width: "calc(100% + 10px)",
               height: "auto",
               display: "block",
+              marginRight: "-10px",
               objectFit: "contain",
               opacity: frontLoaded ? 1 : 0,
               transition: "opacity 0.3s ease, transform 0.4s ease",
@@ -478,7 +479,7 @@ function ProductCard({
           />
         </div>
 
-        {/* ── Back sachet — 2px gap set on parent ── */}
+        {/* ── Back sachet — extends left to close transparent PNG gap ── */}
         <div className="relative flex-1 min-w-0">
           {!backLoaded && (
             <div className="w-full aspect-square animate-pulse bg-gray-100 rounded-tr-lg" />
@@ -492,9 +493,10 @@ function ProductCard({
             loading={priority ? "eager" : "lazy"}
             onLoad={() => setBackLoaded(true)}
             style={{
-              width: "100%",
+              width: "calc(100% + 10px)",
               height: "auto",
               display: "block",
+              marginLeft: "-10px",
               objectFit: "contain",
               opacity: backLoaded ? 1 : 0,
               transition: "opacity 0.3s ease, transform 0.4s ease",
