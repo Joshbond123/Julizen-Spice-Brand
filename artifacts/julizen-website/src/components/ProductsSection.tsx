@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { getImageUrl } from "@/lib/imageUrl";
 import { generateWhatsAppLink } from "@/lib/utils";
-import { ShoppingBag, Info, X, ChefHat, Package2, Flame } from "lucide-react";
+import { ShoppingBag, Info, X, Package2, Flame } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { AdminProduct, SizeKey } from "@/lib/productStorage";
 
@@ -292,50 +292,22 @@ function ProductModal({
               </div>
             </motion.div>
 
-            {/* Description */}
+            {/* About This Product */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22 }}
-              className="mb-6"
+              className="mb-8 rounded-2xl border border-gray-100 bg-gray-50 p-5"
             >
-              <div className="mb-2.5 flex items-center gap-2">
+              <div className="mb-3 flex items-center gap-2">
                 <Flame className="h-4 w-4" style={{ color: product.accentColor }} />
                 <h3 className="text-sm font-bold uppercase tracking-wider text-secondary">About This Product</h3>
               </div>
-              <p className="text-sm leading-7 text-muted-foreground">{product.fullDescription}</p>
-            </motion.div>
-
-            {/* Cooking tips */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.28 }}
-              className="mb-8"
-            >
-              <div className="mb-3 flex items-center gap-2">
-                <ChefHat className="h-4 w-4" style={{ color: product.accentColor }} />
-                <h3 className="text-sm font-bold uppercase tracking-wider text-secondary">Cooking Tips</h3>
-              </div>
-              <ol className="space-y-2.5">
-                {product.cookingTips.map((tip, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.32 + i * 0.07 }}
-                    className="flex items-start gap-3"
-                  >
-                    <span
-                      className="mt-px flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white shadow-sm"
-                      style={{ backgroundColor: product.accentColor }}
-                    >
-                      {i + 1}
-                    </span>
-                    <span className="text-sm leading-6 text-muted-foreground">{tip}</span>
-                  </motion.li>
+              <div className="space-y-3">
+                {product.fullDescription.split("\n\n").map((para, i) => (
+                  <p key={i} className="text-sm leading-7 text-muted-foreground">{para}</p>
                 ))}
-              </ol>
+              </div>
             </motion.div>
 
             {/* CTA */}
