@@ -1,4 +1,11 @@
 User-agent: *
-Allow: /
+  Allow: /
 
-Sitemap: https://joshbond123.github.io/Julizen-Spice-Brand/sitemap.xml
+  # Block admin panel from crawling
+  Disallow: /Julizen-Spice-Brand/admin
+  Disallow: /Julizen-Spice-Brand/admin/
+
+  # Block data store endpoint
+  Disallow: /Julizen-Spice-Brand/data/store.json
+
+  Sitemap: https://joshbond123.github.io/Julizen-Spice-Brand/sitemap.xml
