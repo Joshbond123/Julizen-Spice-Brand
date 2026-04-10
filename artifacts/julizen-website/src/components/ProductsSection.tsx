@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { getImageUrl } from "@/lib/imageUrl";
 import { generateWhatsAppLink } from "@/lib/utils";
-import { ShoppingBag, Info, X, Package2, Flame } from "lucide-react";
+import { ShoppingBag, Info, X, Package2, Flame, Sparkles } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { AdminProduct, SizeKey } from "@/lib/productStorage";
 
@@ -303,7 +303,30 @@ function ProductModal({
                 <Flame className="h-4 w-4" style={{ color: product.accentColor }} />
                 <h3 className="text-sm font-bold uppercase tracking-wider text-secondary">About This Product</h3>
               </div>
-              <p className="text-sm leading-7 text-muted-foreground">{product.fullDescription}</p>
+              <p className="mb-5 text-sm leading-7 text-muted-foreground">{product.fullDescription}</p>
+
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { label: "Rich Taste", desc: "Deep, full flavour that makes every dish stand out." },
+                  { label: "Attractive Colour", desc: "Gives your food a beautiful, appetising look." },
+                  { label: "Pleasant Aroma", desc: "A warm, inviting scent that fills the kitchen." },
+                  { label: "Balanced Sweetness", desc: "Perfectly balanced — never too strong, never too mild." },
+                ].map(({ label, desc }, i) => (
+                  <motion.div
+                    key={label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.26 + i * 0.06 }}
+                    className="rounded-xl border border-gray-100 bg-gray-50 p-3"
+                  >
+                    <div className="mb-1 flex items-center gap-1.5">
+                      <Sparkles className="h-3.5 w-3.5 shrink-0" style={{ color: product.accentColor }} />
+                      <span className="text-[12px] font-bold text-secondary">{label}</span>
+                    </div>
+                    <p className="text-[11px] leading-5 text-muted-foreground">{desc}</p>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
 
             {/* CTA */}
