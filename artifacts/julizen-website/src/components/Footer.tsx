@@ -107,6 +107,7 @@ export function Footer() {
                 <li className="pt-3 flex gap-4">
                   <a
                     href="#"
+                    rel="nofollow"
                     className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
                     aria-label="Julizen on Instagram"
                   >
@@ -114,6 +115,7 @@ export function Footer() {
                   </a>
                   <a
                     href="#"
+                    rel="nofollow"
                     className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
                     aria-label="Julizen on Facebook"
                   >
@@ -121,6 +123,7 @@ export function Footer() {
                   </a>
                   <a
                     href="#"
+                    rel="nofollow"
                     className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
                     aria-label="Julizen on Twitter"
                   >
@@ -136,8 +139,8 @@ export function Footer() {
           <p>&copy; {new Date().getFullYear()} Julizen Seasoning. All rights reserved.</p>
           <nav aria-label="Legal links">
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" rel="nofollow" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" rel="nofollow" className="hover:text-white transition-colors">Terms of Service</a>
             </div>
           </nav>
         </div>
