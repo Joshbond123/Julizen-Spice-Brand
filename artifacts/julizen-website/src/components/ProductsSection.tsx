@@ -472,7 +472,7 @@ function ProductCard({
               objectFit: "contain",
               opacity: frontLoaded ? 1 : 0,
               transition: "opacity 0.3s ease, transform 0.4s ease",
-              transform: hovered ? "translateX(14%) scale(1.04)" : "translateX(14%)",
+              transform: hovered ? "translateX(10%) scale(1.04)" : "translateX(10%)",
               filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.13))",
             }}
           />
@@ -498,7 +498,7 @@ function ProductCard({
               objectFit: "contain",
               opacity: backLoaded ? 1 : 0,
               transition: "opacity 0.3s ease, transform 0.4s ease",
-              transform: hovered ? "translateX(-14%) scale(1.04)" : "translateX(-14%)",
+              transform: hovered ? "translateX(-10%) scale(1.04)" : "translateX(-10%)",
               filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.10))",
             }}
           />
