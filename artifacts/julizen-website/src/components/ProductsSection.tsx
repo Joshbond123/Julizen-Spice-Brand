@@ -427,13 +427,20 @@ function ProductCard({
     >
       {/* ── Image area ──────────────────────────────────────────────────── */}
       {/*
-        Fixed-height images (height:260px, width:auto) so the sachet renders at
-        its natural aspect ratio and fills the full 260px tall. Both images sit
-        directly next to each other with no wrapper containers creating dead space.
+        Container is flex-row with overflow:hidden so both halves fill the
+        full card width (no horizontal padding eating space). Each half is
+        flex:1 min-w-0 so images are as wide as possible. Images use
+        width:100%/height:100%/objectFit:contain — no maxWidth constraint.
+        8px gap between the two sachets per the design spec.
       */}
       <div
-        className="relative flex items-center justify-center rounded-t-3xl px-4 pt-5 pb-7"
-        style={{ background: "linear-gradient(160deg,#f6f5f3 0%,#ffffff 100%)" }}
+        className="relative flex overflow-hidden rounded-t-3xl"
+        style={{
+          height: "300px",
+          gap: "8px",
+          padding: "8px 8px 28px",
+          background: "linear-gradient(160deg,#f6f5f3 0%,#ffffff 100%)",
+        }}
       >
         {/* Accent top border — fades in on hover */}
         <div
@@ -445,52 +452,56 @@ function ProductCard({
           }}
         />
 
-        {/* Front sachet */}
-        <img
-          ref={frontImgRef}
-          src={frontSrc}
-          alt={`Julizen ${product.name} ${product.size} — front`}
-          fetchPriority={priority ? "high" : "auto"}
-          decoding={priority ? "sync" : "async"}
-          loading={priority ? "eager" : "lazy"}
-          onLoad={() => setFrontLoaded(true)}
-          itemProp="image"
-          style={{
-            height: "260px",
-            width: "auto",
-            maxWidth: "50%",
-            flexShrink: 0,
-            objectFit: "contain",
-            display: "block",
-            opacity: frontLoaded ? 1 : 0,
-            transition: "opacity 0.3s ease, transform 0.4s ease",
-            transform: hovered ? "scale(1.05)" : "scale(1)",
-            filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.14))",
-          }}
-        />
+        {/* ── Front sachet ── */}
+        <div className="relative flex flex-1 min-w-0 items-center justify-center">
+          {!frontLoaded && (
+            <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tl-2xl" />
+          )}
+          <img
+            ref={frontImgRef}
+            src={frontSrc}
+            alt={`Julizen ${product.name} ${product.size} — front`}
+            fetchPriority={priority ? "high" : "auto"}
+            decoding={priority ? "sync" : "async"}
+            loading={priority ? "eager" : "lazy"}
+            onLoad={() => setFrontLoaded(true)}
+            itemProp="image"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              opacity: frontLoaded ? 1 : 0,
+              transition: "opacity 0.3s ease, transform 0.4s ease",
+              transform: hovered ? "scale(1.04)" : "scale(1)",
+              filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.13))",
+            }}
+          />
+        </div>
 
-        {/* Back sachet — sits directly next to front, no gap */}
-        <img
-          ref={backImgRef}
-          src={backSrc}
-          alt={`Julizen ${product.name} ${product.size} — back`}
-          fetchPriority={priority ? "high" : "auto"}
-          decoding={priority ? "sync" : "async"}
-          loading={priority ? "eager" : "lazy"}
-          onLoad={() => setBackLoaded(true)}
-          style={{
-            height: "260px",
-            width: "auto",
-            maxWidth: "50%",
-            flexShrink: 0,
-            objectFit: "contain",
-            display: "block",
-            opacity: backLoaded ? 1 : 0,
-            transition: "opacity 0.3s ease, transform 0.4s ease",
-            transform: hovered ? "scale(1.05)" : "scale(1)",
-            filter: "drop-shadow(0 8px 20px rgba(0,0,0,0.11))",
-          }}
-        />
+        {/* ── Back sachet — 8px gap set on parent ── */}
+        <div className="relative flex flex-1 min-w-0 items-center justify-center">
+          {!backLoaded && (
+            <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tr-2xl" />
+          )}
+          <img
+            ref={backImgRef}
+            src={backSrc}
+            alt={`Julizen ${product.name} ${product.size} — back`}
+            fetchPriority={priority ? "high" : "auto"}
+            decoding={priority ? "sync" : "async"}
+            loading={priority ? "eager" : "lazy"}
+            onLoad={() => setBackLoaded(true)}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              opacity: backLoaded ? 1 : 0,
+              transition: "opacity 0.3s ease, transform 0.4s ease",
+              transform: hovered ? "scale(1.04)" : "scale(1)",
+              filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.10))",
+            }}
+          />
+        </div>
 
         {/* Size badge */}
         <span
@@ -596,7 +607,7 @@ function SizeGroup({
           <div className="ml-2 h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent" aria-hidden />
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {products.map((product, pi) => (
             <ProductCard
               key={product.id + product.size}
