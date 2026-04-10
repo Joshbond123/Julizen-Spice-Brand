@@ -452,7 +452,7 @@ function ProductCard({
         />
 
         {/* ── Front sachet ── */}
-        <div className="relative flex-1 min-w-0">
+        <div className="relative flex-1 min-w-0 overflow-hidden">
           {!frontLoaded && (
             <div className="w-full aspect-square animate-pulse bg-gray-100 rounded-tl-lg" />
           )}
@@ -466,21 +466,20 @@ function ProductCard({
             onLoad={() => setFrontLoaded(true)}
             itemProp="image"
             style={{
-              width: "calc(100% + 10px)",
+              width: "100%",
               height: "auto",
               display: "block",
-              marginRight: "-10px",
               objectFit: "contain",
               opacity: frontLoaded ? 1 : 0,
               transition: "opacity 0.3s ease, transform 0.4s ease",
-              transform: hovered ? "scale(1.04)" : "scale(1)",
+              transform: hovered ? "translateX(14%) scale(1.04)" : "translateX(14%)",
               filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.13))",
             }}
           />
         </div>
 
-        {/* ── Back sachet — extends left to close transparent PNG gap ── */}
-        <div className="relative flex-1 min-w-0">
+        {/* ── Back sachet — shifts left to close transparent PNG gap ── */}
+        <div className="relative flex-1 min-w-0 overflow-hidden">
           {!backLoaded && (
             <div className="w-full aspect-square animate-pulse bg-gray-100 rounded-tr-lg" />
           )}
@@ -493,14 +492,13 @@ function ProductCard({
             loading={priority ? "eager" : "lazy"}
             onLoad={() => setBackLoaded(true)}
             style={{
-              width: "calc(100% + 10px)",
+              width: "100%",
               height: "auto",
               display: "block",
-              marginLeft: "-10px",
               objectFit: "contain",
               opacity: backLoaded ? 1 : 0,
               transition: "opacity 0.3s ease, transform 0.4s ease",
-              transform: hovered ? "scale(1.04)" : "scale(1)",
+              transform: hovered ? "translateX(-14%) scale(1.04)" : "translateX(-14%)",
               filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.10))",
             }}
           />
