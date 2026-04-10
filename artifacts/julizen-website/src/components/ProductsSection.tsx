@@ -431,14 +431,13 @@ function ProductCard({
         full card width (no horizontal padding eating space). Each half is
         flex:1 min-w-0 so images are as wide as possible. Images use
         width:100%/height:100%/objectFit:contain — no maxWidth constraint.
-        8px gap between the two sachets per the design spec.
+        2px gap keeps front+back feeling like one unit with no dead space.
       */}
       <div
         className="relative flex overflow-hidden rounded-t-3xl"
         style={{
-          height: "300px",
-          gap: "8px",
-          padding: "8px 8px 28px",
+          gap: "2px",
+          padding: "12px 8px 32px",
           background: "linear-gradient(160deg,#f6f5f3 0%,#ffffff 100%)",
         }}
       >
@@ -453,9 +452,9 @@ function ProductCard({
         />
 
         {/* ── Front sachet ── */}
-        <div className="relative flex flex-1 min-w-0 items-center justify-center">
+        <div className="relative flex-1 min-w-0">
           {!frontLoaded && (
-            <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tl-2xl" />
+            <div className="w-full aspect-square animate-pulse bg-gray-100 rounded-tl-lg" />
           )}
           <img
             ref={frontImgRef}
@@ -468,7 +467,8 @@ function ProductCard({
             itemProp="image"
             style={{
               width: "100%",
-              height: "100%",
+              height: "auto",
+              display: "block",
               objectFit: "contain",
               opacity: frontLoaded ? 1 : 0,
               transition: "opacity 0.3s ease, transform 0.4s ease",
@@ -478,10 +478,10 @@ function ProductCard({
           />
         </div>
 
-        {/* ── Back sachet — 8px gap set on parent ── */}
-        <div className="relative flex flex-1 min-w-0 items-center justify-center">
+        {/* ── Back sachet — 2px gap set on parent ── */}
+        <div className="relative flex-1 min-w-0">
           {!backLoaded && (
-            <div className="absolute inset-0 animate-pulse bg-gray-100 rounded-tr-2xl" />
+            <div className="w-full aspect-square animate-pulse bg-gray-100 rounded-tr-lg" />
           )}
           <img
             ref={backImgRef}
@@ -493,7 +493,8 @@ function ProductCard({
             onLoad={() => setBackLoaded(true)}
             style={{
               width: "100%",
-              height: "100%",
+              height: "auto",
+              display: "block",
               objectFit: "contain",
               opacity: backLoaded ? 1 : 0,
               transition: "opacity 0.3s ease, transform 0.4s ease",
