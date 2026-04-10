@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { getImageUrl } from "@/lib/imageUrl";
 import { generateWhatsAppLink } from "@/lib/utils";
-import { ShoppingBag, Info, X, Package2, Flame, Sparkles } from "lucide-react";
+import { ShoppingBag, Info, X, ChefHat, Package2, Flame } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { AdminProduct, SizeKey } from "@/lib/productStorage";
 
@@ -292,7 +292,7 @@ function ProductModal({
               </div>
             </motion.div>
 
-            {/* About This Product */}
+            {/* Description */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
@@ -303,30 +303,39 @@ function ProductModal({
                 <Flame className="h-4 w-4" style={{ color: product.accentColor }} />
                 <h3 className="text-sm font-bold uppercase tracking-wider text-secondary">About This Product</h3>
               </div>
-              <p className="mb-5 text-sm leading-7 text-muted-foreground">{product.fullDescription}</p>
+              <p className="text-sm leading-7 text-muted-foreground">{product.fullDescription}</p>
+            </motion.div>
 
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { label: "Rich Taste", desc: "Deep, full flavour that makes every dish stand out." },
-                  { label: "Attractive Colour", desc: "Gives your food a beautiful, appetising look." },
-                  { label: "Pleasant Aroma", desc: "A warm, inviting scent that fills the kitchen." },
-                  { label: "Balanced Sweetness", desc: "Perfectly balanced — never too strong, never too mild." },
-                ].map(({ label, desc }, i) => (
-                  <motion.div
-                    key={label}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.26 + i * 0.06 }}
-                    className="rounded-xl border border-gray-100 bg-gray-50 p-3"
-                  >
-                    <div className="mb-1 flex items-center gap-1.5">
-                      <Sparkles className="h-3.5 w-3.5 shrink-0" style={{ color: product.accentColor }} />
-                      <span className="text-[12px] font-bold text-secondary">{label}</span>
-                    </div>
-                    <p className="text-[11px] leading-5 text-muted-foreground">{desc}</p>
-                  </motion.div>
-                ))}
+            {/* Cooking tips */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.28 }}
+              className="mb-8"
+            >
+              <div className="mb-3 flex items-center gap-2">
+                <ChefHat className="h-4 w-4" style={{ color: product.accentColor }} />
+                <h3 className="text-sm font-bold uppercase tracking-wider text-secondary">Cooking Tips</h3>
               </div>
+              <ol className="space-y-2.5">
+                {product.cookingTips.map((tip, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.32 + i * 0.07 }}
+                    className="flex items-start gap-3"
+                  >
+                    <span
+                      className="mt-px flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white shadow-sm"
+                      style={{ backgroundColor: product.accentColor }}
+                    >
+                      {i + 1}
+                    </span>
+                    <span className="text-sm leading-6 text-muted-foreground">{tip}</span>
+                  </motion.li>
+                ))}
+              </ol>
             </motion.div>
 
             {/* CTA */}
@@ -671,13 +680,17 @@ export function ProductsSection() {
               className="mx-auto mt-5 max-w-2xl space-y-3 text-base leading-7 text-muted-foreground sm:text-lg"
             >
               <p>
-                Julizen Seasoning delivers{" "}
-                <strong className="font-bold text-secondary">rich taste, beautiful colour, and a wonderful aroma</strong>{" "}
-                — every time you cook. Whether it is a quick weekday meal or a special family dish,
-                Julizen gives you consistent, delicious results you can count on.
+                Julizen Seasoning is the real{" "}
+                <strong className="font-bold text-secondary">&ldquo;Baba&rdquo;</strong>{" "}
+                in cooking, giving your food rich and mouth-watering flavour every time.
+                Whether it is everyday cooking or a special meal, Julizen helps your food
+                come out tasty and well balanced.
               </p>
               <p>
-                Simple to use. Trusted by families. Available in 10g, 100g, and 400g.
+                Easy to use and reliable, Julizen gives you consistent results you can trust.
+              </p>
+              <p>
+                Available in different sizes: 10g, 100g, and 400g.
               </p>
             </motion.div>
           </div>
