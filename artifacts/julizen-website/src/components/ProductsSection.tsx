@@ -410,11 +410,11 @@ function ProductCard({
       <div
             className="relative flex overflow-hidden rounded-t-3xl"
             style={{
-              gap: "0",
-              padding: "0 0 28px",
+              gap: "2px",
+              padding: "0",
               background: "#ffffff",
-              height: "240px",
-              alignItems: "center",
+              height: "256px",
+              alignItems: "stretch",
             }}
           >
             {/* Accent top border — fades in on hover */}
@@ -430,7 +430,7 @@ function ProductCard({
             {/* ── Front sachet ── */}
             <div
               className="relative overflow-hidden"
-              style={{ width: "50%", height: "100%", flexShrink: 0 }}
+              style={{ width: "50%", height: "calc(100% - 26px)", marginTop: "4px", flexShrink: 0 }}
             >
               {!frontLoaded && (
                 <div className="absolute inset-0 animate-pulse bg-gray-100" />
@@ -452,8 +452,8 @@ function ProductCard({
                   objectPosition: "center",
                   opacity: frontLoaded ? 1 : 0,
                   transition: "opacity 0.3s ease, transform 0.4s ease",
-                  transform: hovered ? "scale(1.48)" : "scale(1.38)",
-                  filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.18))",
+                  transform: hovered ? "scale(1.95)" : "scale(1.85)",
+                  filter: "drop-shadow(0 5px 14px rgba(0,0,0,0.22))",
                 }}
               />
             </div>
@@ -461,7 +461,7 @@ function ProductCard({
             {/* ── Back sachet ── */}
             <div
               className="relative overflow-hidden"
-              style={{ width: "50%", height: "100%", flexShrink: 0 }}
+              style={{ width: "50%", height: "calc(100% - 26px)", marginTop: "4px", flexShrink: 0 }}
             >
               {!backLoaded && (
                 <div className="absolute inset-0 animate-pulse bg-gray-100" />
@@ -482,8 +482,8 @@ function ProductCard({
                   objectPosition: "center",
                   opacity: backLoaded ? 1 : 0,
                   transition: "opacity 0.3s ease, transform 0.4s ease",
-                  transform: hovered ? "scale(1.48)" : "scale(1.38)",
-                  filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.14))",
+                  transform: hovered ? "scale(1.95)" : "scale(1.85)",
+                  filter: "drop-shadow(0 5px 14px rgba(0,0,0,0.18))",
                 }}
               />
             </div>
