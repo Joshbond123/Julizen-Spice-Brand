@@ -61,8 +61,8 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
       "400g": {
         packLabel: "Value Pack",
         packDetail: "400g × 20 sachets (carton)",
-        frontImage: "/images/product-chicken-new-front.webp",
-        backImage: "/images/product-chicken-new-back.webp",
+        frontImage: "/images/product-chicken-400g-front.png",
+        backImage: "/images/product-chicken-400g-back.png",
         whatsappMessage:
           "Hello, I want to order Julizen Chicken Flavour 400g × 20 sachets. Please send me the details.",
         sizeEnabled: true,
