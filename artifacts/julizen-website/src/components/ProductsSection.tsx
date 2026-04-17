@@ -256,7 +256,7 @@ function ProductModal({
               className="mb-6 rounded-2xl"
               style={{ background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}
             >
-              <div className="flex items-center" style={{ gap: "2px" }}>
+              <div className="flex items-center" style={{ gap: "0px" }}>
                 {[
                   { src: frontSrc, side: "front" },
                   { src: backSrc, side: "back" },
@@ -427,13 +427,13 @@ function ProductCard({
           - objectFit: contain lets each image fill its own frame completely.
           - No overflow:hidden so nothing is ever clipped.
           - Both images use identical CSS — guaranteed same rendered size.
-          - gap: 2px keeps sachets close together.
+          - gap: 0px — sachets sit flush against each other.
         */}
         <div
           style={{
             display: "flex",
             alignItems: "stretch",
-            gap: "2px",
+            gap: "0px",
             padding: "10px 8px 20px",
             background: "#ffffff",
           }}
