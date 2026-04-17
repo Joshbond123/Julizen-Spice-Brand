@@ -269,7 +269,7 @@ function ProductModal({
                     style={{
                       flex: 1,
                       position: "relative",
-                      aspectRatio: "3/4",
+                      aspectRatio: "2/3",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -278,8 +278,8 @@ function ProductModal({
                     <img
                       src={src}
                       alt={`Julizen ${product.name} ${product.size} ${side} view`}
-                      width={300}
-                      height={400}
+                      width={480}
+                      height={720}
                       fetchPriority="high"
                       decoding="sync"
                       loading="eager"
@@ -423,7 +423,7 @@ function ProductCard({
 
         {/*
           Two equal-width portrait containers side by side.
-          - aspectRatio 3/4 gives a tall portrait frame that suits sachet shapes.
+          - aspectRatio 2/3 matches normalized 480x720 sachet images exactly — both fill 100% of the container.
           - objectFit: contain lets each image fill its own frame completely.
           - No overflow:hidden so nothing is ever clipped.
           - Both images use identical CSS — guaranteed same rendered size.
@@ -442,7 +442,7 @@ function ProductCard({
           <div
             style={{
               flex: 1,
-              aspectRatio: "3/4",
+              aspectRatio: "2/3",
               position: "relative",
               display: "flex",
               alignItems: "center",
@@ -481,7 +481,7 @@ function ProductCard({
           <div
             style={{
               flex: 1,
-              aspectRatio: "3/4",
+              aspectRatio: "2/3",
               position: "relative",
               display: "flex",
               alignItems: "center",
