@@ -51,7 +51,7 @@ const FRONT_SCALE_100G: Record<string, number> = {
   "chicken":     1.25,   // back/front height fill ratio = 93.2% / 74.7%
   "crayfish":    1.24,   // 93.2% / 75.5%
   "stew-jollof": 1.17,   // 93.2% / 79.9%
-  // "fried-rice" intentionally omitted: front ≥ back, no correction needed
+  "fried-rice":  0.949,  // front fills 87.4%, back fills 82.95% → scale front down
 };
 
 const SIZE_LABELS: Record<string, string> = {
@@ -433,7 +433,10 @@ function ProductCard({
       {/* ── Image area ──────────────────────────────────────────────────── */}
       <div
         className="relative rounded-t-3xl"
-        style={{ background: "#ffffff" }}
+        style={{
+          background: "#ffffff",
+          paddingBottom: product.size === "10g" ? "24px" : "0px",
+        }}
       >
         {/* Accent top border — fades in on hover */}
         <div
@@ -469,8 +472,8 @@ function ProductCard({
           style={{
             display: "flex",
             alignItems: "stretch",
-            gap: "2px",
-            padding: "6px 4px 12px",
+            gap: "0px",
+            padding: "4px 2px 8px",
             background: "#ffffff",
             height: `${IMAGE_AREA_HEIGHT[product.size]}px`,
           }}
