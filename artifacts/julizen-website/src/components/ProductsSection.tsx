@@ -41,6 +41,18 @@ const IMAGE_AREA_HEIGHT: Record<SizeKey, number> = {
   "100g": 262,
   "400g": 300,
 };
+// Per-product scale applied ONLY to the 100g front sachet image.
+// Root cause: the front sachet PNG has a larger transparent canvas margin
+// than the back sachet PNG, so objectFit:contain renders the front artwork
+// visually smaller than the back inside the same container.
+// Scale compensates so both sachets appear the same visual height.
+// The scaled transparent overflow is invisible; no content is clipped.
+const FRONT_SCALE_100G: Record<string, number> = {
+  "chicken":     1.25,   // back/front height fill ratio = 93.2% / 74.7%
+  "crayfish":    1.24,   // 93.2% / 75.5%
+  "stew-jollof": 1.17,   // 93.2% / 79.9%
+  // "fried-rice" intentionally omitted: front ≥ back, no correction needed
+};
 
 const SIZE_LABELS: Record<string, string> = {
   "10g": "Perfect for everyday cooking & catering packs",
@@ -497,7 +509,12 @@ function ProductCard({
                 opacity: frontLoaded ? 1 : 0,
                 transition: "transform 0.4s ease, opacity 0.3s ease",
                 transformOrigin: "50% 50%",
-                transform: hovered ? "scale(1.05)" : "scale(1)",
+                transform: (() => {
+                  const base = product.size === "100g"
+                    ? (FRONT_SCALE_100G[product.id] ?? 1.0)
+                    : 1.0;
+                  return hovered ? `scale(${base * 1.05})` : `scale(${base})`;
+                })(),
                 filter: "drop-shadow(0 6px 22px rgba(0,0,0,0.20))",
               }}
             />
