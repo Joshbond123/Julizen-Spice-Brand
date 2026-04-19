@@ -473,7 +473,6 @@ function ProductCard({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              overflow: "hidden",
             }}
           >
             {!frontLoaded && (
@@ -491,9 +490,9 @@ function ProductCard({
               onLoad={() => setFrontLoaded(true)}
               itemProp="image"
               style={{
-                width: "auto",
+                width: "100%",
                 height: "100%",
-                maxWidth: "none",
+                objectFit: "contain",
                 display: "block",
                 opacity: frontLoaded ? 1 : 0,
                 transition: "transform 0.4s ease, opacity 0.3s ease",
@@ -514,7 +513,6 @@ function ProductCard({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              overflow: "hidden",
             }}
           >
             {!backLoaded && (
@@ -531,9 +529,9 @@ function ProductCard({
               loading={priority ? "eager" : "lazy"}
               onLoad={() => setBackLoaded(true)}
               style={{
-                width: "auto",
+                width: "100%",
                 height: "100%",
-                maxWidth: "none",
+                objectFit: "contain",
                 display: "block",
                 opacity: backLoaded ? 1 : 0,
                 transition: "transform 0.4s ease, opacity 0.3s ease",
@@ -545,9 +543,9 @@ function ProductCard({
           </div>
         </div>
 
-        {/* Size badge — top-right corner so it never overlaps sachet artwork */}
+        {/* Size badge */}
         <span
-          className="absolute top-2 right-3 z-10 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow"
+          className="absolute bottom-2 right-3 z-10 rounded-full px-2.5 py-1 text-[11px] font-bold text-white shadow"
           style={{ backgroundColor: product.accentColor }}
         >
           {product.size}
