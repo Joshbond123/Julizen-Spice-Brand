@@ -31,6 +31,17 @@ type ProductEntry = {
 
 const SIZES: SizeKey[] = ["10g", "100g", "400g"];
 
+// Fixed image-area heights per size tier.
+// Using a pixel height (not aspectRatio) guarantees that front and back
+// images always occupy exactly the same container — objectFit:contain then
+// scales each image proportionally within that identical box.
+// Taller for 100g and 400g creates the correct visual size hierarchy.
+const IMAGE_AREA_HEIGHT: Record<SizeKey, number> = {
+  "10g": 198,
+  "100g": 262,
+  "400g": 300,
+};
+
 const SIZE_LABELS: Record<string, string> = {
   "10g": "Perfect for everyday cooking & catering packs",
   "100g": "Ideal for households & regular family cooking",
@@ -256,7 +267,7 @@ function ProductModal({
               className="mb-6 rounded-2xl"
               style={{ background: "linear-gradient(160deg,#f9f9f7 0%,#ffffff 100%)" }}
             >
-              <div className="flex items-center" style={{ gap: "0px" }}>
+              <div className="flex items-stretch" style={{ gap: "2px", height: "280px" }}>
                 {[
                   { src: frontSrc, side: "front" },
                   { src: backSrc, side: "back" },
@@ -268,8 +279,9 @@ function ProductModal({
                     transition={{ delay: 0.2 + si * 0.08, type: "spring", stiffness: 300 }}
                     style={{
                       flex: 1,
+                      height: "100%",
+                      minWidth: 0,
                       position: "relative",
-                      aspectRatio: "2/3",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -422,27 +434,41 @@ function ProductCard({
         />
 
         {/*
-          Two equal-width portrait containers side by side.
-          - aspectRatio 2/3 matches normalized 480x720 sachet images exactly — both fill 100% of the container.
-          - objectFit: contain lets each image fill its own frame completely.
-          - No overflow:hidden so nothing is ever clipped.
-          - Both images use identical CSS — guaranteed same rendered size.
-          - gap: 0px — sachets sit flush against each other.
+          Two equal-width containers side by side with a fixed pixel height
+          derived from IMAGE_AREA_HEIGHT[size].
+
+          ROOT CAUSE FIX — why aspectRatio:"2/3" was wrong:
+          Our PNG images are 1800×2200 (100g) and 1260×1540 (10g), both at a
+          9:11 intrinsic ratio (≈0.818). A 2:3 container (ratio ≈0.667) is
+          taller than the image needs — objectFit:contain leaves ~28% dead
+          vertical space as transparent strips. Those strips make front/back
+          appear different sizes depending on how much of the canvas each
+          sachet occupies, even when both containers are pixel-identical.
+
+          FIX: Use explicit height instead of aspectRatio. Both containers
+          receive the same pixel height, so objectFit:contain always
+          constrains both images to the same bounding box — guaranteed equal
+          rendered size with no dead-space artefacts.
+
+          SIZE HIERARCHY: 10g → 198px, 100g → 262px, 400g → 300px.
+          Closer gap (2px) and reduced padding keep the pair visually tight.
         */}
         <div
           style={{
             display: "flex",
             alignItems: "stretch",
-            gap: "0px",
-            padding: "10px 8px 20px",
+            gap: "2px",
+            padding: "6px 4px 12px",
             background: "#ffffff",
+            height: `${IMAGE_AREA_HEIGHT[product.size]}px`,
           }}
         >
           {/* Front sachet */}
           <div
             style={{
               flex: 1,
-              aspectRatio: "2/3",
+              height: "100%",
+              minWidth: 0,
               position: "relative",
               display: "flex",
               alignItems: "center",
@@ -481,7 +507,8 @@ function ProductCard({
           <div
             style={{
               flex: 1,
-              aspectRatio: "2/3",
+              height: "100%",
+              minWidth: 0,
               position: "relative",
               display: "flex",
               alignItems: "center",
