@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from "react";
   const STORE_URL = import.meta.env.BASE_URL + "data/store.json";
 
   export async function fetchProductsFromStore(): Promise<AdminProduct[]> {
-    const res = await fetch(STORE_URL + "?t=" + Date.now());
+    const res = await fetch(STORE_URL);
     if (!res.ok) throw new Error("Could not load store.json");
     const data = await res.json();
     const products = data?.products;
