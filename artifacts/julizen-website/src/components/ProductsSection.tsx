@@ -32,26 +32,38 @@ type ProductEntry = {
 const SIZES: SizeKey[] = ["10g", "100g", "400g"];
 
 // Fixed image-area heights per size tier.
-// Using a pixel height (not aspectRatio) guarantees that front and back
-// images always occupy exactly the same container — objectFit:contain then
-// scales each image proportionally within that identical box.
-// Taller for 100g and 400g creates the correct visual size hierarchy.
 const IMAGE_AREA_HEIGHT: Record<SizeKey, number> = {
   "10g": 198,
   "100g": 262,
   "400g": 300,
 };
-// Per-product scale applied ONLY to the 100g front sachet image.
-// Root cause: the front sachet PNG has a larger transparent canvas margin
-// than the back sachet PNG, so objectFit:contain renders the front artwork
-// visually smaller than the back inside the same container.
-// Scale compensates so both sachets appear the same visual height.
-// The scaled transparent overflow is invisible; no content is clipped.
-const FRONT_SCALE_100G: Record<string, number> = {
-  "chicken":     1.25,   // back/front height fill ratio = 93.2% / 74.7%
-  "crayfish":    1.24,   // 93.2% / 75.5%
-  "stew-jollof": 1.17,   // 93.2% / 79.9%
-  "fried-rice":  0.949,  // front fills 87.4%, back fills 82.95% → scale front down
+
+// Canvas pixel dimensions per size (intrinsic image dimensions for aspect-ratio hint).
+const CANVAS_SIZE: Record<SizeKey, [number, number]> = {
+  "10g":  [1260, 1540],
+  "100g": [1800, 2200],
+  "400g": [480,  720],
+};
+
+// Per-image content-fill scale: canvas_height / content_height.
+// Rendering an image at this scale × container_height fills the container
+// with ONLY the sachet artwork. Combined with overflow:hidden on the
+// container, all transparent canvas margins are clipped away, so front
+// and back sachets sit flush against each other with no gap.
+// Measured via ImageMagick trim bounding boxes on all product PNGs.
+const IMG_CONTENT_SCALE: Record<string, { front: number; back: number }> = {
+  "100g:chicken":     { front: 2200/1644, back: 2200/2050 },
+  "100g:crayfish":    { front: 2200/1661, back: 2200/2050 },
+  "100g:fried-rice":  { front: 2200/1923, back: 2200/1825 },
+  "100g:stew-jollof": { front: 2200/1757, back: 2200/2050 },
+  "10g:chicken":      { front: 1540/1435, back: 1540/1433 },
+  "10g:crayfish":     { front: 1540/1435, back: 1540/1435 },
+  "10g:fried-rice":   { front: 1540/1435, back: 1540/1433 },
+  "10g:stew-jollof":  { front: 1540/1435, back: 1540/1435 },
+  "400g:chicken":     { front: 720/646,   back: 720/653   },
+  "400g:crayfish":    { front: 720/658,   back: 720/660   },
+  "400g:fried-rice":  { front: 720/521,   back: 720/514   },
+  "400g:stew-jollof": { front: 720/537,   back: 720/530   },
 };
 
 const SIZE_LABELS: Record<string, string> = {
@@ -389,16 +401,7 @@ function ProductCard({
   onViewDetails: (p: ProductEntry) => void;
 }) {
   const whatsappLink = generateWhatsAppLink(product.whatsappMessage);
-  const [frontLoaded, setFrontLoaded] = useState(priority);
-  const [backLoaded, setBackLoaded] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const frontImgRef = useRef<HTMLImageElement>(null);
-  const backImgRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    if (frontImgRef.current?.complete) setFrontLoaded(true);
-    if (backImgRef.current?.complete) setBackLoaded(true);
-  }, []);
 
   const frontSrc = product.frontImage.startsWith("/")
     ? getImageUrl(product.frontImage)
@@ -449,119 +452,96 @@ function ProductCard({
         />
 
         {/*
-          Two equal-width containers side by side with a fixed pixel height
-          derived from IMAGE_AREA_HEIGHT[size].
-
-          ROOT CAUSE FIX — why aspectRatio:"2/3" was wrong:
-          Our PNG images are 1800×2200 (100g) and 1260×1540 (10g), both at a
-          9:11 intrinsic ratio (≈0.818). A 2:3 container (ratio ≈0.667) is
-          taller than the image needs — objectFit:contain leaves ~28% dead
-          vertical space as transparent strips. Those strips make front/back
-          appear different sizes depending on how much of the canvas each
-          sachet occupies, even when both containers are pixel-identical.
-
-          FIX: Use explicit height instead of aspectRatio. Both containers
-          receive the same pixel height, so objectFit:contain always
-          constrains both images to the same bounding box — guaranteed equal
-          rendered size with no dead-space artefacts.
-
-          SIZE HIERARCHY: 10g → 198px, 100g → 262px, 400g → 300px.
-          Closer gap (2px) and reduced padding keep the pair visually tight.
+          Each container uses overflow:hidden + a height-based scale factor
+          so only the sachet artwork is visible — all transparent canvas
+          margins are clipped away. Scale = canvas_h / content_h (measured
+          via ImageMagick trim). This eliminates the gap between front and
+          back and ensures both sachets are the same visual size.
         */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "stretch",
-            gap: "0px",
-            padding: "4px 2px 8px",
-            background: "#ffffff",
-            height: `${IMAGE_AREA_HEIGHT[product.size]}px`,
-          }}
-        >
-          {/* Front sachet */}
-          <div
-            style={{
-              flex: 1,
-              height: "100%",
-              minWidth: 0,
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {!frontLoaded && (
-              <div
-                className="absolute inset-0 animate-pulse bg-gray-100 rounded-md"
-              />
-            )}
-            <img
-              ref={frontImgRef}
-              src={frontSrc}
-              alt={`Julizen ${product.name} ${product.size} — front`}
-              fetchPriority={priority ? "high" : "auto"}
-              decoding={priority ? "sync" : "async"}
-              loading={priority ? "eager" : "lazy"}
-              onLoad={() => setFrontLoaded(true)}
-              itemProp="image"
+        {(() => {
+          const scaleKey = `${product.size}:${product.id}`;
+          const scales = IMG_CONTENT_SCALE[scaleKey] ?? { front: 1, back: 1 };
+          const [cw, ch] = CANVAS_SIZE[product.size];
+          return (
+            <div
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "contain",
-                display: "block",
-                opacity: frontLoaded ? 1 : 0,
-                transition: "transform 0.4s ease, opacity 0.3s ease",
-                transformOrigin: "50% 50%",
-                transform: (() => {
-                  const base = product.size === "100g"
-                    ? (FRONT_SCALE_100G[product.id] ?? 1.0)
-                    : 1.0;
-                  return hovered ? `scale(${base * 1.05})` : `scale(${base})`;
-                })(),
-                filter: "drop-shadow(0 6px 22px rgba(0,0,0,0.20))",
+                display: "flex",
+                alignItems: "stretch",
+                gap: "0px",
+                padding: "4px 2px 8px",
+                background: "#ffffff",
+                height: `${IMAGE_AREA_HEIGHT[product.size]}px`,
               }}
-            />
-          </div>
+            >
+              {/* Front sachet */}
+              <div
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  minWidth: 0,
+                  overflow: "hidden",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src={frontSrc}
+                  alt={`Julizen ${product.name} ${product.size} — front`}
+                  width={cw}
+                  height={ch}
+                  fetchPriority={priority ? "high" : "auto"}
+                  decoding={priority ? "sync" : "async"}
+                  loading={priority ? "eager" : "lazy"}
+                  itemProp="image"
+                  style={{
+                    height: `${scales.front * 100}%`,
+                    width: "auto",
+                    flexShrink: 0,
+                    display: "block",
+                    transition: "transform 0.4s ease",
+                    transformOrigin: "50% 50%",
+                    transform: hovered ? "scale(1.05)" : "scale(1)",
+                    filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.18))",
+                  }}
+                />
+              </div>
 
-          {/* Back sachet */}
-          <div
-            style={{
-              flex: 1,
-              height: "100%",
-              minWidth: 0,
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {!backLoaded && (
+              {/* Back sachet */}
               <div
-                className="absolute inset-0 animate-pulse bg-gray-100 rounded-md"
-              />
-            )}
-            <img
-              ref={backImgRef}
-              src={backSrc}
-              alt={`Julizen ${product.name} ${product.size} — back`}
-              fetchPriority={priority ? "high" : "auto"}
-              decoding={priority ? "sync" : "async"}
-              loading={priority ? "eager" : "lazy"}
-              onLoad={() => setBackLoaded(true)}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "contain",
-                display: "block",
-                opacity: backLoaded ? 1 : 0,
-                transition: "transform 0.4s ease, opacity 0.3s ease",
-                transformOrigin: "50% 50%",
-                transform: hovered ? "scale(1.05)" : "scale(1)",
-                filter: "drop-shadow(0 6px 22px rgba(0,0,0,0.16))",
-              }}
-            />
-          </div>
-        </div>
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  minWidth: 0,
+                  overflow: "hidden",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src={backSrc}
+                  alt={`Julizen ${product.name} ${product.size} — back`}
+                  width={cw}
+                  height={ch}
+                  fetchPriority={priority ? "high" : "auto"}
+                  decoding={priority ? "sync" : "async"}
+                  loading={priority ? "eager" : "lazy"}
+                  style={{
+                    height: `${scales.back * 100}%`,
+                    width: "auto",
+                    flexShrink: 0,
+                    display: "block",
+                    transition: "transform 0.4s ease",
+                    transformOrigin: "50% 50%",
+                    transform: hovered ? "scale(1.05)" : "scale(1)",
+                    filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.14))",
+                  }}
+                />
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Size badge */}
         <span
