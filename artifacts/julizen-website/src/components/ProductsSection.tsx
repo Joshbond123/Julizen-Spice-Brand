@@ -490,11 +490,6 @@ function ProductCard({
               justifyContent: "center",
             }}
           >
-            {!frontLoaded && (
-              <div
-                className="absolute inset-0 animate-pulse bg-gray-100 rounded-md"
-              />
-            )}
             <img
               ref={frontImgRef}
               src={frontSrc}
@@ -509,8 +504,7 @@ function ProductCard({
                 height: "100%",
                 objectFit: "contain",
                 display: "block",
-                opacity: frontLoaded ? 1 : 0,
-                transition: "transform 0.4s ease, opacity 0.3s ease",
+                transition: "transform 0.4s ease",
                 transformOrigin: "50% 50%",
                 transform: (() => {
                   const base = product.size === "100g"
@@ -537,11 +531,6 @@ function ProductCard({
               justifyContent: "center",
             }}
           >
-            {!backLoaded && (
-              <div
-                className="absolute inset-0 animate-pulse bg-gray-100 rounded-md"
-              />
-            )}
             <img
               ref={backImgRef}
               src={backSrc}
@@ -555,8 +544,7 @@ function ProductCard({
                 height: "100%",
                 objectFit: "contain",
                 display: "block",
-                opacity: backLoaded ? 1 : 0,
-                transition: "transform 0.4s ease, opacity 0.3s ease",
+                transition: "transform 0.4s ease",
                 transformOrigin: "50% 50%",
                 transform: hovered ? "translateX(-15px) scale(1.05)" : "translateX(-15px) scale(1)",
                 filter: "drop-shadow(0 6px 22px rgba(0,0,0,0.16))",
