@@ -673,14 +673,45 @@ function SizeGroup({
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // PRODUCT CARD SKELETON — shown while store.json loads (prevents wrong-image flash)
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  function ProductCardSkeleton() {
+    return (
+      <div className="flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
+        <div className="animate-pulse">
+          <div className="rounded-t-3xl bg-gray-50" style={{ height: "262px" }}>
+            <div className="flex h-full items-center justify-center gap-6 px-8">
+              <div className="h-[200px] w-[76px] rounded-2xl bg-gray-200" />
+              <div className="h-[200px] w-[76px] rounded-2xl bg-gray-200" />
+            </div>
+          </div>
+          <div className="px-4 pb-5 pt-4 space-y-3">
+            <div className="h-4 w-20 rounded-full bg-gray-200" />
+            <div className="h-5 w-40 rounded bg-gray-200" />
+            <div className="h-3 w-full rounded bg-gray-100" />
+            <div className="h-3 w-3/4 rounded bg-gray-100" />
+            <div className="h-10 w-full rounded-xl bg-gray-100 mt-1" />
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <div className="h-9 rounded-xl bg-gray-100" />
+              <div className="h-9 rounded-xl bg-gray-200" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
 // MAIN SECTION
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function ProductsSection() {
   const [activeProduct, setActiveProduct] = useState<ProductEntry | null>(null);
   const closeModal = useCallback(() => setActiveProduct(null), []);
-  const rawProducts = useProducts();
+  const { products: rawProducts, isLoading } = useProducts();
 
   const allProducts = useMemo(() => adminProductsToEntries(rawProducts), [rawProducts]);
 
@@ -743,15 +774,23 @@ export function ProductsSection() {
           </div>
 
           <div className="space-y-10 sm:space-y-14">
-            {grouped.map((g, gi) => (
-              <SizeGroup
-                key={g.size}
-                size={g.size}
-                products={g.products}
-                groupIndex={gi}
-                onViewDetails={setActiveProduct}
-              />
-            ))}
+            {isLoading ? (
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                {[0, 1, 2, 3].map((i) => (
+                  <ProductCardSkeleton key={i} />
+                ))}
+              </div>
+            ) : (
+              grouped.map((g, gi) => (
+                <SizeGroup
+                  key={g.size}
+                  size={g.size}
+                  products={g.products}
+                  groupIndex={gi}
+                  onViewDetails={setActiveProduct}
+                />
+              ))
+            )}
           </div>
         </div>
       </section>
