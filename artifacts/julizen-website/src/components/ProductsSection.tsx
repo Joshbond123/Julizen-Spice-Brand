@@ -472,8 +472,8 @@ function ProductCard({
           style={{
             display: "flex",
             alignItems: "stretch",
-            gap: "0px",
-            padding: "4px 2px 8px",
+            gap: "8px",
+            padding: "4px 8px 8px",
             background: "#ffffff",
             height: `${IMAGE_AREA_HEIGHT[product.size]}px`,
           }}
@@ -511,8 +511,8 @@ function ProductCard({
                     ? (FRONT_SCALE_100G[product.id] ?? 1.0)
                     : 1.0;
                   return hovered
-                    ? `translateX(15px) scale(${base * 1.05})`
-                    : `translateX(15px) scale(${base})`;
+                    ? `scale(${base * 1.04})`
+                    : `scale(${base})`;
                 })(),
                 filter: "drop-shadow(0 6px 22px rgba(0,0,0,0.20))",
               }}
@@ -546,7 +546,7 @@ function ProductCard({
                 display: "block",
                 transition: "transform 0.4s ease",
                 transformOrigin: "50% 50%",
-                transform: hovered ? "translateX(-15px) scale(1.05)" : "translateX(-15px) scale(1)",
+                transform: hovered ? "scale(1.04)" : "scale(1)",
                 filter: "drop-shadow(0 6px 22px rgba(0,0,0,0.16))",
               }}
             />
