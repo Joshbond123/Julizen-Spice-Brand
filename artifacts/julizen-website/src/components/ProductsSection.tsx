@@ -37,7 +37,7 @@ const SIZES: SizeKey[] = ["10g", "100g", "400g"];
 // scales each image proportionally within that identical box.
 // Taller for 100g and 400g creates the correct visual size hierarchy.
 const IMAGE_AREA_HEIGHT: Record<SizeKey, number> = {
-  "10g": 198,
+  "10g": 224,
   "100g": 262,
   "400g": 300,
 };
@@ -51,7 +51,13 @@ const FRONT_SCALE_100G: Record<string, number> = {
   "chicken":     1.25,   // back/front height fill ratio = 93.2% / 74.7%
   "crayfish":    1.24,   // 93.2% / 75.5%
   "stew-jollof": 1.17,   // 93.2% / 79.9%
-  "fried-rice":  0.949,  // front fills 87.4%, back fills 82.95% → scale front down
+  "fried-rice":  1.066,  // artwork fills 87.4% of canvas → scale to 93.2% reference (matches chicken/crayfish/stew)
+};
+// Per-product scale applied ONLY to the 100g BACK sachet image.
+// Fried rice back artwork fills only 83.0% of canvas (vs chicken/crayfish/stew at 93.2%).
+// Scale compensates so all 100g back sachets appear the same visual height.
+const BACK_SCALE_100G: Record<string, number> = {
+  "fried-rice": 1.123,  // 93.2% / 83.0% = 1.123 → matches 93.2% reference
 };
 
 const SIZE_LABELS: Record<string, string> = {
@@ -435,7 +441,6 @@ function ProductCard({
         className="relative rounded-t-3xl"
         style={{
           background: "#ffffff",
-          paddingBottom: product.size === "10g" ? "24px" : "0px",
         }}
       >
         {/* Accent top border — fades in on hover */}
@@ -472,8 +477,8 @@ function ProductCard({
           style={{
             display: "flex",
             alignItems: "stretch",
-            gap: "8px",
-            padding: "4px 8px 8px",
+            gap: "4px",
+            padding: "4px 6px 6px",
             background: "#ffffff",
             height: `${IMAGE_AREA_HEIGHT[product.size]}px`,
           }}
@@ -546,7 +551,14 @@ function ProductCard({
                 display: "block",
                 transition: "transform 0.4s ease",
                 transformOrigin: "50% 50%",
-                transform: hovered ? "scale(1.04)" : "scale(1)",
+                transform: (() => {
+                  const base = product.size === "100g"
+                    ? (BACK_SCALE_100G[product.id] ?? 1.0)
+                    : 1.0;
+                  return hovered
+                    ? `scale(${base * 1.04})`
+                    : `scale(${base})`;
+                })(),
                 filter: "drop-shadow(0 6px 22px rgba(0,0,0,0.16))",
               }}
             />
