@@ -516,7 +516,9 @@ function ProductCard({
                   const base = product.size === "100g"
                     ? (FRONT_SCALE_100G[product.id] ?? 1.0)
                     : 1.0;
-                  return hovered ? `scale(${base * 1.05})` : `scale(${base})`;
+                  return hovered
+                    ? `translateX(10%) scale(${base * 1.05})`
+                    : `translateX(10%) scale(${base})`;
                 })(),
                 filter: "drop-shadow(0 6px 22px rgba(0,0,0,0.20))",
               }}
@@ -556,7 +558,7 @@ function ProductCard({
                 opacity: backLoaded ? 1 : 0,
                 transition: "transform 0.4s ease, opacity 0.3s ease",
                 transformOrigin: "50% 50%",
-                transform: hovered ? "scale(1.05)" : "scale(1)",
+                transform: hovered ? "translateX(-10%) scale(1.05)" : "translateX(-10%) scale(1)",
                 filter: "drop-shadow(0 6px 22px rgba(0,0,0,0.16))",
               }}
             />
